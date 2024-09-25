@@ -1,0 +1,28 @@
+<QucsStudio Schematic 4.3.1>
+<Properties>
+View=-60,-60,887,740,1.18182,0,110
+Grid=10,10,0
+DataSet=*.dat
+DataDisplay=*.sch
+OpenDisplay=1
+showFrame=0
+FrameText0=Title
+FrameText1=Drawn By:
+FrameText2=Date:
+FrameText3=Revision:
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+<Rect 100 521 600 472 31 #c0c0c0 1 10 1 0.01 1 10000 1 -2.30241 5 26.8369 1 0 0 0 315 0 225 "" "" "">
+	<Legend 10 -100 0>
+	<"NF" "" #0000ff 0 3 0 0 0 0 "">
+	<"NF_calc" "" #ff0000 0 3 0 0 0 0 "">
+</Rect>
+</Diagrams>
+<Paintings>
+</Paintings>
