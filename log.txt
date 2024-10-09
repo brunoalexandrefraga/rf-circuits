@@ -1,0 +1,14 @@
+Starting "impedance-match-test.sch" on ter 08. out 2024 at 20:09:24
+
+creating netlist... done.
+analysing circuit... done.
+solving circuit... done.
+saving result... done.
+
+Finished successfully after 0.078 sec
+Ready.
+
+
+-------------
+
+
