@@ -1,0 +1,38 @@
+<QucsStudio Schematic 4.3.1>
+<Properties>
+View=-128,0,907,800,1,0,0
+Grid=10,10,0
+DataSet=*.dat
+DataDisplay=*.sch
+OpenDisplay=1
+showFrame=0
+FrameText0=Title
+FrameText1=Drawn By:
+FrameText2=Date:
+FrameText3=Revision:
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+<Smith 640 260 220 220 31 #c0c0c0 1 00 1 0 1 1 1 0 4 1 1 0 4 1 315 0 225 "" "" "">
+	<Legend 10 -100 0>
+	<"S[1,1]" "" #0000ff 3 3 0 0 0 0 "">
+	<"S[2,2]" "" #ff0000 3 3 0 0 0 0 "">
+</Smith>
+<Rect 100 260 360 220 31 #c0c0c0 1 00 1 0 5e+09 1.5e+10 1 -81.491 50 7.27514 1 0 0 0 315 0 225 "" "" "">
+	<Legend 10 -100 0>
+	<"dB(S[2,1])" "" #ff0000 3 3 0 0 0 0 "">
+	<"dB(S[1,2])" "" #ff00ff 3 3 0 0 0 0 "">
+</Rect>
+<Rect 90 600 360 220 31 #c0c0c0 1 00 1 0 5e+09 1.5e+10 1 -2.33833 10 25.7266 1 0 0 0 315 0 225 "" "Insertion loss (dB)" "">
+	<Legend 10 -100 0>
+	<"-20*log10(abs(S[2,1]))" "" #ff0000 2 3 0 0 0 1 "Insertion loss">
+	  <Mkr 5.39326e+09 220 -110 3 1 0 0 0 50>
+</Rect>
+</Diagrams>
+<Paintings>
+</Paintings>

@@ -1,0 +1,35 @@
+<QucsStudio Schematic 4.3.1>
+<Properties>
+View=0,0,1500,800,1,0,0
+Grid=10,10,0
+DataSet=*.dat
+DataDisplay=*.sch
+OpenDisplay=1
+showFrame=0
+FrameText0=Title
+FrameText1=Drawn By:
+FrameText2=Date:
+FrameText3=Revision:
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+<Rect 630 390 360 300 31 #c0c0c0 1 10 1 10000 1 1e+10 1 -1 2 0 1 0 0 0 315 0 225 "" "" "">
+	<Legend 10 -100 0>
+	<"dB(S[1,1])" "" #ff0000 0 3 0 0 0 0 "">
+	  <Mkr 5.11604e+07 280 -330 3 1 0 0 0 50>
+</Rect>
+<Rect 130 390 360 300 31 #c0c0c0 1 10 1 10000 1 1e+10 1 -6.96562 20 80 1 0 0 0 315 0 225 "" "" "">
+	<Legend 10 -100 0>
+	<"-20*log10(abs(S[2,1]))" "" #ff0000 0 3 0 0 0 0 "">
+	  <Mkr 460004 90 -370 3 1 0 0 0 50>
+	  <Mkr 3.24563e+08 360 -370 3 1 0 0 0 50>
+	  <Mkr 5.01104e+07 20 140 3 1 0 0 0 50>
+</Rect>
+</Diagrams>
+<Paintings>
+</Paintings>
