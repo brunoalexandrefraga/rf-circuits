@@ -1,0 +1,270 @@
+---
+title: Prática de Adaptação de Impedância 
+subtitle: Laboratório 06
+author:
+  - name: Bruno Alexandre Fraga
+    email: bruno.fraga@posgrad.ufsc.br
+    affiliations: 
+        - id: some-tech
+          name: Universidade Federal de Santa Catarina
+          department: Departamento de Engenharia Elétrica e Eletrônica
+          address: R. Delfino Conti
+          city: Florianópolis
+          state: Santa Catarina
+          postal-code: 88040-370
+abstract: |
+  Este trabalho tem por objetivo consolidar a técnica de projeto de redes de casamento de impedância, em especial a técnica pela rede L. Para isso, é proposto realizar o casamento de impedância da saída de um amplificador para uma carga de 50 $\Omega$ de modo que a eficiência da potência dissipada na carga seja de 80%. Após algumas análises o projeto foi concluído com sucesso e realizada uma simulação Monte Carlo com 100 iterações para verificar a robustez do projeto por técnicas estatísticas. Os resultados obtidos foram brevemente discutidos.
+keywords: 
+  - Robustez
+  - Adaptação de impedância
+  - Análise estatística
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    include-in-header:
+      - text: |
+          \usepackage{steinmetz}
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      # model: 3p # Don't set a model with preprint
+      cite-style: number
+---
+
+# Prelab
+## Potência dissipada na carga
+
+A potência dissipada na carga, $P_L$, é dada pela seguinte expressão
+
+$$
+  P_L=\frac{V_L\cdot I_L^*}{2}
+$$
+
+em que $V_L$ é a tensão na carga e $I_L^*$ o conjugado da corrente que passa pela mesma.
+
+Como o circuito está todo em paralelo, a tensão na carga é a mesma tensão do circuito todo, ou seja, $V_L=V_s$, como pode-se verificar na [Fig. @fig-original-circuit].
+
+![Circuito para medição da admitância total](../images/circuit-original.png){width=300, #fig-original-circuit}
+
+Com base nisso, percebe-se que
+
+$$
+  P_L=\frac{V_s\cdot V_s^*}{2R_L}
+$$
+
+pois $I_L=V_s/R_L$. E assim obtém-se que
+
+$$
+  V_s=\frac{I_s}{Y_N}
+$$
+
+em que $Y_N$ é a admitância de Norton do circuito. Essa admitância é calculada como se segue
+
+$$
+  \begin{split}
+    Y_N&=R_s^{-1}-jX_s^{-1}+Y_L\implies\\
+    &=\frac{X_s\left(1+Y_LR_s\right)-jR_s}{X_sR_s}
+  \end{split}
+$$
+
+dessa forma, obtém-se que a tensão em cima da carga é de
+
+$$
+  V_s=\frac{I_sX_sR_s}{X_s\left(1+Y_LR_s\right)-jR_s}
+$$
+
+Substituindo $X_s=\omega L_s$, obtém-se
+
+$$
+  V_s=\frac{I_s\omega L_sR_s}{\omega L_s\left(1+Y_LR_s\right)-jR_s}
+$$
+
+Assim, a forma mais simples de se calcular a potência sobre a carga é obter o valor de $V_s$, e calcular a potência por meio da expressão já obtida anteriormente.
+
+## Eficiência
+
+Tendo o valor de $V_s$ já definido, a obtenção do valor da potência da fonte do circuito, $P_s$ é simples, como pode-se verificar a seguir
+
+$$
+  P_s=\frac{V_sI_s^*}{2}
+$$
+
+A expressão de $V_s$ já foi estabelecida e $I_s$ é uma hipótese do problema.
+
+A fim de se verificar as expressões obtidas, é realizada simulação de parâmetros S para obter a impedância do circuito. Essa comparação é apresentada na [Tab @tbl-admitances].
+
+| $Y_N$ simulado (mS)        | $Y_N$ calculado (mS)       |
+|----------------------------|----------------------------|
+|$28,8\phase{-13.3^{\circ}}$ |$28,8\phase{-13.3^{\circ}}$ |
+
+: Admitâncias simulada e calculada {#tbl-admitances}
+
+A impedância referente a essa admitância ($Y_N^{-1}$) que foi simulada pode ser verificada na [Fig @fig-admita-smith].
+
+
+![Circuito para medição da admitância total](../images/admita-smith.png){width=300, #fig-admita-smith}
+
+Com base em tudo que foi discutido até então, pode-se realizar a análise da eficiência $\eta=P_s/P_L$ pela resistência da carga, $R_L$. A curva obtida pode ser visualizada na [Fig @fig-admita-smith].
+
+![Circuito para medição da admitância total](../images/load-80eff.png){width=300, #fig-load-80eff}
+
+Além da curva, também foi evidenciado o ponto em que a eficiência de 80% é atingido, ou seja $29,3\;\Omega$.
+
+# Rede de adaptação
+
+Para que o circuito fornecido pelo problema realize uma dissipação de 80% da potência fornecida pela fonte, essa carga deve ser de 29,3 $\Omega$. Entretanto, a carga do problema é de 50 $\Omega$, sendo assim, o circuito equivalente do amplificador deve enxergar uma resistência de carga de 29,3 $\Omega$ ao invés de 50 $\Omega$. Essa adaptação é realizada por meio da rede tipo L @steer2019microwavev3.
+
+Para essa tarefa, imaginou-se que a impedância de $R_s=50\;\Omega$ deva ser adaptada para $R_L=29,3\;\Omega$. Assim, obtém-se
+
+$$
+  Q=\sqrt{\frac{R_s}{R_L}-1}=0,84
+$$
+
+Como o circuito é o modelo equivalente de um amplificador, optou-se por bloquear a passagem de AC e, assim, utilizar a topologia do capacitor em paralelo. A impedância reativa desse capacitor é de
+
+$$
+\begin{split}
+  X_c&=QR_L=24,6\;\Omega\implies\\
+  C&=2,7\;\text{pF}
+\end{split}
+$$
+
+e a impedância reativa do indutor em paralelo é dada por
+
+$$
+\begin{split}
+  X_L&=\frac{R_s}{Q}=59,5\;\Omega\implies\\
+  L&=3,9\;nH
+\end{split}
+$$
+
+O circuito da rede de adaptação em questão pode ser visualizado na [Fig. @fig-L-net].
+
+![Circuito para medição da admitância total](../images/L-net.png){width=300, #fig-L-net}
+
+Esse circuito possui uma impedância de 29,3 $\Omega$, conforme pode ser visualizado na [Fig. @fig-impedance-smith-Lnet].
+
+![Circuito para medição da admitância total](../images/impedance-smith-Lnet.png){width=300, #fig-impedance-smith-Lnet}
+
+As [Fig. @fig-admit-allfreqe] e [Fig. @fig-reflex-allfreq] apresentam a admitância e o coeficiente de reflexão da rede de adaptação ao longo de um amplo espectro de frequência (100 MHz a 10 GHz), com a carga de 50 $\Omega$.
+
+
+![Circuito para medição da admitância total](../images/admit-allfreqe.png){width=300, #fig-admit-allfreqe}
+
+
+![Circuito para medição da admitância total](../images/reflex-allfreq.png){width=300, #fig-reflex-allfreq}
+
+# Teste da rede L ao circuito equivalente do amplificador
+
+Ao finalizar os testes e medições da rede L isoladamente, essa rede é acoplada ao circuito equivalente do amplificador. E pode-se perceber, pela [Fig. @fig-test-Lnet], que a rede projetada adequou corretamente a impedância do amplificador, de modo que a eficiência da potência dissipada na carga foi de 80%.
+
+
+![Circuito para medição da admitância total](../images/test-Lnet.png){width=300, #fig-test-Lnet}
+
+# Simulação Monte Carlo
+
+Para garantir a robustez do projeto, analiza-se a simulação Monte Carlo e pode-se verificar estatisticamente se o projeto atende a alguns padrões estabelecidos (como o de ter os resultados dentro de uma faixa de 3 vezes o desvio padrão da distribuição).
+
+A [Fig. @fig-monte-carlo] mostra o arranjo utilizado para realizar a simulação Monte Carlo. Os dados obtidos por meio dessa simulação foram exportados e serão apresentados a seguir.
+
+![Circuito para medição da admitância total](../images/monte-carlo.png){width=300, #fig-monte-carlo}
+
+
+Pela [Fig. @fig-efficiency-points] pode-se verificar que a média da eficiência do circuito, com componentes de 5% de tolerância foi de 79%, sendo que, exatamente todas as amostras, no espaço amostral de 100 testes, ficaram dentro dos 3$\sigma$, o que é um excelente resultado, tendo em vista que, com base nesse teste, pode-se concluir inicialmente que 99,7% dos casos o circuito terá uma variação máxima de 3$\sigma$ a mais e a menos em relação à média de 79%. Isso significa que os valores podem variar, no máximo, de 75,83% a 82,15%.
+
+```{python}
+#| label: fig-efficiency-points
+#| fig-cap: A meaningless scatterplot
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+#| out-width: 50%
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Output/efficiency-points.csv', delimiter=';', quotechar='"')
+
+# Extraindo a coluna de interesse
+valores = df['r_eta']
+
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
+
+# Plotando o histograma
+plt.figure(figsize=(8, 6))
+plt.hist(valores, bins=20, color='blue', alpha=0.7, edgecolor='black')
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='Média + 3σ')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='Média - 3σ')
+
+# Adicionando título e rótulos
+plt.title('Histograma da Eficiência com Limites de 3-Sigma')
+plt.xlabel('Eficiência (r_eta)')
+plt.ylabel('Frequência')
+plt.legend()
+
+# Exibindo o gráfico
+plt.tight_layout()
+plt.show()
+```
+
+A potência dissipada na carga, por sua vez, apresenteou um comportamento em que a média da potência é de 93,7 mW, sendo que os 99,7% das amostras (3$\sigma$) ficaram dentro de um intervalo de 86,4 mW e 100 mW.
+
+```{python}
+#| label: fig-power-points
+#| fig-cap: A meaningless scatterplot
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+#| out-width: 50%
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Output/power-points.csv', delimiter=';', quotechar='"')
+
+# Extraindo a coluna de interesse
+valores = df['r_PL']
+
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
+
+# Plotando o histograma
+plt.figure(figsize=(8, 6))
+plt.hist(valores, bins=20, color='blue', alpha=0.7, edgecolor='black')
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='Média + 3σ')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='Média - 3σ')
+
+# Adicionando título e rótulos
+plt.title('Histograma da Potência com Limites de 3-Sigma')
+plt.xlabel('Eficiência (r_eta)')
+plt.ylabel('Frequência')
+plt.legend()
+
+# Exibindo o gráfico
+plt.tight_layout()
+plt.show()
+
+
+```
+
+
+# Discussão
+
+Com essa atividade, tive a oportunidade de consolidar o conhecimento de adaptação de impedâncias pela técnica da rede L. Entretanto, a parte de mais valor da atividade é a análise estatística que deve ser analisada para verificar a robustez do projeto. Eu já havia ouvido falar da simulação Monte Carlo e até já havia performado algumas análises no software Keysight ADS, como parte de um tutorial, mas não tinha muita noção do motivo e da importância da simulação. Além disso, eu particularmente tenho negligenciado a estatística e, com base no que foi verificado nesta atividade, isso não é correto, uma vez que nada no mundo real é ideal e, em se tratando de circuitos de radiofrequência, pequenas não-idealidades podem causar comportamentos muito significativos. 
+
+Outro ponto um pouco menos importante é que esse relatório foi feito utilizando a tecnologia Quarto, apresentada em sala de aula como uma ferramenta essencial para gerar relatórios e documentação acadêmica.
+
+Um dos pontos que ficaram um pouco mal documentados é em relação à análise estatística dos resultados obtidos. Como comentei, minha parte de estatística foi um pouco negligenciada, logo tenho uma certa necessidade de relembrar e aprofundar os conceitos. Minha sugestão de como eu posso mitigar essa lacuna no meu conhecimento é analisar com muito mais atenção quando alguns valores e conceitos estatísticos forem apresentados em algum artigo ou bibliografia (eu costumo passar bem por cima nessas seções), bem como em manter como padrão, realizar análises de robustez nos projetos que tenho a oportunidade de trabalhar.
+
+# References {-}
