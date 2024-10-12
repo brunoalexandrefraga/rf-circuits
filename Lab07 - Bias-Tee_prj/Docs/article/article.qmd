@@ -26,6 +26,7 @@ format:
     include-in-header:
       - text: |
           \usepackage{steinmetz}
+          \usepackage{circuitikz}
     keep-tex: true
     journal:
       name: Journal Name
@@ -34,14 +35,98 @@ format:
       cite-style: number
 ---
 
-# Introdução
-
-## Projeto de filtros
-
-### Aproximação Cauer (elíptica)
-
-## Perdas por inserção
 
 # Prelab
 
-# 
+
+
+# Laboratório
+
+## Perda por inserção no Bias-Tee
+
+A perda por inserção, $I_L$ é definida como @steer2019microwavev3
+
+$$
+  I_L=\frac{P_{L1}}{P_{L2}}
+$$
+
+em que $P_{L1}$ é a potência dissipada na carga sem o dispositivo a ser medido (DUT, do inglês *Device Under Test*) e $P_{L2}$ é o dispositivo a ser medido com o DUT acoplado ao circuito de medição.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+    \draw (-2, -2.5) coordinate(point1) to[R, l=$R_s$] ++(0, 2) to[short] ++(5, 0) to[R, l=$R_L$] ++(0, -3.5) to[short] ++(-2, 0) coordinate(point2) ;
+    \draw (point1) to[vsource, l=$V_s$] ++(0, -1.5) to[short] (point2) ;
+  \end{circuitikz}
+  \caption{Circuito sem \textit{bias-Tee}}
+  \label{fig:circuit-no-biasTee}
+\end{figure}
+```
+O circuito apresentado na Fig.\ref{fig:circuit-no-biasTee} está sem o DUT. Dessa forma, é possível calcular a potência entregue à carga $R_L$ antes do acoplamento do DUT.
+
+$$
+  P_{L1}=\frac{1}{2}\mathfrak{R}\left\{V_{L1}I_{L1}^*\right\}
+$$
+
+No caso do circuito da Fig. \ref{fig:circuit-no-biasTee} a tensão sob a carga é dada por (utilizando um divisor de tensão)
+
+$$
+  V_{L1}=V_s\frac{R_L}{R_s+R_L}
+$$
+
+A corrente de carga, $I_{L1}$, para essa configuração é dada por
+
+$$
+  I_{L1}=\frac{V_s}{R_s+R_L}
+$$
+
+Como a impedância é totalmente resistiva, sabe-se que $I_{L1}=I_{L1}^*$ e tanto $V_{L1}$ quanto $I_{L1}$ são totalmente reais. Dessa forma, a potência, $P_{L1}$ é obtida por
+
+$$
+  P_{L1}=\frac{V_s^2R_L}{2\left(R_s+R_L\right)^2}
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+  	\draw (-2, -2.5) coordinate(point1) to[R, l=$R_s$] ++(0, 2) to[C, l=$C$] ++(3, 0) coordinate(point2) to[L, l=$L$] ++(0, -3.5) coordinate(point3) node[ground]{} ;
+  	\draw (point1) to[vsource, l=$V_s$] ++(0, -1.5) to[short] (point3) ;
+  	\draw (point2) to[short] ++(2, 0) to[R, l=$R_L$] ++(0, -3.5) to[short] (point3) ;
+  \end{circuitikz}
+  \caption{Circuito com \textit{bias-Tee}}
+  \label{fig:circuit-biasTee}
+\end{figure}
+```
