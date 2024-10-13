@@ -87,46 +87,24 @@ $$
   P_{L1}=\frac{V_s^2R_L}{2\left(R_s+R_L\right)^2}
 $$
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Para realizar a análise do circuito com o *bias-Tee* refere-se à Fig.\ref{fig:circuit-biasTee}.
 
 ```{=latex}
 \begin{figure}[h]
   \centering
   \begin{circuitikz}[american]
-  	\draw (-2, -2.5) coordinate(point1) to[R, l=$R_s$] ++(0, 2) to[C, l=$C$] ++(3, 0) coordinate(point2) to[L, l=$L$] ++(0, -3.5) coordinate(point3) node[ground]{} ;
-  	\draw (point1) to[vsource, l=$V_s$] ++(0, -1.5) to[short] (point3) ;
-  	\draw (point2) to[short] ++(2, 0) to[R, l=$R_L$] ++(0, -3.5) to[short] (point3) ;
+    \draw (1, -1) coordinate(point1) to[R, l=$R_s$] ++(0, -2) to[vsource] ++(0, -1.5) to[short] ++(3, 0) coordinate(point2) node[ground]{} ;
+    \draw (point1) to[C, i^>=$I_s$, -*] ++(3, 0) coordinate(point3) to[L, i>^=$I_{dc}$, *-] (point2) ;
+    \draw (point3) to[short, *-] ++(2, 0) to[R, l=$R_L$, i>^=$I_L$] ++(0, -3.5) to[short] (point2) ;
+  
+    % Add the marker for V_1
+    \node at (point3) [above] {$V_1$};
   \end{circuitikz}
   \caption{Circuito com \textit{bias-Tee}}
   \label{fig:circuit-biasTee}
 \end{figure}
 ```
+
+Logo de início, já é possível verificar que a tensão $V_1$ é a tensão que opera sobre a resistência de carga.
+
+
