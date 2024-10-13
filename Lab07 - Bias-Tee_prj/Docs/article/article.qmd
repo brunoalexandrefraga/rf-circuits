@@ -56,8 +56,11 @@ em que $P_{L1}$ é a potência dissipada na carga sem o dispositivo a ser medido
 \begin{figure}[h]
   \centering
   \begin{circuitikz}[american]
-    \draw (-2, -2.5) coordinate(point1) to[R, l=$R_s$] ++(0, 2) to[short] ++(5, 0) to[R, l=$R_L$] ++(0, -3.5) to[short] ++(-2, 0) coordinate(point2) ;
-    \draw (point1) to[vsource, l=$V_s$] ++(0, -1.5) to[short] (point2) ;
+	  \draw (0.5, -1.5) coordinate(point1) to[vsource, l=$V_s$] ++(0, -2) to[short] ++(4.5, 0) coordinate(point2) ;
+	  \draw (point1) to[R, l=$R_s$] ++(0, 2) to[short, -*] ++(4.5, 0) to[R, l=$R_L$, i>^=$I_{L1}$, *-] (point2) ;
+
+    % Add the marker for V_{L1}
+    \node at (5, 0.5) [above right] [above] {$V_{L1}$};
   \end{circuitikz}
   \caption{Circuito sem \textit{bias-Tee}}
   \label{fig:circuit-no-biasTee}
@@ -93,22 +96,22 @@ Para realizar a análise do circuito com o *bias-Tee* refere-se à Fig.\ref{fig:
 \begin{figure}[h]
   \centering
   \begin{circuitikz}[american]
-    \draw (1, -1) coordinate(point1) to[R, l=$R_s$] ++(0, -2) to[vsource, l=$V_s$] ++(0, -1.5) to[short] ++(3, 0) coordinate(point2) node[ground]{} ;
+	  \draw (1, -1) coordinate(point1) to[R, l=$R_s$] ++(0, -2) to[vsource, l=$V_s$] ++(0, -1.5) to[short] ++(3, 0) coordinate(point2) node[ground]{} ;
 	  \draw (point1) to[C, l=C, a=$X_C$, i^>=$I_s$, -*] ++(3, 0) coordinate(point3) to[L, l=L, a=$X_L$, i>^=$I_{dc}$, *-] (point2) ;
-	  \draw (point3) to[short, *-] ++(2, 0) to[R, l=$R_L$, i>^=$I_L$] ++(0, -3.5) to[short] (point2) ;
+	  \draw (point3) to[short, *-] ++(2, 0) to[R, l=$R_L$, i>^=$I_{L2}$] ++(0, -3.5) to[short] (point2) ;
   
-    % Add the marker for V_1
-    \node at (point3) [above] {$V_1$};
+    % Add the marker for V_{L2}
+    \node at (point3) [above] {$V_{L2}$};
   \end{circuitikz}
   \caption{Circuito com \textit{bias-Tee}}
   \label{fig:circuit-biasTee}
 \end{figure}
 ```
 
-Logo de início, já é possível verificar que a tensão $V_1$ é a tensão que opera sobre a resistência de carga, ou seja, $V_1=V_{L1}$. Sabendo $V_1$, também é possível obter a corrente que opera sob essa resistência, cuja relação é dada a seguir
+Logo de início, já é possível verificar que a tensão $V_{L2}$ é a tensão que opera sobre a resistência de carga. Conhecendo $V_{L2}$, também é possível obter a corrente que opera sob essa resistência, cuja relação é dada a seguir
 
 $$
- I_{L1}=\frac{V_{L1}}{R_L}=\frac{V_1}{R_L}
+ I_{L2}=\frac{V_{L2}}{R_L}
 $$
 
 Pela lei de Kirchhoff de correntes, pode-se estabelecer a seguinte relação
@@ -116,12 +119,58 @@ Pela lei de Kirchhoff de correntes, pode-se estabelecer a seguinte relação
 $$
   \begin{split}
     I_s&=I_\text{dc}+I_L\implies\\
-    \frac{V_s-V_1}{R_s+X_c}&=\frac{V_1}{X_L}+\frac{V_1}{R_L}\implies\\
-    \frac{V_s}{R_s+X_c}&=V_1\left(\frac{1}{X_L}+\frac{1}{R_L}+\frac{1}{R_s+X_c}\right)\implies\\
-    \frac{V_s}{R_s+X_c}&=V_1\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L(R_s+X_C)}\right]\implies\\
-    V_s&=V_1\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L}\right]\implies\\
-    V_1&=\frac{V_sX_LR_L}{(R_L+X_L)(R_s+X_C)+X_LR_L}\implies\\
+    \frac{V_s-V_{L2}}{R_s+X_c}&=\frac{V_{L2}}{X_L}+\frac{V_{L2}}{R_L}\implies\\
+    \frac{V_s}{R_s+X_c}&=V_{L2}\left(\frac{1}{X_L}+\frac{1}{R_L}+\frac{1}{R_s+X_c}\right)\implies\\
+    \frac{V_s}{R_s+X_c}&=V_{L2}\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L(R_s+X_C)}\right]\implies\\
+    V_s&=V_{L2}\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L}\right]\implies\\
+    V_{L2}&=\frac{V_sX_LR_L}{(R_L+X_L)(R_s+X_C)+X_LR_L}\implies\\
   \end{split}
 $$
 
-em que $I_L=I_{L1}$, a impedância do indutor é $X_L=j\omega L$ e a impedância do capacitor é $X_C=\left(j\omega C\right)^{-1}$.
+em que a impedância do indutor é $X_L=j\omega L$ e a impedância do capacitor é $X_C=\left(j\omega C\right)^{-1}$.
+
+Se for adotada a suposição de que $X_L=\omega L$ e $X_C=\left(\omega C\right)^{-1}$. A tensão $V_{L2}$ é dada por
+
+
+$$
+  \begin{split}
+    V_{L2}&=\frac{jV_sX_LR_L}{(R_L+jX_L)(R_s-jX_C)+jX_LR_L}\implies\\
+    &=\frac{jV_sX_LR_L}{(R_LR_s+X_LX_C)+j(X_LR_s+X_LR_L-R_LX_C)}\implies\\
+    &=V_sX_LR_L\frac{(X_LR_s+X_LR_L-R_LX_C)+j(R_LR_s+X_LX_C)}{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}
+  \end{split}
+$$
+
+Sendo a tensão $V_{L2}$ conhecida, é possível calcular facilmente a corrente $I_{L2}$ como se segue
+
+$$
+  I_{L2}=\frac{V_{L2}}{R_L}=V_sX_L\frac{(X_LR_s+X_LR_L-R_LX_C)+j(R_LR_s+X_LX_C)}{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}
+$$
+
+Entretanto, para o cálculo da potência, é necessário o conjugado da corrente, ou seja,
+
+$$
+  I_{L2}^*=V_sX_L\frac{(X_LR_s+X_LR_L-R_LX_C)-j(R_LR_s+X_LX_C)}{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}
+$$
+
+Seguindo com o cálculo, tem-se que
+
+$$
+  \begin{split}
+    V_{L2}I_{L2}^*&=V_s^2X_L^2R_L\frac{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}{\left[(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2\right]^2}\implies\\
+    &=\frac{V_s^2X_L^2R_L}{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}
+  \end{split}
+$$
+
+Dessa forma, a potência sobre a carga com o DUT acoplado ao circuito de medição é dado por
+
+$$
+  P_{L2}=\frac{1}{2}\mathfrak{R}\left\{V_{L2}I_{L2}^*\right\}=\frac{V_s^2X_L^2R_L}{2(R_LR_s+X_LX_C)^2+2(X_LR_s+X_LR_L-R_LX_C)^2}
+$$
+
+Como já foi definido anteriormente, é possível calcular a perda por inserção, $I_L$ como
+
+$$
+  \begin{split}
+    I_L=\frac{P_{L1}}{P_{L2}}
+  \end{split}
+$$
