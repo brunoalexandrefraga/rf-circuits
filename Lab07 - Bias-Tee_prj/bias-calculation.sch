@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-107,22,1456,1001,0.846154,0,0
+View=-107,22,1456,1337,0.846154,0,540
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -33,6 +33,7 @@ VProbe VL 1 590 220 2 28 0 3 "SIL-2" 0
 IProbe IL 1 430 100 -24 -58 0 0 "SIL-2" 0
 Eqn power 1 50 920 0 8 0 0 "Ps=(Vs.dv*conj(Is.i))/2=" 1 "Ps1=((1/2)*Vs^2)/((Rs+RL))=" 1 "yes" 0
 Eqn power1 1 310 920 0 8 0 0 "PL=(VL.dv*conj(IL.i))/2=" 1 "PL1=(Vs^2 * RL) / (2 * (Rs + RL)^2)=" 1 "yes" 0
+Eqn Eqn1 1 50 1050 0 8 0 0 "V1=Vs*XL*RL/((RL+XL)*(Rs+XC)+XL*RL)=" 1 "yes" 0
 </Components>
 <Wires>
 70 310 70 330 "" 0 0 0 ""

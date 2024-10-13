@@ -93,9 +93,9 @@ Para realizar a análise do circuito com o *bias-Tee* refere-se à Fig.\ref{fig:
 \begin{figure}[h]
   \centering
   \begin{circuitikz}[american]
-    \draw (1, -1) coordinate(point1) to[R, l=$R_s$] ++(0, -2) to[vsource] ++(0, -1.5) to[short] ++(3, 0) coordinate(point2) node[ground]{} ;
-    \draw (point1) to[C, i^>=$I_s$, -*] ++(3, 0) coordinate(point3) to[L, i>^=$I_{dc}$, *-] (point2) ;
-    \draw (point3) to[short, *-] ++(2, 0) to[R, l=$R_L$, i>^=$I_L$] ++(0, -3.5) to[short] (point2) ;
+    \draw (1, -1) coordinate(point1) to[R, l=$R_s$] ++(0, -2) to[vsource, l=$V_s$] ++(0, -1.5) to[short] ++(3, 0) coordinate(point2) node[ground]{} ;
+	  \draw (point1) to[C, l=C, a=$X_C$, i^>=$I_s$, -*] ++(3, 0) coordinate(point3) to[L, l=L, a=$X_L$, i>^=$I_{dc}$, *-] (point2) ;
+	  \draw (point3) to[short, *-] ++(2, 0) to[R, l=$R_L$, i>^=$I_L$] ++(0, -3.5) to[short] (point2) ;
   
     % Add the marker for V_1
     \node at (point3) [above] {$V_1$};
@@ -105,6 +105,23 @@ Para realizar a análise do circuito com o *bias-Tee* refere-se à Fig.\ref{fig:
 \end{figure}
 ```
 
-Logo de início, já é possível verificar que a tensão $V_1$ é a tensão que opera sobre a resistência de carga.
+Logo de início, já é possível verificar que a tensão $V_1$ é a tensão que opera sobre a resistência de carga, ou seja, $V_1=V_{L1}$. Sabendo $V_1$, também é possível obter a corrente que opera sob essa resistência, cuja relação é dada a seguir
 
+$$
+ I_{L1}=\frac{V_{L1}}{R_L}=\frac{V_1}{R_L}
+$$
 
+Pela lei de Kirchhoff de correntes, pode-se estabelecer a seguinte relação
+
+$$
+  \begin{split}
+    I_s&=I_\text{dc}+I_L\implies\\
+    \frac{V_s-V_1}{R_s+X_c}&=\frac{V_1}{X_L}+\frac{V_1}{R_L}\implies\\
+    \frac{V_s}{R_s+X_c}&=V_1\left(\frac{1}{X_L}+\frac{1}{R_L}+\frac{1}{R_s+X_c}\right)\implies\\
+    \frac{V_s}{R_s+X_c}&=V_1\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L(R_s+X_C)}\right]\implies\\
+    V_s&=V_1\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L}\right]\implies\\
+    V_1&=\frac{V_sX_LR_L}{(R_L+X_L)(R_s+X_C)+X_LR_L}\implies\\
+  \end{split}
+$$
+
+em que $I_L=I_{L1}$, a impedância do indutor é $X_L=j\omega L$ e a impedância do capacitor é $X_C=\left(j\omega C\right)^{-1}$.
