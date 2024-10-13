@@ -171,6 +171,7 @@ Como já foi definido anteriormente, é possível calcular a perda por inserçã
 
 $$
   \begin{split}
-    I_L=\frac{P_{L1}}{P_{L2}}
+    I_L&=\frac{P_{L1}}{P_{L2}}\implies\\
+    &=\frac{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}{X_L^2\left(R_s+R_L\right)^2}
   \end{split}
 $$
