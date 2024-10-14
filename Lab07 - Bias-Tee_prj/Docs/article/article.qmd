@@ -17,7 +17,6 @@ abstract: |
 keywords: 
   - Robustez
   - Bias Tee 
-  - :wa
 
 date: last-modified
 bibliography: bibliography.bib
@@ -44,13 +43,15 @@ format:
 
 ## Perda por inserção no Bias-Tee
 
-A perda por inserção, $I_L$ é definida como @steer2019microwavev3
+A perda por inserção, $\text{IL}$ é definida como @steer2019microwavev3
 
 $$
-  I_L=\frac{P_{L1}}{P_{L2}}
+  \text{IL}=\frac{P_{L1}}{P_{L2}}
 $$
 
 em que $P_{L1}$ é a potência dissipada na carga sem o dispositivo a ser medido (DUT, do inglês *Device Under Test*) e $P_{L2}$ é o dispositivo a ser medido com o DUT acoplado ao circuito de medição.
+
+### Perda por inserção pela potência
 
 ```{=latex}
 \begin{figure}[h]
@@ -118,7 +119,7 @@ Pela lei de Kirchhoff de correntes, pode-se estabelecer a seguinte relação
 
 $$
   \begin{split}
-    I_s&=I_\text{dc}+I_L\implies\\
+    I_s&=I_\text{dc}+\text{IL}\implies\\
     \frac{V_s-V_{L2}}{R_s+X_c}&=\frac{V_{L2}}{X_L}+\frac{V_{L2}}{R_L}\implies\\
     \frac{V_s}{R_s+X_c}&=V_{L2}\left(\frac{1}{X_L}+\frac{1}{R_L}+\frac{1}{R_s+X_c}\right)\implies\\
     \frac{V_s}{R_s+X_c}&=V_{L2}\left[\frac{(R_L+X_L)(R_s+X_C)+X_LR_L}{X_LR_L(R_s+X_C)}\right]\implies\\
@@ -167,11 +168,71 @@ $$
   P_{L2}=\frac{1}{2}\mathfrak{R}\left\{V_{L2}I_{L2}^*\right\}=\frac{V_s^2X_L^2R_L}{2(R_LR_s+X_LX_C)^2+2(X_LR_s+X_LR_L-R_LX_C)^2}
 $$
 
-Como já foi definido anteriormente, é possível calcular a perda por inserção, $I_L$ como
+Dessa forma, é possível calcular a perda por inserção, $\text{IL}$ como
 
 $$
   \begin{split}
-    I_L&=\frac{P_{L1}}{P_{L2}}\implies\\
-    &=\frac{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}{X_L^2\left(R_s+R_L\right)^2}
+    \text{IL}&=\frac{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}{X_L^2\left(R_s+R_L\right)^2}
+  \end{split}
+$$ {#eq-insertion-loss}
+
+### Perda por inserção pelos parâmetros s
+
+## Equações de projeto
+
+Dado que o cálculo da perda por inserção foi devidamente expressa pela [Eq. @eq-insertion-loss], é possível obter as equações para o projeto do *bias-Tee* com os requisitos do problema. Abrindo, reaorganizando e substituindo os valores de $R_s$ e $R_L$ nos termos da equação, obtém-se
+
+$$
+  \text{IL}=\frac{2500^2 + (\frac{\omega L}{\omega C})^2 + 10000(\omega L)^2 + 2500(\frac{1}{\omega C})^2 - 5000\frac{\omega L}{\omega C}}{(\omega L)^2 (100)^2}
+$$ {#eq-insertion-loss-values}
+
+Pelas restrições impostas pelo problema, a perda por inserção deve ser de no máximo 1 dB entre 100 kHz e 10 GHz. Dessa forma, é obtém-se que 
+
+$$
+  \begin{split}
+    \text{IL}\big|_\text{dB}&=10\log\left(\text{IL}\right)\implies\\
+    1\;\text{dB}&=10\log\left(\text{IL}\right)\implies\\
+    IL&=10^{1/10}\approx 1,26
   \end{split}
 $$
+
+
+Assim, a equação [Eq. @eq-insertion-loss-values] pode ser manipulada como se segue
+
+$$
+  \begin{split}
+    1,26(\omega L)^2 (100)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + 10000(\omega L)^2 + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
+    12600(\omega L)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + 10000(\omega L)^2 + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
+    2600(\omega L)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
+    2600(\omega L)^2-2500^2 + 5000\frac{\omega L}{\omega C}=\frac{(\omega L)^2+2500}{(\omega C)^2}\implies\\
+    2600\omega^4L^2C^2 - 2500^2\omega^2C^2 + 5000\omega^2LC=\omega^2L^2+2500\implies\\
+    2600\omega^4L^2C^2 - 2500^2\omega^2C^2 - \omega^2L^2 - 2500 + 5000\omega^2LC=0\implies\\
+  \end{split}
+$$
+
+Para dar continuidade à resolução das equações 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
