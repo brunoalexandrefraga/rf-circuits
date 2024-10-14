@@ -206,12 +206,18 @@ $$
     2600(\omega L)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
     2600(\omega L)^2-2500^2 + 5000\frac{\omega L}{\omega C}=\frac{(\omega L)^2+2500}{(\omega C)^2}\implies\\
     2600\omega^4L^2C^2 - 2500^2\omega^2C^2 + 5000\omega^2LC=\omega^2L^2+2500\implies\\
-    2600\omega^4L^2C^2 - 2500^2\omega^2C^2 - \omega^2L^2 - 2500 + 5000\omega^2LC=0\implies\\
   \end{split}
 $$
 
-Para dar continuidade à resolução das equações 
+$$
+  2600\omega^4L^2C^2 - 2500^2\omega^2C^2 - \omega^2L^2 - 2500 + 5000\omega^2LC=0
+$$ {#eq-algebric}
 
+Para dar continuidade à resolução das equações, nota-se que a análise deve ser feita para a frequência de 100 kHz, assim, $\omega=2\pi f=2\pi 100\cdot 10^3$. Substituindo essa relação na [Eq. @eq-algebric], obtém-se
+
+$$
+  2600(16\cdot 10^{20})\pi^4L^2C^2 - 2500^2(40\cdot 10^9)\pi^2C^2 - (40\cdot 10^9)\pi^2L^2 - 2500 + 5000(40\cdot 10^9)\pi^2LC=0
+$$
 
 
 

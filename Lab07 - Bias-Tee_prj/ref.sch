@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=0,-214,2126,1594,0.715977,0,408
+View=0,-214,2126,1502,0.715977,0,60
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -36,8 +36,8 @@ Eqn Eqn2 1 160 640 0 8 0 0 "PL1=(1/2)*real(VL1.dv*conj(IL1.i))=" 1 "PL2=(1/2)*re
 Eqn Eqn1 1 160 790 0 8 0 0 "PL1_calc=(Vs^2*RL)/(2*(Rs+RL)^2) =" 1 "PL2_calc=(Vs^2*XI^2*RL)/(2*(RL*Rs+XI*XC)^2+2*(XI*Rs+XI*RL-RL*XC)^2)=" 1 "ILoss_calc1=PL1_calc/PL2_calc=" 1 "ILoss_calc2=((RL*Rs+XI*XC)^2+(XI*Rs+XI*RL-RL*XC)^2)/(XI^2*(Rs+RL)^2)=" 1 "yes" 0
 R R1 1 270 -70 15 -26 0 1 "Rs" 1 "26.85" 0 "european" 0 "SMD0603" 0
 .AC AC1 1 1650 200 0 38 0 0 "list" 1 "1 GHz" 0 "10 GHz" 0 "1 GHz" 1 "no" 0 "none" 0
-Eqn Consts 1 1330 220 0 8 0 0 "RL=50 Ω=" 1 "Rs=50 Ω=" 1 "C=1 pF=" 1 "L=1 nH=" 1 "Vs=1 V=" 1 "no" 0
 Eqn Eqn3 1 180 1270 0 8 0 0 "ILoss_calc3=((RL*Rs)^2+(XI*XC)^2+(XI*Rs)^2+(XI*RL)^2+(RL*XC)^2+2*RL*Rs*XI*XC+2*XI*Rs*XI*RL-2*XI*Rs*RL*XC-2*XI*RL*RL*XC)/(XI^2*(Rs+RL)^2)=" 1 "ILoss_calc4=(((50*50)^2+(omega*L*(1/(omega*C)))^2+(omega*L*50)^2+(omega*L*50)^2+(50*(1/(omega*C)))^2+2*50*50*omega*L*(1/(omega*C))+2*omega*L*50*omega*L*50-2*omega*L*50*50*(1/(omega*C))-2*omega*L*50*50*(1/(omega*C)))/((omega*L)^2*(50+50)^2)=" 1 "ILoss_calc5=((2500)^2+((omega*L)/(omega*C))^2+2*(omega*L*50)^2+(50*(1/(omega*C)))^2-5000*(omega*L)/(omega*C)+5000*(omega*L)^2)/((omega*L)^2*(100)^2)=" 1 "ILoss_calc6=(2500^2+((omega*L)/(omega*C))^2+10000*(omega*L)^2+2500*(1/(omega*C))^2-5000*(omega*L)/(omega*C))/((omega*L)^2*(100)^2)=" 1 "ILoss_calc7=(2500^2+((omega*L)/(omega*C))^2+10000*(omega*L)^2+2500*(1/(omega*C))^2-5000*(omega*L)/(omega*C))/((omega*L)^2*(100^2))=" 1 "yes" 0
+Eqn Consts 1 1330 220 0 8 0 0 "RL=77.3 Ω=" 1 "Rs=50 Ω=" 1 "C=1 pF=" 1 "L=1 nH=" 1 "Vs=1 V=" 1 "no" 0
 </Components>
 <Wires>
 550 200 550 290 "" 0 0 0 ""
@@ -88,9 +88,9 @@ Eqn Eqn3 1 180 1270 0 8 0 0 "ILoss_calc3=((RL*Rs)^2+(XI*XC)^2+(XI*Rs)^2+(XI*RL)^
 	<"PL2_calc" "" #0000ff 0 3 1 0 0 0 "">
 	<"ILoss_calc1" "" #0000ff 0 3 1 0 0 0 "">
 	<"ILoss_calc2" "" #0000ff 0 3 1 0 0 0 "">
-	<"10*log10(ILoss_calc2)" "" #0000ff 0 3 1 0 0 0 "">
+	<"10*log10(ILoss_calc2)" "" #0000ff 0 7 1 0 0 0 "">
 </Tab>
-<Tab 1115 1172 670 55 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+<Tab 195 1482 670 55 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
 	<"ILoss_calc3" "" #0000ff 0 3 1 0 0 0 "">
 	<"ILoss_calc4" "" #0000ff 0 3 1 0 0 0 "">
 	<"ILoss_calc5" "" #0000ff 0 3 1 0 0 0 "">
