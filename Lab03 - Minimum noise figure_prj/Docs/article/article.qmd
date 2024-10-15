@@ -47,7 +47,12 @@ format:
   elsevier-pdf:
     include-in-header:
       - text: |
-          \usepackage{steinmetz}
+            \usepackage{graphicx} % Required for inserting images
+            \usepackage{circuitikz}
+            \usepackage{amsmath}
+            \usepackage{amssymb}
+            \usepackage{amsthm}
+            \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
     keep-tex: true
     journal:
       name: Journal Name
@@ -363,7 +368,7 @@ Em seguida, é realizada a análise com a entrada do circuito aberta para os doi
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{ino2-diode-serie-curto.png}
+    \includegraphics[width=0.5\linewidth]{../images/ino2-diode-serie-curto.png}
     \caption{Circuito diodo em série com ruído referido à entrada em curto-circuito}
     \label{fig:ino2-diode-serie-curto}
 \end{figure}
@@ -467,7 +472,7 @@ E para se analisar o o circuito, inclui-se uma fonte de corrente $I_s$, de admit
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{model-circuit-diode-parallel.png}
+    \includegraphics[width=0.5\linewidth]{../images/model-circuit-diode-parallel.png}
     \caption{Circuito equivalente do diodo em paralelo}
     \label{fig:model-circuit-diode-parallel}
 \end{figure}
@@ -554,7 +559,7 @@ Como é apresentado na Fig.~\ref{fig:original-circuit-parallel-diode-open}, \(I_
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{original-circuit-parallel-diode-open.png}
+    \includegraphics[width=0.5\linewidth]{../images/original-circuit-parallel-diode-open.png}
     \caption{Modelo de pequenos sinais com ruído e entrada em aberto}
     \label{fig:original-circuit-parallel-diode-open}
 \end{figure}
@@ -612,7 +617,7 @@ A Fig.~\ref{fig:parallel-results}. Neste caso os resultados ficaram muito próxi
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{parallel-results.png}
+    \includegraphics[width=0.5\linewidth]{../images/parallel-results.png}
     \caption{Resultados para o diodo em paralelo}
     \label{fig:parallel-results}
 \end{figure}
