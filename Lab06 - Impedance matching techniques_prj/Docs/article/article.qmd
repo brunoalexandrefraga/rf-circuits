@@ -25,9 +25,17 @@ format:
     include-in-header:
       - text: |
           \usepackage{steinmetz}
+          \usepackage[a4paper, margin=1in]{geometry}
+          \usepackage{graphicx} % Required for inserting images
+          \usepackage{circuitikz}
+          \usepackage{amsmath}
+          \usepackage{amssymb}
+          \usepackage{amsthm}
+
+          \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
     keep-tex: true
     journal:
-      name: Journal Name
+      name: RF Circuits
       formatting: preprint
       # model: 3p # Don't set a model with preprint
       cite-style: number
