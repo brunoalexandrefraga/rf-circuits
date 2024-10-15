@@ -45,6 +45,9 @@ date: last-modified
 bibliography: bibliography.bib
 format:
   elsevier-pdf:
+    include-in-header:
+      - text: |
+          \usepackage{steinmetz}
     keep-tex: true
     journal:
       name: Journal Name
