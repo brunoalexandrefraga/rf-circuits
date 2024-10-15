@@ -75,7 +75,7 @@ A seguir, é realizada a obtenção do fator de ruído \(F\). Para essa análise
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/two-port-original.png}
+    \includegraphics[width=0.5\linewidth]{../images/two-port-original.png}
     \caption{Quadripolo com ruído referido à entrada}
     \label{fig:two-port-original}
 \end{figure}
@@ -84,7 +84,7 @@ Para realizar o cálculo do fator de ruído, primeiro, a resistência da fonte, 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/two-port-circuit-open.png}
+    \includegraphics[width=0.5\linewidth]{../images/two-port-circuit-open.png}
     \caption{Quadripolo com ruído referido à entrada com representação do ruído da fonte}
     \label{fig:two-port-circuit-open}
 \end{figure}
@@ -170,7 +170,7 @@ Para o diodo em série, apresentado na Fig.~\ref{fig:diode-series-sub}, existem 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/diode-series-sub.png}
+    \includegraphics[width=0.5\linewidth]{../images/diode-series-sub.png}
     \caption{Subcircuito com diodo em série}
     \label{fig:diode-series-sub}
 \end{figure}
@@ -187,7 +187,7 @@ Sem contar com o ruído \textit{Shot}, o diodo do circuito apresentado na Fig.~\
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/small-signal-diode-series.png}
+    \includegraphics[width=0.5\linewidth]{../images/small-signal-diode-series.png}
     \caption{Modelo de pequeno sinais do diodo em série}
     \label{fig:small-signal-diode-series}
 \end{figure}
@@ -204,7 +204,7 @@ A Fig.~\ref{fig:diode-series-shot}, por sua vez, apresenta o modelo de pequeno s
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/diode-series-shot.png}
+    \includegraphics[width=0.5\linewidth]{../images/diode-series-shot.png}
     \caption{Diodo com ruído \textit{Shot}}
     \label{fig:diode-series-shot}
 \end{figure}
@@ -215,7 +215,7 @@ Para obter os parâmetros necessários para o cálculo do fator de ruído, $F$, 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{asdfsad211.png}
+    \includegraphics[width=0.5\linewidth]{../images/asdfsad211.png}
     \caption{Circuito diodo ruidoso alimentado e com impedância de Norton}
     \label{fig:asdfsad211}
 \end{figure}
@@ -333,7 +333,7 @@ Para utilizar o modelo do ruído referido à entrada, as fontes de ruído são r
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/input-referred-noise-diode-series.png}
+    \includegraphics[width=0.5\linewidth]{../images/input-referred-noise-diode-series.png}
     \caption{Circuito diodo em série com ruído referido à entrada}
     \label{fig:input-referred-noise-diode-series}
 \end{figure}
@@ -342,7 +342,7 @@ E a análise é realizada medindo-se a corrente com a entrada em curto e a corre
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/open-circuit-input-referred-noise-diode-series.png}
+    \includegraphics[width=0.5\linewidth]{../images/open-circuit-input-referred-noise-diode-series.png}
     \caption{Circuito diodo em série com ruído referido à entrada aberta}
     \label{fig:open-circuit-input-referred-noise-diode-series}
 \end{figure}
@@ -351,7 +351,7 @@ Dessa forma, é possível obter que \(i_n=i_{no1}\). Realizando essa mesma anál
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/original-open-circuit-input-referred-noise-diode-series.png}
+    \includegraphics[width=0.5\linewidth]{../images/original-open-circuit-input-referred-noise-diode-series.png}
     \caption{Circuito diodo em série com ruído e entrada aberta}
     \label{fig:original-open-circuit-input-referred-noise-diode-series}
 \end{figure}
@@ -367,7 +367,7 @@ Em seguida, é realizada a análise com a entrada do circuito aberta para os doi
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/ino2-diode-noise-referred-serie-curto.png}
+    \includegraphics[width=0.5\linewidth]{../images/ino2-diode-noise-referred-serie-curto.png}
     \caption{Circuito diodo em série com ruído e entrada em curto-circuito}
     \label{fig:ino2-diode-noise-referred-serie-curto}
 \end{figure}
@@ -413,7 +413,7 @@ Para simplificar a simulação, as correntes do diodo foram fixadas por fontes d
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/series-diode-circuit-simulation.png}
+    \includegraphics[width=0.5\linewidth]{../images/series-diode-circuit-simulation.png}
     \caption{Circuito da simulação do diodo em série}
     \label{fig:series-diode-circuit-simulation}
 \end{figure}
@@ -430,7 +430,7 @@ A Fig.~\ref{fig:series-result}. Neste caso os resultados ficaram bem próximos a
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/series-result.png}
+    \includegraphics[width=0.5\linewidth]{../images/series-result.png}
     \caption{Resultados obtidos para o diodo em série}
     \label{fig:series-result}
 \end{figure}
@@ -446,7 +446,7 @@ Analisa-se, agora, o caso do diodo em paralelo. A Fig.~\ref{fig:diode-parallel-o
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/diode-parallel-original.png}
+    \includegraphics[width=0.5\linewidth]{../images/diode-parallel-original.png}
     \caption{Diodo em paralelo}
     \label{fig:diode-parallel-original}
 \end{figure}
@@ -455,7 +455,7 @@ Substituindo o diodo pelo seu modelo de pequenos sinais, é possível ver na Fig
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/diode-parallel-small-signal-noisy.png}
+    \includegraphics[width=0.5\linewidth]{../images/diode-parallel-small-signal-noisy.png}
     \caption{Modelo de diodo em paralelo com ruído}
     \label{fig:diode-parallel-small-signal-noisy}
 \end{figure}
@@ -542,7 +542,7 @@ O circuito apresentado na Fig.~\ref{fig:parallel-diode-noise-referred-open} apre
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/parallel-diode-noise-referred-open.png}
+    \includegraphics[width=0.5\linewidth]{../images/parallel-diode-noise-referred-open.png}
     \caption{Modelo de pequeno sinais do diodo em paralelo com o ruído referido à entrada com entrada em aberto}
     \label{fig:parallel-diode-noise-referred-open}
 \end{figure}
@@ -560,7 +560,7 @@ Para o circuito com a entrada em curto-circuito da Fig.~\ref{fig:parallel-diode-
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/parallel-diode-noise-referred-curto.png}
+    \includegraphics[width=0.5\linewidth]{../images/parallel-diode-noise-referred-curto.png}
     \caption{Modelo de pequeno sinais do diodo em paralelo com o ruído referido à entrada com entrada em curto}
     \label{fig:parallel-diode-noise-referred-curto}
 \end{figure}
@@ -592,7 +592,7 @@ Para simplificar a simulação, as correntes do diodo foram fixadas por fontes d
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/parallel-diode-circuit-simulation.png}
+    \includegraphics[width=0.5\linewidth]{../images/parallel-diode-circuit-simulation.png}
     \caption{Circuito da simulação do diodo em paralelo}
     \label{fig:parallel-diode-circuit-simulation}
 \end{figure}
@@ -623,21 +623,21 @@ A Fig.~\ref{fig:parallel-results}. Neste caso os resultados ficaram muito próxi
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/two-diodes.png}
+    \includegraphics[width=0.5\linewidth]{../images/two-diodes.png}
     \caption{Circuito de dois diodos original}
     \label{fig:two-diodes}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/two-diodes-noisy-diode-model.png}
+    \includegraphics[width=0.5\linewidth]{../images/two-diodes-noisy-diode-model.png}
     \caption{Circuito de dois diodos com modelo de pequenos sinais}
     \label{fig:two-diodes-noisy-diode-model}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/complete-two-diode-circuit.png}
+    \includegraphics[width=0.75\linewidth]{../images/complete-two-diode-circuit.png}
     \caption{Circuito de dois diodos com modelo de pequenos sinais e alimentado}
     \label{fig:two-diodes-circuit-model-feed}
 \end{figure}
@@ -735,14 +735,14 @@ E essa é a relação para a obtenção da máxima figura de ruído, obtida, uti
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/input-open-originalcircuit-currentout.png}
+    \includegraphics[width=0.5\linewidth]{../images/input-open-originalcircuit-currentout.png}
     \caption{Circuito para cálculo da corrente de curto-circuito com entrada em aberto}
     \label{fig:input-open-originalcircuit-currentout}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/current-closed-output-original-two-diode.png}
+    \includegraphics[width=0.5\linewidth]{../images/current-closed-output-original-two-diode.png}
     \caption{Circuito para cálculo da corrente de curto-circuito com entrada em curto-circuito}
     \label{fig:current-closed-output-original-two-diode}
 \end{figure}
@@ -751,7 +751,7 @@ Para o circuito em aberto, a corrente de curto-circuito é dada por \(i_{n1}^2=i
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/referred-input-noise-two-diode-curto-input.png}
+    \includegraphics[width=0.5\linewidth]{../images/referred-input-noise-two-diode-curto-input.png}
     \caption{Ruído referido à entrada }
     \label{fig:referred-input-noise-two-diode-curto-input}
 \end{figure}
@@ -803,7 +803,7 @@ Para simplificar a simulação, as correntes dos diodos foram fixadas por fontes
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/two-diodes-simulation-circuit.png}
+    \includegraphics[width=0.5\linewidth]{../images/two-diodes-simulation-circuit.png}
     \caption{Circuito com dois diodos e correntes fixas}
     \label{fig:two-diodes-simulation-circuit}
 \end{figure}
@@ -857,7 +857,7 @@ A Fig.~\ref{fig:two-diodes-results} apresenta os resultados para o circuito de d
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/two-diodes-results.png}
+    \includegraphics[width=0.5\linewidth]{../images/two-diodes-results.png}
     \caption{Resultado dos dois diodos}
     \label{fig:two-diodes-results}
 \end{figure}
