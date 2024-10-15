@@ -1,0 +1,894 @@
+---
+title: Short Paper
+subtitle: A Short Subtitle
+author:
+  - name: Alice Anonymous
+    email: alice@example.com
+    affiliations: 
+        - id: some-tech
+          name: Some Institute of Technology
+          department: Department Name
+          address: Street Address
+          city: City
+          state: State
+          postal-code: Postal Code
+    attributes:
+        corresponding: true
+    note: This is the first author footnote.
+  - name: Bob Security
+    email: bob@example.com
+    affiliations:
+        - id: another-u
+          name: Another University
+          department: Department Name
+          address: Street Address
+          city: City
+          state: State
+          postal-code: Postal Code
+    note: |
+      Another author footnote, this is a very long footnote and it should be a really long footnote. But this footnote is not yet sufficiently long enough to make two lines of footnote text.
+  - name: Cat Memes
+    email: cat@example.com
+    affiliations:
+        - ref: another-u
+    note: Yet another author footnote.
+  - name: Derek Zoolander
+    email: derek@example.com
+    affilations:
+        - ref: some-tech
+abstract: |
+  This is the abstract. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum augue turpis, dictum non malesuada a, volutpat eget velit. Nam placerat turpis purus, eu tristique ex tincidunt et. Mauris sed augue eget turpis ultrices tincidunt. Sed et mi in leo porta egestas. Aliquam non laoreet velit. Nunc quis ex vitae eros aliquet auctor nec ac libero. Duis laoreet sapien eu mi luctus, in bibendum leo molestie. Sed hendrerit diam diam, ac dapibus nisl volutpat vitae. Aliquam bibendum varius libero, eu efficitur justo rutrum at. Sed at tempus elit.
+keywords: 
+  - keyword1
+  - keyword2
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    include-in-header:
+      - text: |
+            \usepackage{graphicx} % Required for inserting images
+            \usepackage{circuitikz}
+            \usepackage{amsmath}
+            \usepackage{amssymb}
+            \usepackage{amsthm}
+    keep-tex: true
+    journal:
+      name: Journal Name
+      formatting: preprint
+      # model: 3p # Don't set a model with preprint
+      cite-style: authoryear
+---
+
+```{=latex}
+\section{Revisão}
+
+A densidade espectral de potência (PSD) da potência de ruído disponível por um resistor de qualquer valor é dado por \cite{steer2019microwave}
+
+\begin{equation}\label{eq:PSD-ANP}
+    S_t(f)=kT
+\end{equation}
+
+em que $k$ é a constante de Boltzmann e $T$ é a temperatura em kelvin. As unidades SI de \(S_t\) são watts por hertz, mas é mais comumente expresso como dBm por hertz. A potência de ruído disponível em uma largura de banda \(B\) é (em unidades de watts), ou seja,
+
+\begin{equation}\label{eq:ANP}
+    P_t(f)=kTB
+\end{equation}
+
+A constante de Boltzmann, por sua vez, é dada por
+
+\[
+    k=1,381\cdot10^{-23}\;\text{J/K}
+\]
+
+
+
+
+
+
+
+
+
+A conversão de watt para dBm é realizada utilizando a seguinte expressão
+
+\begin{equation}\label{eq:W-dBm}
+    P_{dBm}=10\cdot\log_{10}\left(\frac{P_{W}}{1\;\text{mW}}\right)
+\end{equation}
+
+
+
+
+A equação para calcular a potência por meio da tensão rms é dada a seguir 
+
+\begin{equation}\label{eq:P-Vrms}
+    P=\frac{V_{\text{rms}}^2}{R}
+\end{equation}
+
+Como a tensão de pico \(V_p=V_{rms}\sqrt{2}\), a potência obtida por meio da tensão de pico é dada por
+
+\[
+    P=\frac{V_p^2}{2R}
+\]
+
+E, para a tensão de pico-a-pico, $V_{pp}$, calcula-se a potência pela equação
+
+\[
+    P=\frac{V_{pp}^2}{8R}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Pré-lab}
+
+Como é apresentado pela Eq.~\ref{eq:PSD-ANP}, a PSD da potência de ruído disponível para um resistor de $50\;\Omega$ à temperatura de $4,5\;\text{K}$ independe do valor de $R$ e é obtido por
+
+\[
+    \begin{split}
+        S_t(f)&=1,381\cdot10^{-23}\cdot4,5\implies\\
+        &=62,145\cdot10^{-24}=-192,1\;\text{dBm/Hz}
+    \end{split}
+\]
+
+Agora, se a intenção é obter o densidade espectral da tensão de ruído do resistor $R$ à temperatura $Y$, a equação a ser utilizada é \cite{steer2019microwave}
+
+\[
+    S_{vn}(f)=\frac{v_n^2}{B}=4kTR
+\]
+
+e a tensão média quadrática, $v_n^2$, é dada por
+
+\[
+    v_n^2=4kTRB
+\]
+
+Aplicando os valores, 
+
+\[
+    S_{vn}(f)=4\cdot1,381\cdot10^{-23}\cdot4,5\cdot50\approx-398,11\;\text{dbV}^2/\text{Hz}
+\]
+
+se for levada em consideração uma largura de banda $B=1\;\text{Hz}$, a tensão média quadrática é dada por
+
+\[
+    v_n^2\approx-400\;\text{dbV}^2
+\]
+
+
+
+
+
+Segundo \cite{goldsmith2020wireless}, a relação sinal-ruído (SNR) é definida como a potência do sinal transmitido após a propagação por um meio dividida pela potência do ruído adicionada por esse meio.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Uma potência de $-154\;\text{dBm}$ pode ser convertida para watts utilizando uma variação da Eq.~\ref{eq:W-dBm}
+
+\[
+    \begin{split}
+        P&=10\cdot\log_{10}\left(\frac{P_{W}}{1\;\text{mW}}\right)\implies\\
+        P_W&=1\cdot10^{-3}\cdot e^{P/10}
+    \end{split}
+\]
+
+Substituindo o valor de $P=-154\;\text{dBm}$, obtém-se
+
+\[
+    \begin{split}
+        P_W&=1\cdot10^{-3}\cdot e^{-154/10}\implies\\
+        &=205,1\cdot10^{-12}\;\text{W}=205,1\;\text{pW}
+    \end{split}
+\]
+
+Se um resistor de $50\;\Omega$ dissipar uma potência de $-165\;\text{dBm}=$, a tensão rms será calculada utilizando a equação \ref{eq:P-Vrms}, isto é
+
+\[
+    \begin{split}
+        68,26\;\cdot10^{-12}&=\frac{V_{\text{rms}}^2}{50}\implies\\
+        V_{\text{rms}}&=\sqrt{68,26\;\cdot10^{-12}\cdot50}\implies\\
+        &=58,42\;\mu\text{V}
+    \end{split}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Exercício resolvido}
+
+A Fig.~\ref{fig:solved-original-circuit} apresenta o circuito no qual se deseja determinar a figura de ruído \(\text{NF}\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/solved-original-circuit.png}
+    \caption{Circuito original}
+    \label{fig:solved-original-circuit}
+\end{figure}
+
+Para analisar o circuito, é realizada a conexão de uma fonte de sinal com tensão pico-a-pico $v_s$, em série com uma resistência $R_s$ ao circuito. O circuito resultante pode ser verificado na Fig.~\ref{fig:circuit-source-resolved}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/circuit-source-resolved.png}
+    \caption{Circuito com fonte de sinal}
+    \label{fig:circuit-source-resolved}
+\end{figure}
+
+Relembra-se, agora, que a definição de \(\text{NF}\) é
+
+\[
+    \text{NF}=\frac{\text{SNR}_i}{\text{SNR}_o}
+\]
+
+Seguindo a definição de \(\text{SNR}\), tem-se que
+
+\[
+    \text{NF}=\frac{S_i/N_i}{S_o/N_o}
+\]
+
+Em que $S_i$ é a potência do sinal de entrada, calculada por
+
+\[
+    S_i=\frac{v_s^2}{8R_s}
+\]
+
+$N_i$ é a potência de ruído disponível de entrada, dada por
+
+\[
+    N_i=kT_B
+\]
+
+$S_o$ é a potência do sinal de saída, obtida pela equação
+
+\[
+    S_o=\frac{V_{TH}^2}{8R_{TH}}
+\]
+
+Em que $V_{TH}$ é a tensão de Thévenin (pico-a-pico) e a resistência de Thévenin do ponto de vista da saída do circuito.
+
+Finalmente, $N_o$ é a potência do ruído de saída.
+
+\[
+    N_o=\frac{v_n^2}{4R_{TH}}
+\]
+
+em que $v_n$ é a tensão total do ruído do ponto de vista da saída do circuito.
+
+Dado que tanto o resistor do circuito analisado, $R$, quanto a resistência da fonte, $R_s$, são passíveis de ruído e que ambos estão a uma temperatura $T$, o circuito pode ser reapresentado conforme a Fig.~\ref{fig:opened-circuit-resolved}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/opened-circuit-resolved.png}
+    \caption{Circuito com fontes de ruído}
+    \label{fig:opened-circuit-resolved}
+\end{figure}
+
+em que $v_{ns}$ é a tensão do ruído devido à resistência da fonte e $v_{nr}$ é a tensão do ruído devido à resistência do circuito analisado.
+
+Para o cálculo da figura de ruído, $NF$, as potências de entrada de sinal e do ruído já estão bem definidas. Entretanto, as potências de saída do sinal e do ruído precisam ser obtidas.
+
+Para obter a potência de saída de sinal do circuito, deve-se anular as fontes de ruído e obter o equivalente Thévenin do circuito. O circuito a ser com as fontes de ruído anuladas pode ser visualizado na Fig.~\ref{fig:thevenin-circuit-resolved}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/thevenin-circuit-resolved.png}
+    \caption{Circuito sem fontes de ruído}
+    \label{fig:thevenin-circuit-resolved}
+\end{figure}
+
+Por meio dessa análise, é possível determinar que \(R_{TH}=R_s+R\) e que a \(V_{TH}=V_s\). A seguir, anulam-se as fontes de sinal e deseja-se determinar a tensão total do ruído, $v_n$.
+
+Duas fontes de tensão $v_{n1}$ e $v_{n2}$ quando conectadas, podem ser substituídas por uma única fonte $v_n$, em que
+
+\[
+    v_n^2=v_{n1}^2+v_{n2}^2+2Cv_{n1}v_{n2}
+\]
+
+onde $C$ é o coeficiente de correlação das duas fontes. Como as duas fontes tratam do ruído de um resistor, $C=0$, resultando em
+
+\[
+    v_n^2=v_{n1}^2+v_{n2}^2
+\]
+
+Fazendo $v_{n1}=v_{ns}$ e $v_{n2}=v_{nr}$, a equação da tensão total do ruído do circuito é dada por
+
+\[
+    v_n^2=v_{ns}^2+v_{nr}^2
+\]
+
+Com essas informações, já é possível obter a potência de sinal para a saída
+
+\[
+    S_o=\frac{V_s^2}{8(R_s+R)}
+\]
+
+enquanto que a potência de ruído para a saída é dada por
+
+\[
+    N_o=\frac{v_{ns}^2+v_{nr}^2}{4(R_s+R)}
+\]
+
+Dessa forma, SNR de entrada resulta em 
+
+\[
+    \text{SNR}_i=\frac{V_s^2}{8R_skT_0B}
+\]
+
+e o SNR de saída resulta
+
+\[
+\begin{split}
+    \text{SNR}_o&=\frac{V_{TH}^2}{8R_{TH}}\cdot\frac{4R_{TH}}{v_n^2}\implies\\
+    &=\frac{V_{s}^2}{2(v_{ns}^2+v_{nr}^2)}
+\end{split}
+\]
+
+Calcula-se, agora, o fator de ruído, $F$
+
+\[
+\begin{split}
+    F&=\frac{\text{SNR}_i}{\text{SNR}_o}\implies\\
+    &=\frac{V_s^2}{8R_skT_0B}\cdot\frac{2(v_{ns}^2+v_{nr}^2)}{V_{s}^2}\implies\\
+    &=\frac{v_{ns}^2+v_{nr}^2}{4R_skT_0B}
+\end{split}
+\]
+
+Substituindo a definição da densidade espectral da tensão de ruído de um resistor $R$ a uma temperatura $T$ para uma largura de banda $B$,
+
+\[
+    \begin{split}
+        F&=\frac{4kTBR_s+4kTBR}{4R_skT_0B}\implies\\
+        &=1+\frac{T}{T_0}\frac{R}{R_s}
+    \end{split}
+\]
+
+E, finalmente, define-se a figura de ruído como
+
+\begin{equation}\label{eq:resolved-result}
+    \text{NF}=10\log\left(1+\frac{T}{T_0}\frac{R}{R_s}\right)
+\end{equation}
+
+\section{Atividade 1}
+
+Considerando que o resistor \(R_1\) opera na temperatura \(T=16,85^\circ\text{C}=290\;\text{K}\), e o resistor \(R_2\) está em \(T_{0K}=-273,15^\circ\text{C}=0\;\text{K}\), pode-se considerar dois resistores ruidosos. Substituindo o modelo de resistor ruidoso, é possível obter o circuito equivalente apresentado na Fig.~\ref{fig:part1-circ-equivalent}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/part1-circ-equivalent.png}
+    \caption{Circuito com modelos de ruído}
+    \label{fig:part1-circ-equivalent}
+\end{figure}
+
+Como \(v_n^2=4kTBR\), tem-se que
+
+\[
+    v_{n2}^2=4kT_{0K}BR_1=0
+\]
+
+Assim, a fonte de tensão $v_{n2}$ pode ser anulada do circuito, resultando na representação apresentada em \ref{fig:equiv-circuit-part1}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/equiv-circuit-part1.png}
+    \caption{Circuito equivalente com fonte de ruído}
+    \label{fig:equiv-circuit-part1}
+\end{figure}
+
+Dessa forma, a tensão $V_o=v_{\text{out}}$ é dada por
+
+\[
+    V_o=v_{n1}\frac{R_2}{R_1+R_2}
+\]
+
+substituindo \(v_{n1}=4kTBR_1\),
+
+\begin{equation}\label{eq:vout-parti}
+    V_o=\sqrt{4kTBR_1}\cdot\frac{R_2}{R_1+R_2}
+\end{equation}
+
+Assumindo que o cálculo deva ser feito para uma largura de banda, $B=1\;\text{Hz}$, e substituindo os valores,
+
+\[
+    \begin{split}
+        V_o&=\sqrt{4\cdot1,381\cdot10^{-23}\cdot290\cdot1\cdot50}\cdot\frac{50}{50+50}\implies\\
+        &\approx447,34\;\text{pV}
+    \end{split}
+\]
+
+Por meio da simulação, é possível perceber que o valor foi basicamente o mesmo. O circuito e o resultado da simulação é apresentado na Fig.~\ref{fig:part1i-simulation}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/part1i-simulation.png}
+    \caption{Simulação de resistor ruidoso a \(290\;\text{K}\)}
+    \label{fig:part1i-simulation}
+\end{figure}
+
+A seguir, são realizados os mesmos cálculos, entretanto, para a temperatura \(T=19,3^\circ\text{C}=292,45\;\text{K}\), conforme é  apresentado na \ref{fig:temp-room}. A medição de temperatura foi obtida por meio de um aplicativo de celular.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{../images/temp-room.png}
+    \caption{Temperatura atual no ambiente}
+    \label{fig:temp-room}
+\end{figure}
+
+Com substituindo a temperatura na Eq.~\ref{eq:vout-parti}, obtém-se
+
+\[
+    \begin{split}
+        V_o&=\sqrt{4\cdot1,381\cdot10^{-23}\cdot292,45\cdot1\cdot50}\cdot\frac{50}{50+50}\implies\\
+        &\approx449,32\;\text{pV}
+    \end{split}
+\]
+
+Esse valor pode ser verificado também na simulação, apresentada na Fig.~\ref{fig:simul-partii}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/simul-partii.png}
+    \caption{Simulação de resistor ruidoso a \(19,3^\circ\text{C}\)}
+    \label{fig:simul-partii}
+\end{figure}
+
+Como já foi apresentado na a densidade espectral de potência (PSD) de ruído disponível é calculada por
+
+\[
+    S_t(f)=kT
+\]
+
+Sendo assim, a PSD de ruído disponível para $T=290\;\text{K}$ é \(S_t=4\cdot10^{-21}\;\text{J}\). Enquanto que para $T=292,45\;\text{K}$, a PSD de ruído disponível será \(S_t\approx-173,94\;\text{dBm/Hz}\).
+
+A potência de ruído disponível para a condição de temperatura ambiente (290 K), para uma banda de 10 MHz é dada por
+
+\[
+    \begin{split}
+        P_t(f)&=kTB\implies\\
+        &=-103,98\;\text{dBm}
+    \end{split}
+\]
+
+Para a temperatura $T=292,45\;\text{K}$, a potência de ruído disponível é
+
+\[
+    P_t(f)=-103,94\;\text{dBm}
+\]
+
+Comparando com os resultados obtidos experimentalmente, a Fig.~\ref{fig:results-ambient-temp} apresenta os resultados para o caso da temperatura ambiente e a Fig.~\ref{fig:results-19temp} apresenta para a temperatura de $19,3^\circ\text{C}$.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/results-ambient-temp.png}
+    \caption{Resultados para temperatura ambiente}
+    \label{fig:results-ambient-temp}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/results-19temp.png}
+    \caption{Resultados para temperatura ambiente igual a $19,3^\circ\text{C}$}
+    \label{fig:results-19temp}
+\end{figure}
+
+Para a temperatura de $T=4,5\;\text{K}=-268,65^\circ\text{C}$ e considerando $R_1=2\cdot R_2$, os resultados são apresentados para a simulação, na Fig.~\ref{fig:resultpart1}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{../images/resultpart1.png}
+    \caption{Resultados para $T=4,5\;\text{K}$ e $R_1=2\cdot R_2$}
+    \label{fig:resultpart1}
+\end{figure}
+
+A densidade espectral de potência de ruído disponível é dada por
+
+\[
+    \begin{split}
+        S_t&=kT\implies\\
+        &=1,38\cdot10^{-23}\cdot4,5\implies\\
+        &=-192,07\;\text{dBm/Hz}
+    \end{split}
+\]
+
+A potência de ruído disponível é
+
+\[
+    P_t=1,38\cdot10^{-23}\cdot4,5\cdot1=-192,07\;\text{dBm}
+\]
+
+Para analisar a tensão obtida em \(v_o\), visualiza-se o circuito como o que é apresentado na Fig.~\ref{fig:circt-equiv-2fontes}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/circt-equiv-2fontes.png}
+    \caption{Circuito com duas fontes de ruído}
+    \label{fig:circt-equiv-2fontes}
+\end{figure}
+
+A análise desse circuito será realizada utilizando o princípio da superposição, ou seja, somando as contribuições de cada fonte, individualmente, dessa forma,
+
+\[
+    v_o^2=v_{o1}^2+v_{o2}^2
+\]
+
+Inicialmente, é realizado um curto-circuito na fonte $v_{n2}$, conforme exibido na Fig.~\ref{fig:curt-font2}. Assim, obtém-se a seguinte equação
+
+\begin{equation}\label{eq:noise-source1}
+    v_{o1}=v_{n1}\frac{R_2}{R_1+R_2}
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/curt-font2.png}
+    \caption{Curto na fonte $v_{n2}$}
+    \label{fig:curt-font2}
+\end{figure}
+
+Semelhantemente para $v_{n2}$, o curto é realizado em $v_{n1}$, como é exibido na Fig.~\ref{fig:curto-font1}. Assim, obtém-se
+
+\begin{equation}\label{eq:noise-source2}
+    v_{o2}=v_{n2}\frac{R_1}{R_1+R_2}
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/curto-font1.png}
+    \caption{Curto na fonte $v_{n1}$}
+    \label{fig:curto-font1}
+\end{figure}
+
+Já é sabido que \(R_1=2R_2\). Assim, é realizada uma substituição nas equações \ref{eq:noise-source1} e \ref{eq:noise-source2}, resultando em
+
+\begin{equation}\label{eq:vo1-def}
+    \begin{split}
+        v_{o1}&=v_{n1}\frac{R_2}{2R_2+R_2}\implies\\
+        &=v_{n1}\frac{1}{3}
+    \end{split}
+\end{equation}
+
+e
+
+\begin{equation}\label{eq:vo2-def}
+    \begin{split}
+        v_{o2}&=v_{n2}\frac{2R_2}{2R_2+R_2}\implies\\
+        &=v_{n2}\frac{2}{3}
+    \end{split}
+\end{equation}
+
+respectivamente. Além disso, sabe-se das relações \(v_{n1}^2=4kTBR_1=4kTB2R_2=8kTBR_2\) e \(v_{n2}^2=4kTBR_2\). Substituindo nas equações Eq.~\ref{eq:vo1-def} e Eq.~\ref{eq:vo2-def}, obtém-se
+
+\[
+    \begin{split}
+        v_{o1}^2&=8kTBR_2\left(\frac{1}{3}\right)^2\implies\\
+        &=kTBR_2\frac{8}{9}
+    \end{split}
+\]
+
+e
+
+\[
+    \begin{split}
+        v_{o2}^2&=4kTBR_2\left(\frac{2}{3}\right)^2\implies\\
+        &=kTBR_2\frac{16}{9}
+    \end{split}
+\]
+
+respectivamente. As equações acima resultam em
+
+\[
+    \begin{split}
+        v_o^2&=kTBR_2\frac{8}{9}+kTBR_2\frac{16}{9}\implies\\
+        &=kTBR_2\frac{8}{3}\implies\\
+        v_o&=\sqrt{\frac{8}{3}kTBR_2}
+    \end{split}
+\]
+
+Aplicando os valores,
+
+\[
+    \begin{split}
+        v_o&=\sqrt{\frac{8}{3}1,38\cdot10^{-23}\cdot4,5\cdot1\cdot50}\implies\\
+        &=91,02\;\text{pV}
+    \end{split}
+\]
+
+
+\section{Atividade 2}
+
+Na Fig.~\ref{fig:power-input-norton2} é apresentado o modelo utilizado para realizar a medição da potência disponível de sinal na entrada e a corrente de curto-circuito de Norton.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/power-input-norton2.png}
+    \caption{Medição da corrente de curto-circuito e potência de entrada}
+    \label{fig:power-input-norton2}
+\end{figure}
+
+A Fig.~\ref{fig:norton-admittance2} exibe o modelo utilizado para o cálculo da admitância de Norton, bem como o cálculo de todos os valores até a obtenção da figura de ruído, \(NF\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/norton-admittance2.png}
+    \caption{Cálculo da admitância de Norton}
+    \label{fig:norton-admittance2}
+\end{figure}
+
+O modelo apresentado nesta seção será utilizado na atividade terceira parte dessa atividade.
+
+\section{Atividade 3}
+
+Para a primeira parte desta última seção, é possível utilizar os resultados obtidos no exercício resolvido, isto é, a Eq.~\ref{eq:resolved-result}. Aplicando os valores informados pelo problema, ou seja, \(R_s=50\;\Omega\) e \(T=30^\circ\;\text{C}=303,15\;\text{K}\), obtém-se
+
+\[
+    \begin{split}
+        F&=1+\frac{303,15}{290}\cdot\frac{50}{50}\implies\\
+        &=2,05
+    \end{split}
+\]
+
+Assim, a figura de ruído é dado por
+
+\[
+    \text{NF}=3,11\;\text{dB}
+\]
+
+Utilizando o modelo apresentado na seção anterior, os resultados são apresentados na seguinte Tab.~\ref{tab:results-part1-ex3}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+$S_i$ (mW) & $S_o$ (mW) & $G$ & $N_i$ (dBm) & $N_o$ (dBm) & $F$ & $NF$ (dB) \\ \hline
+2,5 & 1,25 & 0,5 & $-203,98$ & $-203,88$ & 2.05 & 3.11 \\ \hline
+\end{tabular}
+\caption{Resultados de simulação para $R=50\;\Omega$ série}
+\label{tab:results-part1-ex3}
+\end{table}
+
+A Fig.~\ref{fig:paralel-original} apresenta o circuito original.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/paralel-original.png}
+    \caption{Circuito original do resistor em paralelo}
+    \label{fig:paralel-original}
+\end{figure}
+
+Para resolver o problema do resistor \(R_p=100\;\Omega\) em paralelo, necessita-se adicionar uma fonte para alimentar e analisar o circuito. Para esse problema, faz muito sentido incluir uma fonte de corrente com um resistor \(R_s\) em paralelo. Na Fig.~\ref{fig:circuit-feed-paralel} pode-se verificar o circuito após a inclusão dessa fonte.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/circuit-feed-paralel.png}
+    \caption{Circuito alimentado por fonte e resistor em paralelo}
+    \label{fig:circuit-feed-paralel}
+\end{figure}
+
+Como já foi discutido anteriormente, os resistores são modelados como fontes de ruído e resistências, uma vez que estão a uma temperatura em que a passível de geração de ruído. A Fig.~\ref{fig:circuit-parallel-noisy-sources} apresenta a substituição dos resistores pelo par fonte de corrente com resistores sem ruído em paralelo.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{../images/circuit-parallel-noisy-sources.png}
+    \caption{Circuito com fontes de ruído}
+    \label{fig:circuit-parallel-noisy-sources}
+\end{figure}
+
+Por meio da Fig.~\ref{fig:circuit-parallel-noisy-sources}, é possível verificar que foi evidenciado a resistência de Norton, \(R_N\). Essa resistência é a mesma de Thévenin e o processo de obtenção é apresentado abaixo
+
+\[
+\begin{split}
+    R_N&=\frac{R_sR_p}{R_s+R_p}\implies\\
+    Y_N&=\frac{R_s+R_p}{R_sR_p}
+\end{split}
+\]
+
+Enquanto isso, a corrente de Norton, \(I_N\) é obtida anulando as fontes de ruído, ou seja, \(I_N=I_s\).
+
+E a fonte de corrente de ruído, $i_n$ é dada por
+
+\[
+    i_n^2=i_{ns}^2+i_{np}^2
+\]
+
+sendo $i_n^2$ a corrente média quadrática da corrente de ruído.
+
+Além disso, é necessário que seja conhecida o espectro de corrente de ruído de um resistor $R$ a uma temperatura $T$. Essa expressão deriva da seguinte expressão \cite{steer2019microwave}
+
+\[
+    \begin{split}
+        S_{vn}(f)&=R^2S_{in}(f)\implies\\
+        S_{vn}(f)&=\frac{v_n^2}{B}=4kTR=R^2S_{in}(f)\implies\\
+        v_n^2&=4kTBR=BR^2S_{in}(f)\implies\\
+        v_n^2&=4kTBR=BR^2\frac{i_n^2}{B}\implies\\
+        v_n^2&=4kTBR=R^2i_n^2
+    \end{split}
+\]
+
+Resultando em
+
+\begin{equation}\label{eq:noise-spectral-density-current}
+    i_n^2=\frac{4kTB}{R}
+\end{equation}
+
+Com esses parâmetros, é possível calcular as potências de entrada e saída, para o sinal e o ruído.
+
+Para a potência de sinal disponível na entrada, obtém-se a seguinte relação
+
+\[
+    S_i=\frac{I_s^2R_s}{8}
+\]
+
+Para a potência do ruído de entrada,
+
+\[
+    N_i=kT_0B
+\]
+
+Para a potência no sinal de saída,
+
+\[
+    S_o=\frac{I_N^2}{8Y_N}=\frac{I_s^2}{8}\frac{R_sR_p}{R_s+R_p}
+\]
+
+E, finalmente, a potência do ruído de saída,
+
+\begin{equation}\label{eq:power-noise-output}
+    N_o=\frac{I_{ns}^2+I_{np}^2}{4}\frac{R_sR_p}{R_s+R_p}
+\end{equation}
+
+Pela Eq.~\ref{eq:noise-spectral-density-current}, tem-se que a densidade espectral da corrente de ruído do resistor $R_s$ é
+
+\begin{equation}\label{eq:current-PSD-Rs}
+    I_{ns}^2=\frac{4kTB}{R_s}
+\end{equation}
+
+E, para o resistor $R_p$
+
+\begin{equation}\label{eq:current-PSD-Rp}
+    I_{np}^2=\frac{4kTB}{R_p}
+\end{equation}
+
+Substituindo \ref{eq:current-PSD-Rs} e \ref{eq:current-PSD-Rp} em \ref{eq:power-noise-output}, obtém-se
+
+\[
+    N_o=kTB
+\]
+
+O cálculo da SNR de entrada, $\text{SNR}_i$ é apresentado a seguir
+
+\[
+\begin{split}
+    \text{SNR}_i&=\frac{S_i}{N_i}=\frac{I_s^2R_s}{8}\frac{1}{kT_0B}
+\end{split}
+\]
+
+O SNR de saída, por sua vez, é apresentado abaixo
+
+\[
+    \text{SNR}_o=\frac{S_o}{N_o}=\frac{I_s^2}{8}\frac{R_sR_p}{R_s+R_p}\frac{1}{kTB}
+\]
+
+Assim, o fator de ruído, \(F\) é dado por
+
+\[
+    \begin{split}
+        F&=\frac{\text{SNR}_i}{\text{SNR}_o}\implies\\
+        &=\frac{I_s^2R_s}{8kT_0B}\frac{8(R_s+R_p)kTB}{I_s^2R_sR_p}\implies\\
+        &=\frac{(R_s+R_p)T}{T_0R_p}
+    \end{split}
+\]
+
+Assim, a figura de ruído é dada por
+
+\[
+    \text{NF}=10\log\left[\frac{(R_s+R_p)T}{T_0R_p}\right]
+\]
+
+Aplicando os valores impostos pelo problema, ou seja, \(R_p=100\;\Omega\) e \(T=^\circ\text{C}\),
+
+\[
+    \begin{split}
+        F&=\frac{(50+100)300,15}{100\cdot290}\implies\\
+        &=1,55
+    \end{split}
+\]
+
+Consequentemente, obtém-se uma figura de ruído de
+
+\[
+    \text{NF}=1,91\;\text{dB}
+\]
+
+Os resultados experimentais são apresentados na \ref{tab:results-part2-ex3}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+$S_i$ (mW) & $S_o$ (mW) & $G$ & $N_i$ (dBm) & $N_o$ (dBm) & $F$ & $NF$ (dB) \\ \hline
+2,5 & 1,25 & 0,667 & $-203,98$ & $-203,92$ & 1,52 & 1,81 \\ \hline
+\end{tabular}
+\caption{Resultados de simulação para $R=100\;\Omega$ paralelo}
+\label{tab:results-part2-ex3}
+\end{table}
+
+\section{Discussão}
+
+\subsection{Figura de ruído de um atenuador}
+
+O Ex. 4.3 de \cite{steer2019microwave} apresenta o entendimento de um atenuador de 20 dB em um sistema de 20 $\Omega$. O desenvolvimento apresentado pelo autor pode ser estendido para um atenuador de \(L\;\text{dB}\) para um sistema de uma impedância qualquer. As premissas para que o sistema tenha um comportamento semelhante ao que foi analisado, sem a perda de generalidade é que o sistema esteja operando de forma que as impedâncias estejam casadas, levando à máxima transferência de potência. Além disso, o autor assume que o atenuador tem mesma impedância de entrada e saída. Dessa forma, o ruído oriundo da fonte é um ruído térmico gerado pela impedância e, por hipótese, é o mesmo ruído entregue à carga. Assim, pode-se estabelecer que
+
+\[
+    N_o=N_i
+\]
+
+O sinal, por sua vez, é atenuado por um \(L\;\text{dB}\), então
+
+\[
+    S_i-S_o=L\;\text{dB}
+\]
+
+e a figura de ruído é dada por
+
+\[
+\begin{split}
+    \text{NF}&=S_i+N_o-N_i-S_o\implies\\
+    &=S_i+N_i-N_i-S_o=S_i-S_o\implies\\
+    &=L\;\text{dB}
+\end{split}
+\]
+
+\begin{flushright}
+    \qedsymbol
+\end{flushright}
+
+em que $N_i$, $N_o$, $S_i$ e $S_o$ estão expressos em dBm.
+
+Baseado nos resultados apresentados anteriormente, pode-se concluir que os elementos conectados na entrada dos dispositivos degradam o sinal de entrada, aumentando o o nível da figura de ruído e podendo degradar a sensibilidade do dispositivo. Dessa forma, os dispositivos na entrada do circuito devem ser selecionados de forma a diminuir a atenuação, diminuindo, assim, a figura de ruído. Além disso, especificamente falando em relação aos filtros, estes devem ser selecionados mantendo um compromisso entre uma filtragem adequada e uma atenuação máxima estabelecida na banda-passante, permitindo que o sistema opere adequadamente. Além disso, os dispositivos devem ser adequados à impedância do dispositivo, para que a máxima potência seja transferida à carga.
+
+\subsection{Aprendizado}
+
+Este não é a primeira vez que eu ouço falar sobre amplificadores de baixo ruído (LNAs) e esse termo sempre soou muito natural para mim. Entretanto, foi a partir deste estudo que eu pude perceber que, por mais que eu soubesse do que se trata um LNA, não detinha nem o conhecimento do seu fundamento, ou seja, a definição de ruído e formas de medi-lo. Finalizo esta atividade com o sentimento de dever cumprido, de ter conseguido entender o básico de como o ruído é modelado em um circuito.
+
+Para finalizar esta atividade, a minha maior dificuldade foi a gerência do tempo para finalizá-la. Tenho um péssimo hábito de tentar entender tudo ao máximo antes de "pôr a mão na massa". Porém, para que esta entrega fosse possível, por conta do pouco tempo que disponho, tive que deixar a leitura das bibliografias em segundo plano (já voltei a lê-las) e me concentrar totalmente na finalização da atividade. Em relação a isso, acredito que tive grande sucesso, culminando em uma nova abordagem de estudo. Digo isto, pois hoje me sinto muito mais confiante em ler a bibliografia sugerida, percebendo que estou entendendo os termos com mais facilidade, uma vez que tive que me esforçar bastante para conseguir fazê-la.
+
+A seguir, pretendo preencher as lacunas do meu conhecimento, pois durante o desenvolvimento deste trabalho, uma ou outra dúvida vieram a tona e certamente essas serão sanadas por meio do estudo do livro texto do curso.
+```
