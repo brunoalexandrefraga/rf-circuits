@@ -1,6 +1,6 @@
 ---
-title: Prática de Adaptação de Impedância 
-subtitle: Laboratório 06
+title: Adaptação de impedâncias 
+subtitle: Laboratório 05
 author:
   - name: Bruno Alexandre Fraga
     email: bruno.fraga@posgrad.ufsc.br

@@ -1,6 +1,6 @@
 ---
-title: Prática de Adaptação de Impedância 
-subtitle: Laboratório 06
+title: Revisão sobre simulação de circuitos 
+subtitle: Laboratório 01
 author:
   - name: Bruno Alexandre Fraga
     email: bruno.fraga@posgrad.ufsc.br
@@ -46,13 +46,13 @@ format:
 
 \section{Parte 1}
 
-A Fig.~\ref{fig:part1-original} apresenta o circuito original proposto pelo trabalho.
+A figura abaixo apresenta o circuito original proposto pelo trabalho.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.75\linewidth]{../images/part1-original.png}
     \caption{Circuito original}
-    \label{fig:part1-original}
+    \label{fig:part1-dc-circuit2}
 \end{figure}
 
 \subsection{Análise DC}

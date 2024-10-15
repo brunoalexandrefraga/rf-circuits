@@ -1,6 +1,6 @@
 ---
-title: Prática de Adaptação de Impedância 
-subtitle: Laboratório 06
+title: Circuitos com figura de ruído mínima 
+subtitle: Laboratório 03
 author:
   - name: Bruno Alexandre Fraga
     email: bruno.fraga@posgrad.ufsc.br
