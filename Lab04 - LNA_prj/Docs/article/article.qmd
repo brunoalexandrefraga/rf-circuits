@@ -47,7 +47,12 @@ format:
   elsevier-pdf:
     include-in-header:
       - text: |
-          \usepackage{steinmetz}
+            \usepackage[a4paper, margin=1in]{geometry}
+            \usepackage{graphicx} % Required for inserting ../images
+            \usepackage{circuitikz}
+            \usepackage{amsmath}
+            \usepackage{amssymb}
+            \usepackage{amsthm}
     keep-tex: true
     journal:
       name: Journal Name
@@ -110,7 +115,7 @@ Para o circuito em questão, é necessário modelar seus parâmetros para atende
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{resistive-original-two-port.png}
+    \includegraphics[width=0.5\linewidth]{../images/resistive-original-two-port.png}
     \caption{Circuito resistivo no formato de duas portas}
     \label{fig:resistive-original-two-port}
 \end{figure}
@@ -250,7 +255,7 @@ Percebe-se que o ganho não atende ao padrão estabelecido pelo problema. Esse p
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{images/circuiti-pronto.png}
+    \includegraphics[width=0.5\linewidth]{../images/circuiti-pronto.png}
     \caption{Circuito com os valores corretos}
     \label{fig:circuiti-pronto}
 \end{figure}
@@ -259,7 +264,7 @@ Os resultados podem ser visualizados na Fig.~\ref{fig:resultspart11111111}. Nota
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/resultspart11111111.png}
+    \includegraphics[width=0.75\linewidth]{../images/resultspart11111111.png}
     \caption{Resultados do circuito resistivo}
     \label{fig:resultspart11111111}
 \end{figure}
@@ -275,7 +280,7 @@ A Fig.~\ref{fig:generig-ampl} apresenta o circuito padrão para o projeto de um 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/generig-ampl.png}
+    \includegraphics[width=0.75\linewidth]{../images/generig-ampl.png}
     \caption{Amplificador genérico original}
     \label{fig:generig-ampl}
 \end{figure}
@@ -326,7 +331,7 @@ Como o valor de $I_E$ não é adequado ao projeto, ajusta-se o valor de $R_E$ pa
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/biased-circuit.png}
+    \includegraphics[width=0.75\linewidth]{../images/biased-circuit.png}
     \caption{Circuito devidamente polarizado}
     \label{fig:biased-circuit}
 \end{figure}
@@ -335,7 +340,7 @@ Ao simular esse circuito utilizando a simulação de parâmetros S, pode-se obte
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/results-ampl.png}
+    \includegraphics[width=0.75\linewidth]{../images/results-ampl.png}
     \caption{Resultados preliminares do amplificador}
     \label{fig:results-ampl}
 \end{figure}
@@ -346,7 +351,7 @@ Como já foi estudado anteriormente, a figura do ruído de um amplificador está
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/opt-load-source.png}
+    \includegraphics[width=0.75\linewidth]{../images/opt-load-source.png}
     \caption{Curva da figura de ruído pela impedância da fonte}
     \label{fig:opt-load-source}
 \end{figure}
@@ -355,7 +360,7 @@ Assim, temos um valor quase-ótimo para a resistência da fonte. Aplicando esse 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\linewidth]{images/result-final.png}
+    \includegraphics[width=0.9\linewidth]{../images/result-final.png}
     \caption{Resultados finais}
     \label{fig:result-final}
 \end{figure}
