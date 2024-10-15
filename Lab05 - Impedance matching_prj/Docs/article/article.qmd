@@ -56,4 +56,259 @@ format:
 
 ```{=latex}
 
+\section{Adaptação de impedância de entrada do amplificador}
+
+O amplificador utilizado nesta atividade é o que foi projetado no laboratório 04. O amplificador em questão fornece um ganho de 21 dB, com uma corrente de emissor de aproximadamente 5 mA. Conforme é apresentado pela Fig.~\ref{fig:complete-amplifier-dc-characterization}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/complete-amplifier-dc-characterization.png}
+    \caption{Amplificador completo com caracterização DC}
+    \label{fig:complete-amplifier-dc-characterization}
+\end{figure}
+
+
+\subsection{Máxima transferência de potência}
+
+Deseja-se adaptar a impedância de entrada do amplificador para uma fonte de potência de 50 $\Omega$, a fim de que essa fonte forneça a máxima potência para uma carga de 50 $\Omega$.
+
+Dessa forma, é necessário obter a impedância de entrada do amplificador. Essa caracterização é apresentada na Fig.~\ref{fig:z-in-amplifier-original}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/zinamp-original1.png}
+    \caption{Caracterização da impedância de entrada}
+    \label{fig:z-in-amplifier-original}
+\end{figure}
+
+Dessa forma, deseja-se adaptar a impedância \(Z_i=605-j302\;\Omega\) para 50 $\Omega$. E, para essa tarefa, utiliza-se a abordagem de rede L de adaptação \cite{steer2019microwavev3} (6.5.1).
+
+Para o primeiro passo, pode-se verificar que será necessário adaptar a impedância de 605 $\Omega$ para 50 $\Omega$ e anular a reatância capacitiva. Os cálculos para obter uma rede L que realize a adaptação da impedância para 50 $\Omega$ é descrito a seguir.
+
+\[
+\begin{split}
+    \left|Q_s\right|=\left|Q_s\right|&=\sqrt{\frac{R_L}{R_s}-1}\implies\\
+    &=\sqrt{\frac{605}{50}-1}\approx3,33\implies\\
+\end{split}
+\]
+
+Dessa forma, obtém-se \(X_s=Q_sR_s=50\cdot3,33\approx166,7\;\Omega\) e \(X_p=R_L/Q_p=\approx181,7\;\Omega\). Como deseja-se bloquear os sinais DC na entrada do amplificador, utiliza-se a topologia de capacitor em série e indutor em paralelo, e como \(R_L>R_s\), o capacitor deve vir antes do ramo do indutor. Assim, o valor para o capacitor em série é
+
+\[
+\begin{split}
+    X_s&=\frac{1}{j\omega C}\implies\\
+    C&=\frac{1}{\omega X_s}\implies\\
+    &=9,5456\;\text{pF}
+\end{split}
+\]
+
+E para o indutor em paralelo, obtém-se
+
+\[
+\begin{split}
+    X_s&=j\omega L\implies\\
+    L&=\frac{X_s}{\omega}\implies\\
+    &=289,225\;\text{nH}
+\end{split}
+\]
+
+Em seguida, deseja-se eliminar a reatância da impedância original. Para eliminar essa reatância, será incluído um indutor em paralelo com o circuito, a fim de ressonar com a capacitância já existente na impedância de entrada. Para isso, a impedância de entrada do amplificador será modelada como um capacitor em paralelo com um resistor. Para isso, utiliza-se as equações de conversão de impedância em série para paralelo. Sabe-se que impedância em série é igual a \(R_s=605-j302\;\Omega\) e a impedância em paralelo equivalente, $Z_p$, é dada por
+
+\[
+    R_p=\frac{R_s^2+X_s^2}{R_s}\approx757,128\;\Omega
+\]
+
+e 
+
+\[
+    X_p=\frac{R_s^2+X_s^2}{X_s}\approx1,52\;k\Omega
+\]
+
+Assim, o capacitor em paralelo deve ter um valor de 
+
+\[
+    C=\frac{1}{\omega X_p}=1,05\;\text{pF}
+\]
+
+A impedância equivalente da entrada do amplificador foi mantida e pode ser visualizada na Fig.~\ref{fig:imp_equiv} e agora é possível modelar um indutor que eliminará a parte reativa da impedância de entrada do amplificador.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/imp_equiv.png}
+    \caption{Impedância equivalente de entrada do amplificador}
+    \label{fig:imp_equiv}
+\end{figure}
+
+para eliminar essa reatância, é necessário incluir um indutor que tenha a mesma impedância, ou seja
+
+\[
+\begin{split}
+    \omega L&=\frac{1}{\omega C}\implies\\
+    L&=\frac{1}{\omega^2C}=2,41\;\mu H
+\end{split}
+\]
+
+Utilizando os valores obtidos, como pode ser visualizado na Fig.~\ref{fig:not-matched-zin}, percebe-se que a impedância da fonte não foi obtida com sucesso. Porém, estão bem mais próximos do que estava. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/not-matched-zin.png}
+    \caption{Tentativa de adaptação de impedância}
+    \label{fig:not-matched-zin}
+\end{figure}
+
+Dessa forma, são realizados ajustes finos nos componentes para que a impedância desejada seja obtida com sucesso. Esse processo é ilustrado pela Fig.~\ref{fig:tune-impedances}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/tune-impedances.png}
+    \caption{Ajuste fino nas impedâncias}
+    \label{fig:tune-impedances}
+\end{figure}
+
+Após alguns ajustes, pode-se obter a impedância de entrada apresentada na Fig.~\ref{fig:matched-zin}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/matched-zin.png}
+    \caption{Impedância de entrada adaptada}
+    \label{fig:matched-zin}
+\end{figure}
+
+Para simplificar o circuito, pode-se calcular a indutância equivalente entre os dois indutores. Isso é feito da seguinte forma
+
+\[
+    L_1\parallelsum L_2=282,861\;\text{nH}
+\]
+
+O circuito equivalente pode ser visualizado na Fig.~\ref{fig:circuit-matched-ampl}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/circuit-matched-ampl.png}
+    \caption{Amplificador com a impedância corretamente adaptada}
+    \label{fig:circuit-matched-ampl}
+\end{figure}
+
+O resultado de potência obtida da fonte é apresentado na Fig.~\ref{fig:max-result}.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/max-result.png}
+    \caption{Resultados da máxima transferência de potência}
+    \label{fig:max-result}
+\end{figure}
+
+A largura de banda de operação do amplificador é obtida com base nos parâmetros de máxima transferência de potência e reflexão. Segundo os parâmetros de reflexão, como pode ser visualizado na Fig.~\ref{fig:max-refl}, com base na restrição de -10 dB para reflexão, a largura de banda do amplificador é de 92,8 MHz a 109 MHz, ou seja 16,2 MHz.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/max-refl.png}
+    \caption{Reflexão no circuito de máxima transferência de potência}
+    \label{fig:max-refl}
+\end{figure}
+
+Com base no critério da potência transferida da carga e uma tolerância de -3 dB, a largura de banda do amplificador pode ser visualizada na Fig.~\ref{fig:bandwidth-gain} e é de 49,3 MHz a 152 MHz, ou seja, 102,7 MHz. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/bandwidth-gain.png}
+    \caption{Potência transferida da fonte}
+    \label{fig:bandwidth-gain}
+\end{figure}
+
+Entretanto, busca-se uma banda que todas as restrições sejam atendidas. Dessa forma, a banda de operação propriamente dita do amplificador é de 92,8 MHz a 109 MHz, ou seja 16,2 MHz.
+
+\subsection{Ruído mínimo}
+
+Já se sabe que a impedância da fonte é a principal responsável pela minimização de ruído no circuito. Assim, deseja-se adaptar a impedância da fonte para que o amplificador "seja submetido" à uma fonte com impedância ótima. Para obter o valor da impedância ótima, a simulação de parâmetros de espalhamento do QucsStudio fornece uma propriedade chamada \(S_\text{opt}\) que se trata do coeficiente de reflexão da fonte ótimo normalizado para a impedância do porto de entrada e por meio da função \textit{rtoz}, converte o coeficiente de reflexão com impedância de referência para uma determinada impedância, por padrão, 50 $\Omega$. Fazendo utilização das ferramentas fornecidas, chega-se à uma figura de ruído mínima de 0.792 dB a uma impedância ótima da fonte de \(85,6+j1,09\;\Omega\). Dessa forma, deseja-se adaptar a impedância da fonte \(Z_s=50\;\Omega\) para \(85,6+j1,09\;\Omega\), conforme pode ser visualizado na Fig.~\ref{fig:sopt}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/sopt.png}
+    \caption{Impedância ótima para minimização da figura de ruído}
+    \label{fig:sopt}
+\end{figure}
+
+A adaptação da parte real da impedância de 50 $\Omega$ para 85,6 $\Omega$ é apresentada a seguir
+
+\[
+\begin{split}
+    \left|Q_s\right|=\left|Q_p\right|&=\sqrt{\frac{R_L}{R_s}-1}\implies\\
+    &=\sqrt{\frac{85,6}{50}-1}\approx0,84\implies\\
+\end{split}
+\]
+
+Com isso, obtém-se \(X_s=42,168\;\Omega\) e \(X_p=101,455\;\Omega\). Como deseja-se manter a topologia, o capacitor em série deve ser de 37,74 pF e o indutor em paralelo deve ser de 161,5 nH. O circuito e o resultado obtido podem ser visualizados na Fig.~\ref{fig:result-part1}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/result-part1.png}
+    \caption{Resultado do LNA}
+    \label{fig:result-part1}
+\end{figure}
+
+Como pode ser verificado a figura mínima de ruído foi corretamente atingida e a impedância ótima que é apresentada pelo QucsStudio é muito próxima ao valor real da impedância da fonte.
+
+
+\section{Adaptação de impedância de entrada do amplificador e atenuador}
+
+\subsection{Máxima transferência de potência}
+
+Para iniciar o próximo passo, o atenuador projetado no laboratório anterior é acoplado ao circuito do amplificador mais a rede L, como pode ser verificado na Fig.~\ref{fig:atten-circuit}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/atten-circuit.png}
+    \caption{Circuito com atenuador para máxima transferência de potência}
+    \label{fig:atten-circuit}
+\end{figure}
+
+Com o circuito atenuador, pode-se verificar na Fig.~\ref{fig:result-max-attL} que a condição de máxima transferência de potência foi mantida ao longo de uma banda bem abrangente (simulação de 1 MHz a 1 GHz). Aparentemente, esse comportamento é motivado pela estabilidade da impedância de entrada causada pelo atenuador. Como essa impedância não varia quase nada ao longo da banda, a condição de máxima transferência é mantida.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/result-max-attL.png}
+    \caption{Resultado da potência de entrada do amplificador com atenuador}
+    \label{fig:result-max-attL}
+\end{figure}
+
+Em relação ao coeficiente de reflexão na entrada, pode-se verificar na Fig.~\ref{fig:coef-ref-att} que é sempre abaixo de -20 dB. Atendendo ao critério estabelecido ao logo de uma banda bem larga (de 1 MHz a 1 GHz).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/coef-ref-att.png}
+    \caption{Coeficiente de reflexão com atenuador}
+    \label{fig:coef-ref-att}
+\end{figure}
+
+\subsection{Mínima figura de ruído}
+
+Um problema é encontrado uma vez que analisa-se a figura de ruído do circuito com o atenuador acoplado. O circuito atenuador trata-se de uma fonte de ruído, uma vez que utiliza elementos resistivos em sua composição.
+
+Prevendo, intuitivamente, uma grande degradação na figura de ruído do circuito em questão, a Fig.~\ref{fig:nf-min-att} apresenta os valores obtidos para o acoplamento do atenuador.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/nf-min-att.png}
+    \caption{Figura de ruído com atenuador}
+    \label{fig:nf-min-att}
+\end{figure}
+
+Também é possível verificar que a figura de ruído mínima (gigante) já foi obtida corretamente e a resistência ótima de fonte para fornecer essa mínima figura de ruído é a mesma que está sendo utilizada pela fonte, o que indica que o circuito está corretamente adaptado.
+
+\section{Discussão}
+
+Aparentemente, grande parte de conhecimento necessário para o projeto de um amplificador de baixo ruído já foi adquirido. Estudamos o que é ruído e como caracterizá-lo (manualmente e pelo QucsStudio), também foram apresentados os parâmetros de espalhamento, que facilitam a caracterização do circuito (especialmente via simulação). Também foi visto que a variável mais importante (que pode ser controlada) para a minimização da figura de ruído em um circuito é a impedância da fonte do sinal. Assim, variando a impedância da fonte, podemos obter um circuito com baixo nível de ruído. O problema encontra-se justamente aí, na maioria das vezes não faz sentido alterar a impedância da fonte, necessitando de uma técnica que faça a adaptação da impedância da fonte atual (normalmente 50 $\Omega$) para a impedância ótima. Uma dessas técnicas é a adaptação de impedância por rede L. Essa técnica de adaptação permite que a parte real da impedância seja facilmente adaptada à parte real de outra impedância e, para a adaptação da parte imaginária (reatância) utiliza-se a técnica de ressonância ou absorção pela rede adaptativa. Para a adaptação da reatância, foi utilizada a técnica de ressonância, deixando de lado a absorção por parte da rede de impedância.
+
+Em relação à segunda parte da atividade, tenho a impressão de que o atenuador pode ser útil para ampliar a banda de operação de um circuito, uma vez que tanto a maximização da fonte quanto o valor mínimo dos coeficientes de reflexão foram mantidos para uma banda bem mais larga do que sem o atenuador. Esse benefício foi obtido sob a gigantesca penalidade de degradação da figura de ruído do sistema. Ainda restam várias dúvidas em relação à utilização do atenuador.
+
+Pode ser verificado ao longo do trabalho que diversas vezes foram utilizadas as ferramentas de ajuste fino do QucsStudio para que a adaptação de impedância fosse corretamente obtida. Foi comentado em sala de aula que isso pode ser motivado pela ordem de grandeza da impedância do amplificador, que está muito acima do que é esperado para um sistema RF. Tanto essa adequação da impedância de entrada do amplificador quanto a adequação do ganho (que deve ser de 13 dB) não foi realizada e fica pendente para essa entrega e será finalizada para as próximas atividades.
+
+Além disso, algo que está sendo muito bem-vindo no meu repertório de conhecimento é a criação de \textit{testbenches} adequados e visualmente agradáveis para medição dos parâmetros que já foram estudados e para apresentação. Entretanto, este último ponto demanda um pouco mais de tempo e, talvez seja finalizada até o fim deste curso.
+
+Para finalizar, identifico que ficaram pendentes a demonstração de algumas equações que apareceram ao longo deste trabalho. Tomei a liberdade de utilizar fórmulas para ser um pouco mais eficiente. Apesar de não ter apresentado as demonstrações aqui, tentei estudá-las junto à bibliografia e, pretendo melhorar isso nos próximos relatórios, tendo um pouco mais de tempo par fazê-los.
+
+
 ```

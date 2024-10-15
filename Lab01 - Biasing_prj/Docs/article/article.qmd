@@ -54,5 +54,353 @@ format:
 ---
 
 ```{=latex}
+\section{Introdução}
+
+\section{Parte 1}
+
+A Fig.~\ref{fig:part1-original} apresenta o circuito original proposto pelo trabalho.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/part1-original.png}
+    \caption{Circuito original}
+    \label{fig:part1-original}
+\end{figure}
+
+\subsection{Análise DC}
+
+Abaixo, na Fig.~\ref{fig:part1-dc-circuit} foram anulados a fonte de tensão alternada, o capacitor e o indutor. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/part1-dc-circuit.png}
+    \caption{Circuito com elementos AC anulados}
+    \label{fig:part1-dc-circuit}
+\end{figure}
+
+A Fig.~\ref{fig:part1-simplified-circuit-dc} apresenta o circuito simplificado.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/part1-simplified-circuit-dc.png}
+    \caption{Circuito simplificado para análise DC}
+    \label{fig:part1-simplified-circuit-dc}
+\end{figure}
+
+A partir do circuito apresentado na Fig.~\ref{fig:part1-simplified-circuit-dc}, é possível analisar a corrente de operação do diodo \(D_1\). A corrente de operação é dada pela seguinte equação
+
+\[
+    \begin{split}
+        I&=I_Se^{\frac{v}{V_T}}\implies\\
+        \ln\left(\frac{I}{I_S}\right)&=\frac{v}{V_T}\implies\\
+        v&=V_T\ln\left(\frac{I}{I_S}\right)
+    \end{split}
+\]
+
+em que a \(I_S\) é a corrente de saturação, dada pelo problema como \(I_S=222\;\text{pA}\), \(V_T\approx25,3\;\text{mV}\) é a tensão térmica e \(v\) é a tensão aplicada sobre o diodo.
+
+Aplicando os valores, obtém-se
+
+\[
+    \begin{split}
+        v&=25,3\cdot10^{-3}\ln\left(\frac{1\cdot10^{-3}}{222\cdot10^{-12}}\right)\implies\\
+        &=387,6\;\text{mV}
+    \end{split}
+\]
+
+
+\subsection{Simulação DC}
+
+A Fig.~\ref{fig:part1-dc-simulation} apresenta os resultados obtidos por meio da simulação DC do circuito.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/image.png}
+    \caption{Simulação DC do circuito}
+    \label{fig:part1-dc-simulation}
+\end{figure}
+
+\subsection{Análise de pequenos sinais}
+
+Para pequenos sinais, o diodo opera como uma resistência linear. Dessa forma, é possível substituir o diodo por um resistor \(r_d\). A Fig.~\ref{fig:small-signal-model} apresenta o circuito, sendo que o diodo foi substituído por um resistor \(r_d\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/small-signal-model.png}
+    \caption{Circuito com o diodo no modelo de pequenos sinais}
+    \label{fig:small-signal-model}
+\end{figure}
+
+Esse resistor \(r_d\) pode ser modelado como se segue. Supõe-se que um sinal \(v_D(t)=V_D+v_d(t)\) seja aplicado a um diodo, sendo \(V_D\) a parcela DC do sinal \(v_D\) e \(v_d\) o sinal propriamente dito. Para obter a corrente \(i_D(t)\), utiliza-se a relação a seguir
+
+\[
+    \begin{split}
+        i_D(t)&=I_Se^{\frac{v_D}{V_T}}=I_Se^{\frac{V_D+v_d}{V_T}}\implies\\
+        i_D(t)&=I_Se^{\frac{v_D}{V_T}}e^{\frac{v_d}{V_T}}\implies\\
+        i_D(t)&=I_De^{\frac{v_d}{V_T}}
+    \end{split}
+\]
+
+Se \(\frac{v_d}{V_T})\gg1\), ou seja, se \(v_d\gg V_T\), então é possível utilizar a seguinte expressão
+
+\[
+    \begin{split}
+        i_D(t)&\approx I_D\left(1+\frac{v_d}{V_T}\right)\implies\\
+        i_D(t)&=I_D+\frac{I_D}{V_T}v_d
+    \end{split}
+\]
+
+Assim, a resistência do modelo de pequenos sinais é definida como \(r_d=\frac{V_T}{I_D}\).
+
+
+\subsection{Simulação AC}
+
+Para a simulação do modelo obtido, foi realizada uma varredura nas correntes que são aplicadas ao diodo, de \(1\;\text{mA}\) a \(10\;\text{mA}\), com uma frequência fixa de \(1\;\text{GHz}\). Os resultados obtidos, bem como todo o modelo utilizado para a simulação pode ser visualizado na Fig.~\ref{fig:complete-ac-simulation}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/complete-ac-simulation.png}
+    \caption{Simulação AC completa}
+    \label{fig:complete-ac-simulation}
+\end{figure}
+
+
+\section{Parte 2}
+
+\subsection{Análise DC}
+
+A Fig.~\ref{fig:part2-original} apresenta o circuito original.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Images/part2-original.png}
+    \caption{Circuito original do amplificador}
+    \label{fig:part2-original}
+\end{figure}
+
+A primeira análise a ser realizada é a análise em corrente contínua (análise DC). Dessa forma, a fonte de corrente alternada \(I_1\) é anulada e os capacitores \(C_i\) e \(C_B\) são substituídos por circuitos abertos. Essas substituições podem ser visualizadas no circuito da Fig.~\ref{fig:dc-analysis-circuit}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Images/dc-analysis-circuit.png}
+    \caption{Circuito com elementos AC anulados}
+    \label{fig:dc-analysis-circuit}
+\end{figure}
+
+Após essa anulação dos componentes, o circuito pode ser simplificado como é apresentado na Fig.~\ref{fig:part2-dc-simplified-circuit}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Images/part2-dc-simplified-circuit.png}
+    \caption{Circuito simplificado para análise DC}
+    \label{fig:part2-dc-simplified-circuit}
+\end{figure}
+
+A Fig.~\ref{fig:part2-magnitudes-dc-simplified-circuit} evidencia as grandezas que se desejam obter do circuito.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Images/part2-magnitudes-dc-simplified-circuit.png}
+    \caption{Circuito simplificado para análise DC com grandezas evidentes}
+    \label{fig:part2-magnitudes-dc-simplified-circuit}
+\end{figure}
+
+O cálculo de tais grandezas é iniciado calculando o analisando a malha a seguir
+
+\[
+    \begin{split}
+        R_EI_E+V_{EC}+R_CI_L=V_1\implies\\
+        R_EI_E+V_{EB}+I_BR_f+R_CI_L=V_1
+    \end{split}
+\]
+
+Em relação às correntes do circuito, pode-se perceber que
+
+\[
+    I_E=I_B+I_C
+\]
+
+e
+
+\[
+    I_L=I_B+I_C
+\]
+
+Dessa forma, pode-se estabelecer que \(I_E=I_L=(\beta+1)I_B\). Substituindo essas relações resulta em
+
+\[
+    (\beta+1)I_BR_E+V_{EB}+I_BR_f+(\beta+1)I_BR_C=V_1
+\]
+
+Rearranjando os termos
+
+\[
+    I_B=\frac{V_1-V_{EB}}{(\beta+1)R_E+R_f+(\beta+1)R_C}
+\]
+
+Usualmente, o valor de \(V_{EB}\approx0,7\;\text{V}\). Além disso, substituindo os valores obtém-se
+
+\[
+    \begin{split}
+        I_B&=\frac{5-0,7}{(500+1)12,5+21\cdot10^{3}+(500+1)50}\implies\\
+        &=82,2\;\mu\text{A}
+    \end{split}
+\]
+
+Consequentemente a correntes de coletor é calculada por
+
+\[
+    \begin{split}
+        I_C&=\beta I_B\implies\\
+        &=500\cdot82,2\cdot10^{-6}\implies\\
+        &=41,1\;\text{mA}
+    \end{split}
+\]
+
+De forma semelhante, a corrente de emissor é dada por
+
+\[
+    \begin{split}
+        I_E&=(\beta+1)I_B\implies\\
+        &=(500+1)\cdot82,2\cdot10^{-6}\implies\\
+        &=41,2\;\text{mA}
+    \end{split}
+\]
+
+Assim, foram calculadas todas as correntes da análise DC do circuito. Agora, calculam-se as tensões. O cálculo das tensões inicia-se pela tensão de emissor
+
+\[
+    \begin{split}
+        I_E&=\frac{V_1-V_E}{R_E}\implies\\
+        V_E&=V_1-I_ER_E\implies\\
+        &=5-41,2\cdot10^{-3}\cdot12,5\implies\\
+        &=4.49\;\text{V}
+    \end{split}
+\]
+
+A tensão de base é dada por
+
+\[
+    \begin{split}
+        V_{EB}&=V_E-V_B\implies\\
+        V_B&=V_E-V_{EB}\implies\\
+        V_B&=4,49-0,7=3,8\;\text{V}
+    \end{split}
+\]
+
+Assim, a tensão de coletor é dada por
+
+\[
+    \begin{split}
+        I_B&=\frac{V_B-V_C}{R_f}\implies\\
+        V_C&=V_B-I_BR_f\implies\\
+        &=3,8-82,2\cdot10^{-6}\cdot21\cdot10^{3}\implies\\
+        &=2,1\;\text{V}
+    \end{split}
+\]
+
+Uma forma de verificação dos valores calculados pode ser realizada calculando-se a corrente sobre a carga (e consequentemente a corrente no emissor) por meio dos valores obtidos nos cálculos anteriores
+
+\[
+    \begin{split}
+        I_E&=\frac{V_C-0}{R_C}\implies\\
+        &=\frac{V_C}{R_C}\implies\\
+        &=\frac{2,1}{50}=41,2\;\text{mA}
+    \end{split}
+\]
+
+Essa verificação garante que os valores estão coesos. 
+
+
+\subsection{Simulação DC}
+
+Com todos esses valores em mãos, é possível simular o circuito e realizar a simulação DC.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/part2-simul-DC.png}
+    \caption{Simulação DC do circuito amplificador}
+    \label{fig:part2-simul-DC}
+\end{figure}
+
+Para fins de comparação, a Tab.~\ref{tab:calc_sim} apresenta uma comparação entre os valores calculados e simulados, com base na Fig.~\ref{fig:part2-simul-DC}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Descrição} & \textbf{Cálculo} & \textbf{Simulação} \\ \hline
+        $I_B$ & 82,2$\mu$A & 79$\mu$A \\ \hline
+        $I_C$ & 41,1mA & 39,5mA \\ \hline
+        $I_E$ & 41,2mA & 39,6mA \\ \hline
+        $V_B$ & 3,8V & 3,64V \\ \hline
+        $V_C$ & 2,1V & 1,98V \\ \hline
+        $V_E$ & 4,49V & 4,51V \\ \hline
+        $V_{EB}$ & 0,7V & 0,685V \\ \hline
+    \end{tabular}
+    \caption{Comparação entre valores calculados e simulados}
+    \label{tab:calc_sim}
+\end{table}
+
+Todos os cálculos apresentados nesta subseção foram realizados com base no Capítulo 6 \textit{Bipolar Junction Transistors (BJTs)}, especificamente as subseções 6.1.2 \textit{Operation of the npn Transistor in the Active Mode}, 6.1.5 \textit{The pnp Transistor} da Seção 6.1 \textit{Device Structure and Physical Operation}, a Subseção 6.2.1 \textit{Circuit Symbols and Conventions} da Seção 6.2 \textit{Current–Voltage Characteristics} e a Seção 6.3 \textit{BJT Circuits at DC} de \cite{sedra2014microelectronic}.
+
+\subsection{Análise de pequenos sinais}
+
+A Fig.~\ref{fig:small-signal-model-ac} apresenta o circuito completo, com a substituição do transistor por seu modelo híbrido-\(\pi\), sem a resistência \(r_o\), dessa forma, negligenciando o efeito \textit{Early} ou modulação da largura da base.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/small-signal-model-ac.png}
+    \caption{Substituição do transistor pelo modelo de híbrido-\(\pi\)}
+    \label{fig:small-signal-model-ac}
+\end{figure}
+
+Considerando que o amplificador opere com uma frequência da ordem de GHz, o capacitor fornece uma impedância na ordem dos \(\mu\Omega\), dessa forma, podem ser tratados como curto-circuitos e as fontes de tensão e corrente contínuas são negligenciadas para a análise AC. Assim, a representação do circuito com essas simplificações é apresentado na Fig.~\ref{fig:ac-simplified-circuit}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/ac-simplified-circuit2.png}
+    \caption{Circuito AC simplificado}
+    \label{fig:ac-simplified-circuit}
+\end{figure}
+
+Para realizar a análise desse circuito, é importante relembrar que a admitância \(g_m\) segue a relação
+
+\[
+    \begin{split}
+        g_m&=\frac{I_C}{V_T}\implies\\
+        &=\frac{41,1\cdot10^{-3}}{25,3\cdot10^{-3}}\implies\\
+        &=1,64\;\text{S}
+    \end{split}
+\]
+
+E a resistência \(r_\pi\)
+
+Neste momento, elabora-se uma expressão para obtenção da tensão de entrada do amplificador
+
+\[
+    i_E=i_C+i_B\implies\\
+    I_1+\frac{0-v_E}{R_4}+\frac{0-v_E}{R_E}=g_mv_{EB}+\frac{v_{EB}}{r_\pi}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Todos os cálculos apresentados nesta subseção foram realizados com base no Capítulo 7 \textit{Transistor Amplifiers}, especificamente a parte \textit{The BJC Case} da Subseção 7.2.2 \textit{The BJT Case} da Seção 7.2 \textit{Small-Signal Operation and Models} e a Subseção 7.3.2 \textit{Characterizing Amplifiers} da Seção 7.3 \textit{Basic Configurations} de \cite{sedra2014microelectronic}.
 
 ```

@@ -55,4 +55,826 @@ format:
 
 ```{=latex}
 
+\section{Introdução}
+
+O fator de ruído de um circuito de duas portas pode ser calculada da seguinte maneira
+
+\[
+    F=\frac{\text{SNR}_i}{\text{SNR}_o}=\frac{S_i/N_i}{S_o/N_o}
+\]
+
+Em que $S$ é a potência do sinal, $N$, a potência do ruído e os subscritos $i$ e $o$ são \textit{in} e \textit{out}, respectivamente.
+
+A potência disponível $P$ é a máxima potência extraída de uma fonte de impedância $Z_g$ e dissipada por uma carga, $Z_L$. Matematicamente, é expresso por
+
+\[
+    P=P_L|_{Z_L=Z_g^*}
+\]
+
+A seguir, é realizada a obtenção do fator de ruído \(F\). Para essa análise, leva-se em consideração o circuito da Fig.~\ref{fig:two-port-original}, em que o quadripolo SUB1 tem impedância de entrada igual a $Z_i=R_i+jX_i$, impedância de saída $Z_o=R_o+jX_o$, e ganho $A$.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/two-port-original.png}
+    \caption{Quadripolo com ruído referido à entrada}
+    \label{fig:two-port-original}
+\end{figure}
+
+Para realizar o cálculo do fator de ruído, primeiro, a resistência da fonte, $R_s$, é aberta de tal forma a considerar o ruído térmico presente nessa resistência. O circuito resultante é apresentado na Fig.~\ref{fig:two-port-circuit-open}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/two-port-circuit-open.png}
+    \caption{Quadripolo com ruído referido à entrada com representação do ruído da fonte}
+    \label{fig:two-port-circuit-open}
+\end{figure}
+
+Dessa forma, a potência de sinal disponível na entrada é igual a
+
+\[
+    S_i=\frac{v_s^2}{4R_s}
+\]
+
+supondo que $v_s$ o valor rms. E a potência disponível do ruído de entrada é
+
+\[
+    N_i=4kT_0B
+\]
+
+Assim, para se calcular a potência de sinal na saída, 
+
+\[
+    S_o=\frac{v_o^2}{4R_o}
+\]
+
+em que $v_o$ é o valor rms e é dado pela tensão na impedância de entrada vezes o ganho, ou seja
+
+\[
+    v_o=Av_s\frac{|Z_i|}{|Z_i+R_s|}
+\]
+
+Assim, a potência de sinal de saída, 
+
+\[
+    S_o=\frac{A^2v_s^2}{4R_o}\left(\frac{|Z_i|}{|Z_i+R_s|}\right)^2
+\]
+
+Semelhantemente, pode-se obter a potência de saída do ruído, como
+
+\[
+    N_o=\frac{v_{no}^2}{4R_o}
+\]
+
+Como deseja-se a tensão do ruído na qual a impedância de entrada do quadripolo é submetida, utiliza-se a mesma equação do divisor resistivo (entre $R_s$ e $Z_i$), resultando em
+
+\[
+    v_o=A\frac{|Z_i|}{|Z_i+R_s|}(v_n+R_si_n+v_{ns})
+\]
+
+Da equação acima, se for assumido que as fontes $v_n$, $v_{ns}$ e $i_n$ são descorrelacionadas (que, na realidade isso não é verdadeiro), a potência de ruído na saída é obtido como
+
+\[
+    N_o=\frac{A^2}{4R_o}\frac{|Z_i|^2}{|Z_i+R_s|^2}(v_n^2+R_s^2i_n^2+v_{ns}^2)
+\]
+
+Com todas essas variáveis em mãos, é possível calcular o fator de ruído $F$ facilmente utilizando a seguinte relação
+
+\[
+    F=\frac{N_o}{GN_i}
+\]
+
+Em que \(G=S_o/S_i\), resultando em
+
+\[
+    G=A^2\frac{R_s}{R_o}\left(\frac{|Z_i|}{|Z_i+R_s|}\right)^2
+\]
+
+Definindo $Y_s=R_s^{-1}$ como a admitância da fonte, é fácil ver que
+
+\begin{equation}\label{eq:noise-factor}
+    F=1+\frac{v_n^2Y_s+I_n^2R_s}{4kT_0B}
+\end{equation}
+
+
+
+
+
+
+\section{Diodo em série}
+
+\subsection{Abordagem da fonte de sinal}
+
+\subsubsection{Figura de ruído}
+
+Para o diodo em série, apresentado na Fig.~\ref{fig:diode-series-sub}, existem duas fontes de ruído importantes, o ruído \textit{Shot} e o ruído \textit{Flicker}, sendo que esse último não será levado em consideração, uma vez que ele é inversamente proporcional com a frequência.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/diode-series-sub.png}
+    \caption{Subcircuito com diodo em série}
+    \label{fig:diode-series-sub}
+\end{figure}
+
+Dessa forma, para frequências elevadas, este tipo de ruído pode ser desprezado. Por outro lado, o ruído \textit{Shot} é relevante e a corrente quadrática média é calculada por
+
+\[
+    i_n^2=2qIB
+\]
+
+em que $q$ é a carga do elétron, $B$ é a largura da banda e $I$ é a corrente de polarização do elemento analisado, nesse caso, $I=I_D$, em que $I_D$ é a corrente de polarização do diodo.
+
+Sem contar com o ruído \textit{Shot}, o diodo do circuito apresentado na Fig.~\ref{fig:diode-series-sub} pode ser apresentado pelo seu modelo de pequenos sinais, ou seja, por um resistor de resistência \(r_d\) (ou admitância $y_d$), como o que é apresentado na Fig.~\ref{fig:small-signal-diode-series}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/small-signal-diode-series.png}
+    \caption{Modelo de pequeno sinais do diodo em série}
+    \label{fig:small-signal-diode-series}
+\end{figure}
+
+Sendo que a resistência do modelo de pequeno sinais é dada por \cite{sedra2014microelectronic}
+
+\[
+    r_d=\frac{V_T}{I_D}=\frac{kT}{qI_D}
+\]
+
+em que $k$ é a constante de Boltzmann e $T$ é a temperatura do diodo em Kelvin.
+
+A Fig.~\ref{fig:diode-series-shot}, por sua vez, apresenta o modelo de pequeno sinais do diodo, levando em consideração a presença do ruído \textit{Shot}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/diode-series-shot.png}
+    \caption{Diodo com ruído \textit{Shot}}
+    \label{fig:diode-series-shot}
+\end{figure}
+
+Além disso, seria possível expandir o resistor $r_d$ para que fique evidente o ruído térmico apresentado por ele. Entretanto, essa expansão não foi verificada no exemplo em questão, o que pode levar à interpretação de que o ruído térmico não é relevante para o diodo, sendo muito mais significativo o ruído \textit{Shot} e o ruído \textit{Flicker} (somente para baixas frequências, é claro). Essa questão será analisada mais adiante.
+
+Para obter os parâmetros necessários para o cálculo do fator de ruído, $F$, isto é, potência disponível do sinal de entrada, $S_i$, potência disponível do ruído de entrada, $N_i$, potência do sinal de saída, $S_o$, e potência do ruído de saída, $N_o$, o circuito é submetido a uma fonte de corrente $I_s$ com resistência $R_s$ (admitância $Y_s$), como apresentado na Fig.~\ref{fig:asdfsad211}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{asdfsad211.png}
+    \caption{Circuito diodo ruidoso alimentado e com impedância de Norton}
+    \label{fig:asdfsad211}
+\end{figure}
+
+Seguindo o modelo apresentado, a potência de sinal disponível na entrada é
+
+\[
+    S_i=\frac{I_s^2}{8Y_s}
+\]
+
+e a potência de ruído disponível na entrada é
+
+\[
+    N_i=kT_0B
+\]
+
+Para o cálculo das potências de sinal e ruído na saída, é necessário determinar o modelo equivalente de Norton do circuito. A obtenção da resistência de Norton, $R_N=Y_N^{-1}$ (ou de Thévenin, $R_{TH}$), é apresentada na Fig.~\ref{fig:asdfsad211}.
+
+Além da resistência de Norton, também é utilizada a corrente equivalente de Norton, $I_N$ (ou corrente de curto-circuito). Dessa forma, expressa-se as seguintes equações
+
+\[
+    S_o=\frac{I_{N}^2}{8Y_N}
+\]
+
+em que a corrente $I_{N}$ é a corrente de curto-circuito para o sinal, e
+
+\[
+    N_o=\frac{i_n^2}{4Y_N}
+\]
+
+em que $i_n$ é a corrente de curto-circuito para o ruído.
+
+Se as fontes de ruído forem anuladas, pode-se obter a corrente $I_{N}$, levando em consideração o divisor de corrente entre as admitâncias $Y_s$ e $y_d$, assim,
+
+\[
+    I_{N}=I_s\frac{y_d}{Y_s+y_d}
+\]
+
+A admitância de Norton, por sua vez, é obtida anulando todas as fontes não-controladas, dessa forma,
+
+\[
+\begin{split}
+    Y_{N}&=Y_s\parallelsum y_d\implies\\
+    &=\frac{Y_sy_d}{Y_s+y_d}
+\end{split}
+\]
+
+E, por último, calcula-se a corrente de curto-circuito, média quadrática total do ruído (utilizando superposição das fontes $i_{ns}$ e $i_{nd}$), obtendo
+
+\[
+    \begin{split}
+        i_n^2&=\left(\frac{Y_s}{Y_s+y_d}\right)^2i_{nd}^2\left(\frac{y_d}{Y_s+y_d}\right)^2i_{ns}^2\implies\\
+        i_n^2&=\frac{i_{nd}^2Y_s^2+i_{ns}^2y_d^2}{(Y_s+y_d)^2}
+    \end{split}
+\]
+
+Assim, essas relações podem ser utilizadas para a obtenção da potência de sinal na saída
+
+\[
+\begin{split}
+    S_o&=\frac{I_{N}^2}{8Y_N}\implies\\
+    &=I_s^2\frac{y_d^2}{(Y_s+y_d)^2}\cdot\frac{(Y_s+y_d)}{8Y_sy_d}\implies\\
+    &=\frac{I_s^2y_d}{8Y_s(Y_s+y_d)}
+\end{split}
+\]
+
+e para a potência de ruído na saída,
+
+\[
+\begin{split}
+    N_o&=\frac{i_{nd}^2Y_s^2+i_{ns}^2y_d^2}{(Y_s+y_d)^2}\cdot\frac{(Y_s+y_d)}{4Y_sy_d}\implies\\
+    &=\frac{i_{nd}^2Y_s^2+i_{ns}^2y_d^2}{4Y_sy_d(Y_s+y_d)}
+\end{split}
+\]
+
+Dessa forma, calcula-se o fator de ruído por
+
+\[
+    \begin{split}
+        F&=\frac{I_s^2}{8Y_s}\cdot\frac{1}{kT_0B}\cdot\frac{(i_{nd}^2Y_s^2+i_{ns}^2y_d^2)}{4Y_sy_d(Y_s+y_d)}\cdot\frac{8Y_s(Y_s+y_d)}{I_s^2y_d}\implies\\
+        &=\frac{(i_{nd}^2Y_s^2+i_{ns}^2y_d^2)}{4kT_0BY_sy_d^2}\implies\\
+    \end{split}
+\]
+
+Lembrando que $y_d=qI_D/kT$, $i_{nd}^2=2qI_DB$ (ruído \textit{Shot}) e $i_{ns}^2=4kT_0BY_s$ (ruído térmico da fonte a temperatura ambiente). Substituindo na equação acima, obtém-se, finalmente a seguinte equação
+
+\[
+    F=1+\frac{1}{2}\frac{Y_s}{y_d}\frac{T}{T_0}
+\]
+
+
+
+
+\subsubsection{Figura de ruído mínima}
+
+A figura de ruído mínima é calculada com base na resistência (ou admitância) da fonte do sinal, uma vez que essa é uma dependência da figura de ruído e uma variável que pode ser controlada pelo projetista.
+
+Para isso, é obtido o ponto de mínimo do fator de ruído referente à admitância da fonte de sinal, iniciando-se pela variação do fator de ruído pela admitância, ou seja
+
+\begin{equation}\label{eq:series-diode-noise-factor-variation}
+    \frac{\partial F}{\partial Y_s}=\frac{1}{2}\frac{1}{y_d}\frac{T}{T_0}
+\end{equation}
+
+Essa relação mostra que o fator de ruído (e consequentemente a figura de ruído) não variam linearmente com a admitância da fonte, de modo que quanto menor a admitância e, consequentemente, maior a impedância, mais próximo do valor unitário será o fator de ruído deste circuito.
+
+\subsubsection{Resistência do gerador ótima}
+
+Com base no que foi discutido na subseção anterior, a resistência do gerador ótima é a maior possível, tendo em vista que o fator de ruído varia linearmente com a admitância da fonte de sinal.
+
+\subsection{Abordagem do ruído referido à entrada}
+
+\subsubsection{Figura de ruído}
+
+Para utilizar o modelo do ruído referido à entrada, as fontes de ruído são removidas e todo o ruído do circuito é modelado por duas fontes, uma fonte de corrente $i_n$ e uma fonte de tensão $v_n$, conforme é apresentado na Fig.~\ref{fig:input-referred-noise-diode-series}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/input-referred-noise-diode-series.png}
+    \caption{Circuito diodo em série com ruído referido à entrada}
+    \label{fig:input-referred-noise-diode-series}
+\end{figure}
+
+E a análise é realizada medindo-se a corrente com a entrada em curto e a corrente com a entrada em circuito aberto, iniciando pelo cálculo da corrente de saída com a entrada aberta. Nesse caso, o circuito resume-se ao que é apresentado na Fig.~\ref{fig:open-circuit-input-referred-noise-diode-series}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/open-circuit-input-referred-noise-diode-series.png}
+    \caption{Circuito diodo em série com ruído referido à entrada aberta}
+    \label{fig:open-circuit-input-referred-noise-diode-series}
+\end{figure}
+
+Dessa forma, é possível obter que \(i_n=i_{no1}\). Realizando essa mesma análise no circuito original, obtém-se que \(i_{no1}=0\), com pode ser visualizado na Fig.~\ref{fig:original-open-circuit-input-referred-noise-diode-series}. Dessa forma, conclui-se que \(i_n^2=0\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/original-open-circuit-input-referred-noise-diode-series.png}
+    \caption{Circuito diodo em série com ruído e entrada aberta}
+    \label{fig:original-open-circuit-input-referred-noise-diode-series}
+\end{figure}
+
+Em seguida, é realizada a análise com a entrada do circuito aberta para os dois circuitos (original e com o ruído referido à entrada, Fig.~\ref{fig:ino2-diode-noise-referred-serie-curto} e Fig.~\ref{fig:ino2-diode-serie-curto}, respectivamente).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{ino2-diode-serie-curto.png}
+    \caption{Circuito diodo em série com ruído referido à entrada em curto-circuito}
+    \label{fig:ino2-diode-serie-curto}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/ino2-diode-noise-referred-serie-curto.png}
+    \caption{Circuito diodo em série com ruído e entrada em curto-circuito}
+    \label{fig:ino2-diode-noise-referred-serie-curto}
+\end{figure}
+
+Dessa análise, é possível verificar que \(i_{no2}=i_{nd}=v_ny_d\), ou seja, \(v_n=i_{nd}/y_d\). Substituindo os valores obtidos na Eq.~\ref{eq:noise-factor}, obtém-se
+
+\[
+\begin{split}
+    F&=1+\frac{i_{nd}^2Y_s}{4kT_0By_d^2}
+\end{split}
+\]
+
+Sabendo que \(i_{nd}^2=2qI_DB\) é o ruído \textit{Shot}, pode-se substituir essa relação na equação de $F$, ou seja,
+
+\[
+    F=1+\frac{2qI_DBY_s}{4kT_0By_d^2}
+\]
+
+Como \(y_d=qI_D/kT\implies qI_D=y_dkT\), a equação pode ser reescrita como
+
+\[
+\begin{split}
+    F&=1+\frac{2y_dkTBY_s}{4kT_0By_d^2}\implies\\
+    F&=1+\frac{1}{2}\frac{Y_s}{y_d}\frac{T}{T_0}
+\end{split}
+\]
+
+Confirmando, assim, o que foi obtido no exemplo anterior.
+
+
+\subsubsection{Figura de ruído mínima}
+
+Como o cálculo da figura de ruído é a mesma para as duas abordagens discutidas nesta seção, a figura de ruído mínima é exatamente a mesma que foi apresentada na Eq.~\ref{eq:series-diode-noise-factor-variation}, ou seja, é a menor admitância possível.
+
+\subsubsection{Resistência do gerador ótima}
+
+A discussão nesta subseção segue exatamente o que foi apresentado na abordagem da fonte de sinal, uma vez que a relação da figura de ruído coincidiu exatamente.
+
+
+\subsection{Simulação}
+
+Para simplificar a simulação, as correntes do diodo foram fixadas por fontes de corrente contínua de 1 mA, como é apresentado na Fig.~\ref{fig:series-diode-circuit-simulation}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/series-diode-circuit-simulation.png}
+    \caption{Circuito da simulação do diodo em série}
+    \label{fig:series-diode-circuit-simulation}
+\end{figure}
+
+Dessa forma, faz sentido expressar o fator em função da corrente de polarização do diodo, ao invés da admitância do modelo de pequenos sinais e pela resistência da fonte, ao invés da impedância. Assim, tem-se que a equação do fator de ruído para o circuito do diodo em série é dado por
+
+\[
+\begin{split}
+    F&=1+\frac{1}{2}\frac{kT}{qI_DR_s}\frac{T}{T_0}
+\end{split}
+\]
+
+A Fig.~\ref{fig:series-result}. Neste caso os resultados ficaram bem próximos ao que foi calculado.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/series-result.png}
+    \caption{Resultados obtidos para o diodo em série}
+    \label{fig:series-result}
+\end{figure}
+
+
+\section{Diodo em paralelo}
+
+\subsection{Abordagem da fonte de sinal}
+
+\subsubsection{Figura de ruído}
+
+Analisa-se, agora, o caso do diodo em paralelo. A Fig.~\ref{fig:diode-parallel-original}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/diode-parallel-original.png}
+    \caption{Diodo em paralelo}
+    \label{fig:diode-parallel-original}
+\end{figure}
+
+Substituindo o diodo pelo seu modelo de pequenos sinais, é possível ver na Fig.~\ref{fig:diode-parallel-small-signal-noisy} em paralelo com uma fonte de ruído (corrente quadrática média).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/diode-parallel-small-signal-noisy.png}
+    \caption{Modelo de diodo em paralelo com ruído}
+    \label{fig:diode-parallel-small-signal-noisy}
+\end{figure}
+
+E para se analisar o o circuito, inclui-se uma fonte de corrente $I_s$, de admitância $Y_s$, que tem ruído $i_{ns}$. Na Fig.~ é apresentado o circuito equivalente, evidenciando a resistência de Norton.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{model-circuit-diode-parallel.png}
+    \caption{Circuito equivalente do diodo em paralelo}
+    \label{fig:model-circuit-diode-parallel}
+\end{figure}
+
+Assim, inicia-se o cálculo do fator de ruído. A seguir é apresentada a equação para a obtenção da potência de sinal disponível na entrada
+
+\[
+    S_i=\frac{I_s^2}{8Y_s}
+\]
+
+A potência de ruído disponível
+
+\[
+    N_i=kT_0B
+\]
+
+A potência de sinal na saída é dada por
+
+\[
+    S_o=\frac{I_N^2}{8Y_N}=\frac{I_s^2(y_d+Y_s)}{8y_dY_s}
+\]
+
+E a potência de ruído na saída é dada por
+
+\[
+    N_o=\frac{(i_{ns}^2+i_{nd}^2)(y_d+Y_s)}{4y_dY_s}
+\]
+
+considerando que as duas fontes de ruído não são correlacionadas. Finalmente, é possível realizar o cálculo do fator de ruído
+
+\[
+\begin{split}
+    F&=\frac{I_s^2}{8Y_s}\cdot\frac{1}{kT_0B}\frac{(i_{ns}^2+i_{nd}^2)(y_d+Y_s)}{4y_dY_s}\cdot\frac{8y_dY_s}{I_s^2(y_d+Y_s)}\implies\\
+    &=\frac{(i_{ns}^2+i_{nd}^2)}{4kT_0BY_s}
+\end{split}
+\]
+
+Substituindo os valores das fontes de ruído, sendo \(i_{ns}^2=4kT_0BY_s\), \(i_{nd}^2=2qI_DB\) e \(y_d=qI_D/kT\implies qI_D=y_dkT\).
+
+\[
+\begin{split}
+    F&=\frac{(4kT_0BY_s+2qI_DB)}{4kT_0BY_s}\implies\\
+    &=1+\frac{2y_dkTB}{4kT_0BY_s}\implies\\
+    &=1+\frac{1}{2}\frac{y_d}{Y_s}\frac{T}{T_0}
+\end{split}
+\]
+
+
+\subsubsection{Figura de ruído mínima}
+
+Essa análise é realizada iniciando-se pela variação do fator de ruído pela admitância e igualando-a a zero,
+
+\begin{equation}\label{eq:parallel-diode-noise-factor-variation}
+    \frac{\partial F}{\partial Y_s}=-\frac{1}{2}\frac{y_d}{Y_s^2}\frac{T}{T_0}
+\end{equation}
+
+Em seguida, essa equação é igualada a zero
+
+\[
+    \begin{split}
+        -\frac{1}{2}\frac{y_d}{Y_s^2}\frac{T}{T_0}&=0\implies\\
+        \frac{1}{Y_s}&=0
+    \end{split}
+\]
+
+\subsubsection{Resistência do gerador ótima}
+
+Com base no que foi discutido na subseção anterior, a resistência do gerador ótima é a menor possível, fazendo com que a admitância seja máxima.
+
+\subsection{Abordagem do ruído referido à entrada}
+
+\subsubsection{Figura de ruído}
+
+O circuito apresentado na Fig.~\ref{fig:parallel-diode-noise-referred-open} apresenta o circuito do diodo em paralelo com o ruído referido à entrada. Além disso, o circuito apresenta a entrada em aberto, fazendo com que \(I_n=i_n\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/parallel-diode-noise-referred-open.png}
+    \caption{Modelo de pequeno sinais do diodo em paralelo com o ruído referido à entrada com entrada em aberto}
+    \label{fig:parallel-diode-noise-referred-open}
+\end{figure}
+
+Como é apresentado na Fig.~\ref{fig:original-circuit-parallel-diode-open}, \(I_n^2=i_{nd}^2=2qI_DB\), consequentemente \(i_n^2=i_{nd}^2\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{original-circuit-parallel-diode-open.png}
+    \caption{Modelo de pequenos sinais com ruído e entrada em aberto}
+    \label{fig:original-circuit-parallel-diode-open}
+\end{figure}
+
+Para o circuito com a entrada em curto-circuito da Fig.~\ref{fig:parallel-diode-noise-referred-curto}, para o ruído referido à entrada, \(I_n\to\infty\). Devido a esse resultado, é inviável determinar, matematicamente, a contribuição de \(v_n\) e é assumido que \(v_n=0\).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/parallel-diode-noise-referred-curto.png}
+    \caption{Modelo de pequeno sinais do diodo em paralelo com o ruído referido à entrada com entrada em curto}
+    \label{fig:parallel-diode-noise-referred-curto}
+\end{figure}
+
+Para concluir os cálculos, evoca-se a Eq.~\ref{eq:noise-factor}. Aplicando os valores já conhecidos, obtém-se
+
+\[
+    \begin{split}
+        F&=1+\frac{i_{nd}^2}{4kT_0BY_s}\implies\\
+        &=1+\frac{2qI_DB}{4kT_0BY_s}\implies\\
+        &=1+\frac{y_dkT}{2kT_0Y_s}\implies\\
+        &=1+\frac{1}{2}\frac{T}{T_0}\frac{y_d}{Y_s}
+    \end{split}
+\]
+
+Exatamente o mesmo resultado que foi obtido anteriormente, utilizando a abordagem de alimentar o circuito com um sinal com ruído já conhecido.
+
+\subsubsection{Figura de ruído mínima}
+
+Como o cálculo da figura de ruído é a mesma para as duas abordagens discutidas nesta seção, a figura de ruído mínima é exatamente a mesma que foi apresentada na Eq.~\ref{eq:parallel-diode-noise-factor-variation}, ou seja, é a menor admitância possível.
+
+\subsubsection{Resistência do gerador ótima}
+
+A discussão nesta subseção segue exatamente o que foi apresentado na abordagem da fonte de sinal, uma vez que a relação da figura de ruído coincidiu exatamente.
+
+\subsection{Simulação}
+
+Para simplificar a simulação, as correntes do diodo foram fixadas por fontes de corrente contínua de 1 mA, como é apresentado na Fig.~\ref{fig:parallel-diode-circuit-simulation}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/parallel-diode-circuit-simulation.png}
+    \caption{Circuito da simulação do diodo em paralelo}
+    \label{fig:parallel-diode-circuit-simulation}
+\end{figure}
+
+Dessa forma, faz sentido expressar o fator em função da corrente de polarização do diodo, ao invés da admitância do modelo de pequenos sinais e pela resistência da fonte, ao invés da impedância. Assim, tem-se que a equação do fator de ruído para o circuito do diodo em série é dado por
+
+\[
+\begin{split}
+    F&=1+\frac{qI_DR_s}{2T_0k}
+\end{split}
+\]
+
+A Fig.~\ref{fig:parallel-results}. Neste caso os resultados ficaram muito próximos ao que foi calculado, de forma que as linhas estão tão sobrepostas que não é possível visualizar com clareza a linha referente ao que foi simulado.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{parallel-results.png}
+    \caption{Resultados para o diodo em paralelo}
+    \label{fig:parallel-results}
+\end{figure}
+
+
+\section{Dois diodos}
+
+\subsection{Abordagem da fonte de sinal}
+
+\subsubsection{Determinação da figura de ruído}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/two-diodes.png}
+    \caption{Circuito de dois diodos original}
+    \label{fig:two-diodes}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/two-diodes-noisy-diode-model.png}
+    \caption{Circuito de dois diodos com modelo de pequenos sinais}
+    \label{fig:two-diodes-noisy-diode-model}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/complete-two-diode-circuit.png}
+    \caption{Circuito de dois diodos com modelo de pequenos sinais e alimentado}
+    \label{fig:two-diodes-circuit-model-feed}
+\end{figure}
+
+Tirando a impedância de Norton do modelo, obtém-se
+
+\[
+    Y_N=\frac{y_{d1}Y_s+y_{d2}Y_s+y_{d1}y_{d2}}{y_{d1}+Y_s}
+\]
+
+Para o equivalente de Norton do sinal, é obtido que \(I_N=I_s\). E, para o equivalente de Norton do ruído, essa expressão é facilmente calculado via superposição das três fontes de corrente de ruído ($i_{ns}$, $i_{nd1}$, $i_{nd2}$) e o resultado obtido é (calculando a corrente quadrática média e supondo fontes sem correlação)
+\[
+\begin{split}
+    i_n^2&=i_{ns}^2\left(\frac{y_{d1}}{Y_s+y_{d1}}\right)^2+i_{nd1}^2\left(\frac{Y_s}{Y_s+y_{d1}}\right)^2+i_{nd2}^2\implies\\
+    &=\frac{i_{ns}^2y_{d1}^2+i_{nd1}^2Y_s^2+i_{nd2}^2(Y_s+y_{d1})^2}{(Y_s+y_{d1})^2}
+\end{split}
+\]
+
+Dessa forma, é possível calcular o fator de ruído do circuito como
+
+\[
+    \begin{split}
+        F&=\frac{I_s^2}{8Y_s}\cdot\frac{1}{kT_0B}\cdot\frac{8Y_N}{I_N^2}\cdot\frac{i_n^2}{4Y_N}\implies\\
+        &=\frac{i_n^2}{4kT_0BY_s}
+    \end{split}
+\]
+
+Substituindo os valores de $i_n$, obtém-se
+
+\[
+    \begin{split}
+        F&=\frac{i_n^2}{4kT_0BY_s}\implies\\
+        &=\frac{i_{ns}^2y_{d1}^2+i_{nd1}^2Y_s^2+i_{nd2}^2(Y_s+y_{d1})^2}{4kT_0BY_s(Y_s+y_{d1})^2}\implies\\
+    \end{split}
+\]
+
+Substituindo os valores de \(i_{nd1}^2=2qI_{D1}B\), \(i_{nd2}^2=2qI_{D2}B\), \(i_{ns}^2=4kT_0BY_s\) e, lembrando que \(y_{d1}kT=qI_{D1}\) e \(y_{d2}kT=qI_{D2}\), obtém-se
+
+\[
+    \begin{split}
+        F&=\frac{4kT_0BY_sy_{d1}^2+2qI_{D1}BY_s^2+2qI_{D2}B(Y_s+y_{d1})^2}{4kT_0BY_s(Y_s+y_{d1})^2}\implies\\
+        &=\frac{y_{d1}^2}{(Y_s+y_{d1})^2}+\frac{1}{2}\frac{T}{T_0}\left[\frac{y_{d1}Y_s}{(Y_s+y_{d1})^2}+\frac{y_{d2}}{Y_s}\right]\implies\\
+        &=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{y_{d1}Y_s^2+y_{d2}(Y_s+y_{d1})^2}{Y_s(Y_s+y_{d1})^2}\right]\frac{(Y_s+y_{d1})^2}{y_{d1}^2}\implies\\
+        &=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{y_{d1}Y_s^2+y_{d2}(Y_s+y_{d1})^2}{Y_sy_{d1}^2}\right]\implies\\
+        &=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})Y_s^2+y_{d1}^2y_{d2}+2Y_sy_{d1}y_{d2}}{Y_sy_{d1}^2}\right]
+    \end{split}
+\]
+
+
+
+
+
+\subsubsection{Resistência do gerador ótima}
+
+Essa análise é realizada iniciando-se pela variação do fator de ruído pela admitância e igualando-a a zero. Lembrando que a figura de ruído obtida é dada por 
+
+\[
+    F=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})Y_s^2+y_{d1}^2y_{d2}+2Y_sy_{d1}y_{d2}}{Y_sy_{d1}^2}\right]
+\]
+
+a taxa de variação do fator de ruído por $Y_s$ é dada por
+
+\begin{equation}
+    \frac{\partial F}{\partial Y_s}=\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})}{y_{d1}^2}-\frac{y_{d2}}{Y_s^2}\right]
+\end{equation}
+
+Em seguida, essa equação é igualada a zero
+
+\[
+    \begin{split}
+        \frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})}{y_{d1}^2}-\frac{y_{d2}}{Y_s^2}\right]&=0\implies\\
+        \frac{(y_{d1}+y_{d2})}{y_{d1}^2}&=\frac{y_{d2}}{Y_s^2}\implies\\
+        Y_s=\sqrt{\frac{y_{d1}^2y_{d2}}{(y_{d1}+y_{d2})}}
+    \end{split}
+\]
+
+\subsubsection{Figura de ruído mínima}
+
+Para se obter a figura de ruído mínima, é realizada realizada a substituição da resistência de fonte ótima na equação da figura de ruído, ou seja,
+
+\[
+\begin{split}
+    F_m&=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})}{y_{d1}^2}\sqrt{\frac{y_{d1}^2y_{d2}}{(y_{d1}+y_{d2})}}+y_{d2}\sqrt{\frac{(y_{d1}+y_{d2})}{y_{d1}^2y_{d2}}}+\frac{2y_{d2}}{y_{d1}}\right]\implies\\
+    &=1+\frac{1}{2}\frac{T}{T_0}\left[\sqrt{\frac{(y_{d1}+y_{d2})^2}{y_{d1}^4}\frac{y_{d1}^2y_{d2}}{(y_{d1}+y_{d2})}}+\sqrt{y_{d2}^2\frac{(y_{d1}+y_{d2})}{y_{d1}^2y_{d2}}}+\frac{2y_{d2}}{y_{d1}}\right]\implies\\
+    &=1+\frac{T}{T_0}\frac{\left[y_{d2}+\sqrt{y_{d2}(y_{d1}+y_{d2})}\right]}{y_{d1}}
+\end{split}
+\]
+
+E essa é a relação para a obtenção da máxima figura de ruído, obtida, utilizando a resistência da fonte ótima.
+
+
+\subsection{Abordagem do ruído referido à entrada}
+
+\subsubsection{Figura de ruído}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/input-open-originalcircuit-currentout.png}
+    \caption{Circuito para cálculo da corrente de curto-circuito com entrada em aberto}
+    \label{fig:input-open-originalcircuit-currentout}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/current-closed-output-original-two-diode.png}
+    \caption{Circuito para cálculo da corrente de curto-circuito com entrada em curto-circuito}
+    \label{fig:current-closed-output-original-two-diode}
+\end{figure}
+
+Para o circuito em aberto, a corrente de curto-circuito é dada por \(i_{n1}^2=i_{nd2}^2=I_n^2\), dessa forma, essa é a corrente de ruído referida à entrada. Para o circuito com a entrada em curto, \(i_{n2}^2=i_{nd1}^2+i_{nd2}^2\). Sendo $i_{n1}$ a corrente de curto-circuito com a entrada em aberto e $i_{n2}$ a corrente de curto-circuito com a entrada em curto-circuito.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/referred-input-noise-two-diode-curto-input.png}
+    \caption{Ruído referido à entrada }
+    \label{fig:referred-input-noise-two-diode-curto-input}
+\end{figure}
+
+Para o ruído referido à entrada e o circuito com curto na entrada, temos que \(i_{n2}=v_ny_{d1}\implies v_n=i_{n2}/y_{d1}\). Substituindo essas relações encontradas na Eq.~\ref{eq:noise-factor}, obtém-se
+
+\[
+\begin{split}
+    F&=1+\frac{(i_{nd1}^2+i_{nd2}^2)Y_s}{4kT_0By_{d1}^2}+\frac{i_{nd2}^2R_s}{4kT_0B}\implies\\
+    F&=1+\frac{2qI_{D1}BY_s+2qI_{D2}BY_s}{4kT_0By_{d1}^2}+\frac{2qI_{D2}B}{4kT_0BY_s}\implies\\
+    &=1+\frac{y_{d1}kTBY_s+y_{d2}kTBY_s}{2kT_0By_{d1}^2}+\frac{y_{d2}kTB}{2kT_0BY_s}\implies\\
+    F&=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})Y_s}{y_{d1}^2}+\frac{y_{d2}}{Y_s}\right]\implies\\
+    F&=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})Y_s^2+y_{d1}^2y_{d2}}{Y_sy_{d1}^2}\right]
+\end{split}
+\]
+
+
+\subsubsection{Resistência do gerador ótima}
+
+A resistência ótima para a fonte é obtida calculando-se o mínimo da função fator de ruído. Para que isso seja possível, é calculada a variação do fator de ruído pela variação da admitância da fonte e igualando a taxa obtida a zero. Iniciando-se pelo cálculo da variação, tem-se
+
+\[
+    \frac{\partial F}{\partial Y_s}=\frac{1}{2}\frac{T}{T_0}\left[\frac{(y_{d1}+y_{d2})}{y_{d1}^2}-\frac{y_{d2}}{Y_s^2}\right]
+\]
+
+Igualando essa equação a zero, resulta em
+
+\[
+    Y_s=\sqrt{\frac{y_{d1}^2y_{d2}}{(y_{d1}+y_{d2})}}
+\]
+
+Portanto, essa é a admitância ótima da fonte.
+
+\subsubsection{Figura de ruído mínima}
+
+Para obter o fator de ruído mínimo, substituímos a admitância ótima da fonte na equação da figura de ruído. Dessa forma, obtém-se
+
+\[
+    \begin{split}
+        F_m&=1+\frac{1}{2}\frac{T}{T_0}\left[\sqrt{\frac{(y_{d1}+y_{d2})y_{d2}}{y_{d1}^2}}+\sqrt{\frac{y_{d2}(y_{d1}+y_{d2})}{y_{d1}^2}}\right]\implies\\
+        &=1+\frac{T}{T_0}\frac{\sqrt{y_{d2}(y_{d1}+y_{d2})}}{y_{d1}}
+    \end{split}
+\]
+
+\subsection{Simulação}
+
+Para simplificar a simulação, as correntes dos diodos foram fixadas por fontes de corrente contínua de 1 mA, como é apresentado na Fig.~\ref{fig:two-diodes-simulation-circuit}.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/two-diodes-simulation-circuit.png}
+    \caption{Circuito com dois diodos e correntes fixas}
+    \label{fig:two-diodes-simulation-circuit}
+\end{figure}
+
+Dessa forma, faz sentido expressar o fator em função da corrente de polarização do diodo, ao invés da admitância do modelo de pequenos sinais e pela resistência da fonte, ao invés da impedância. Assim, tem-se que a equação da primeira abordagem de obtenção do fator de ruído para o circuito com dois diodos é dado por
+
+\[
+\begin{split}
+    F_1&=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{kT}{qI_{D1}R_s}+\frac{kTI_{D2}}{qI_{D1}^2R_s}+\frac{qI_{D2}R_s}{kT}+\frac{2I_{D2}}{I_{D1}}\right]
+\end{split}
+\]
+
+E para a segunda abordagem, é a seguinte
+
+
+\[
+\begin{split}
+    F_2&=1+\frac{1}{2}\frac{T}{T_0}\left[\frac{kT}{qI_{D1}R_s}+\frac{kTI_{D2}}{qI_{D1}^2R_s}+\frac{qI_{D2}R_s}{kT}\right]
+\end{split}
+\]
+
+Seguindo a mesma lógica, a resistência de fonte ótima para a primeira abordagem é igual a segunda, portanto
+
+\[
+\begin{split}
+    Y_{s1}=Y_{s1}=Y_s&=\frac{qI_{D1}}{kT}\sqrt{\frac{I_{D2}}{(I_{D1}+I_{D2})}}
+\end{split}
+\]
+
+E, finalmente, a figura de ruído mínima
+
+\[
+\begin{split}
+    F_{m1}&=1+\frac{T}{T_0}\frac{\left[I_{D2}+\sqrt{I_{D2}(I_{D1}+I_{D2})}\right]}{I_{D1}}
+\end{split}
+\]
+
+e para a segunda abordagem
+
+\[
+\begin{split}
+    F_{m2}&=1+\frac{T}{T_0}\frac{\sqrt{I_{D2}(I_{D1}+I_{D2})}}{I_{D1}}
+\end{split}
+\]
+
+\subsection{Análise}
+
+A Fig.~\ref{fig:two-diodes-results} apresenta os resultados para o circuito de dois diodos. Primeiramente, é importante verificar que nem um dos dois resultados obtidos analiticamente coincidiu com o resultado obtido na simulação. Para a abordagem do ruído referido à entrada, o valor obtido foi de 51\% do que foi encontrado por meio da simulação. A outra abordagem utilizada, de se utilizar uma fonte de sinal e analisar o ruído, obteve uma resposta um pouco mais próxima do valor da simulação, mas mesmo assim, houve uma diferença de aproximadamente 30\%.
+
+É necessária uma análise mais aprofundada para entender quais os motivos de toda essa discrepância, tendo em vista que foi despendido um esforço considerável para se obter um modelo que seja fidedigno ao que será apresentado pela simulação.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/two-diodes-results.png}
+    \caption{Resultado dos dois diodos}
+    \label{fig:two-diodes-results}
+\end{figure}
+
+\section{Considerações Finais}
+
+Resumidamente, uma abordagem que pode ser inicialmente suficiente para a concepção de um amplificador de baixo ruído (LNA) é projetar o circuito, analisar os parâmetros de polarização, determinar os elementos que compõem o sistema, substituindo por componentes de mais fácil modelagem de ruído (como o resistor, por exemplo) e calcular o ruído presente nas condições projetadas até então. Após isso, analisar a figura de ruído a fim de determinar a resistência ótima da fonte. Com esse valor determinado, é possível chegar próximo à figura de ruído mínima, que é obtida por meio do cálculo da figura de ruído levando em consideração a resistência ótima da fonte.
+
+\subsection{Comentários}
+
+Por meio desta atividade, aprendi como pôr em prática a determinação de um modelo de figura de ruído, busca pela resistência ótima de fonte e determinação da figura de ruído mínima. Todos esses, passos importantíssimos para determinar quais as capacidades de o sistema projetado lidar com o ruído. Como foi comentado, os resultados obtidos não apresentaram resultados plenamente satisfatórios em comparação com os que foram obtidos na simulação, dessa forma, levanta-se a dúvida quais outras não-idealidades devem ser consideradas a fim de deixar o modelo obtido um pouco mais robusto. Tudo isso, levando em consideração que os cálculos e relações obtidas estão corretas.
+
+
+
+
+
+
+
+
 ```
