@@ -47,7 +47,14 @@ format:
   elsevier-pdf:
     include-in-header:
       - text: |
-          \usepackage{steinmetz}
+            \usepackage[a4paper, margin=1in]{geometry}
+            \usepackage{graphicx} % Required for inserting ../images
+            \usepackage{circuitikz}
+            \usepackage{amsmath}
+            \usepackage{amssymb}
+            \usepackage{amsthm}
+
+            \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
     keep-tex: true
     journal:
       name: Journal Name
@@ -65,7 +72,7 @@ O amplificador utilizado nesta atividade é o que foi projetado no laboratório 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/complete-amplifier-dc-characterization.png}
+    \includegraphics[width=0.75\linewidth]{../images/complete-amplifier-dc-characterization.png}
     \caption{Amplificador completo com caracterização DC}
     \label{fig:complete-amplifier-dc-characterization}
 \end{figure}
@@ -79,7 +86,7 @@ Dessa forma, é necessário obter a impedância de entrada do amplificador. Essa
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/zinamp-original1.png}
+    \includegraphics[width=0.75\linewidth]{../images/zinamp-original1.png}
     \caption{Caracterização da impedância de entrada}
     \label{fig:z-in-amplifier-original}
 \end{figure}
@@ -137,7 +144,7 @@ A impedância equivalente da entrada do amplificador foi mantida e pode ser visu
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/imp_equiv.png}
+    \includegraphics[width=0.75\linewidth]{../images/imp_equiv.png}
     \caption{Impedância equivalente de entrada do amplificador}
     \label{fig:imp_equiv}
 \end{figure}
@@ -155,7 +162,7 @@ Utilizando os valores obtidos, como pode ser visualizado na Fig.~\ref{fig:not-ma
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/not-matched-zin.png}
+    \includegraphics[width=0.75\linewidth]{../images/not-matched-zin.png}
     \caption{Tentativa de adaptação de impedância}
     \label{fig:not-matched-zin}
 \end{figure}
@@ -164,7 +171,7 @@ Dessa forma, são realizados ajustes finos nos componentes para que a impedânci
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/tune-impedances.png}
+    \includegraphics[width=0.75\linewidth]{../images/tune-impedances.png}
     \caption{Ajuste fino nas impedâncias}
     \label{fig:tune-impedances}
 \end{figure}
@@ -173,7 +180,7 @@ Após alguns ajustes, pode-se obter a impedância de entrada apresentada na Fig.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/matched-zin.png}
+    \includegraphics[width=0.75\linewidth]{../images/matched-zin.png}
     \caption{Impedância de entrada adaptada}
     \label{fig:matched-zin}
 \end{figure}
@@ -188,7 +195,7 @@ O circuito equivalente pode ser visualizado na Fig.~\ref{fig:circuit-matched-amp
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/circuit-matched-ampl.png}
+    \includegraphics[width=0.75\linewidth]{../images/circuit-matched-ampl.png}
     \caption{Amplificador com a impedância corretamente adaptada}
     \label{fig:circuit-matched-ampl}
 \end{figure}
@@ -198,7 +205,7 @@ O resultado de potência obtida da fonte é apresentado na Fig.~\ref{fig:max-res
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/max-result.png}
+    \includegraphics[width=0.75\linewidth]{../images/max-result.png}
     \caption{Resultados da máxima transferência de potência}
     \label{fig:max-result}
 \end{figure}
@@ -207,7 +214,7 @@ A largura de banda de operação do amplificador é obtida com base nos parâmet
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/max-refl.png}
+    \includegraphics[width=0.75\linewidth]{../images/max-refl.png}
     \caption{Reflexão no circuito de máxima transferência de potência}
     \label{fig:max-refl}
 \end{figure}
@@ -216,7 +223,7 @@ Com base no critério da potência transferida da carga e uma tolerância de -3 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/bandwidth-gain.png}
+    \includegraphics[width=0.75\linewidth]{../images/bandwidth-gain.png}
     \caption{Potência transferida da fonte}
     \label{fig:bandwidth-gain}
 \end{figure}
@@ -229,7 +236,7 @@ Já se sabe que a impedância da fonte é a principal responsável pela minimiza
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/sopt.png}
+    \includegraphics[width=0.75\linewidth]{../images/sopt.png}
     \caption{Impedância ótima para minimização da figura de ruído}
     \label{fig:sopt}
 \end{figure}
@@ -247,7 +254,7 @@ Com isso, obtém-se \(X_s=42,168\;\Omega\) e \(X_p=101,455\;\Omega\). Como desej
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/result-part1.png}
+    \includegraphics[width=0.75\linewidth]{../images/result-part1.png}
     \caption{Resultado do LNA}
     \label{fig:result-part1}
 \end{figure}
@@ -263,7 +270,7 @@ Para iniciar o próximo passo, o atenuador projetado no laboratório anterior é
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/atten-circuit.png}
+    \includegraphics[width=0.75\linewidth]{../images/atten-circuit.png}
     \caption{Circuito com atenuador para máxima transferência de potência}
     \label{fig:atten-circuit}
 \end{figure}
@@ -272,7 +279,7 @@ Com o circuito atenuador, pode-se verificar na Fig.~\ref{fig:result-max-attL} qu
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/result-max-attL.png}
+    \includegraphics[width=0.75\linewidth]{../images/result-max-attL.png}
     \caption{Resultado da potência de entrada do amplificador com atenuador}
     \label{fig:result-max-attL}
 \end{figure}
@@ -281,7 +288,7 @@ Em relação ao coeficiente de reflexão na entrada, pode-se verificar na Fig.~\
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/coef-ref-att.png}
+    \includegraphics[width=0.75\linewidth]{../images/coef-ref-att.png}
     \caption{Coeficiente de reflexão com atenuador}
     \label{fig:coef-ref-att}
 \end{figure}
@@ -294,7 +301,7 @@ Prevendo, intuitivamente, uma grande degradação na figura de ruído do circuit
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{images/nf-min-att.png}
+    \includegraphics[width=0.75\linewidth]{../images/nf-min-att.png}
     \caption{Figura de ruído com atenuador}
     \label{fig:nf-min-att}
 \end{figure}
