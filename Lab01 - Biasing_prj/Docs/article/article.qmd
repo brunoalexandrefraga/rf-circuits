@@ -62,7 +62,7 @@ A Fig.~\ref{fig:part1-original} apresenta o circuito original proposto pelo trab
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/part1-original.png}
+    \includegraphics[width=0.75\linewidth]{../images/part1-original.png}
     \caption{Circuito original}
     \label{fig:part1-original}
 \end{figure}
@@ -73,7 +73,7 @@ Abaixo, na Fig.~\ref{fig:part1-dc-circuit} foram anulados a fonte de tensão alt
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/part1-dc-circuit.png}
+    \includegraphics[width=0.75\linewidth]{../images/part1-dc-circuit.png}
     \caption{Circuito com elementos AC anulados}
     \label{fig:part1-dc-circuit}
 \end{figure}
@@ -82,7 +82,7 @@ A Fig.~\ref{fig:part1-simplified-circuit-dc} apresenta o circuito simplificado.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/part1-simplified-circuit-dc.png}
+    \includegraphics[width=0.75\linewidth]{../images/part1-simplified-circuit-dc.png}
     \caption{Circuito simplificado para análise DC}
     \label{fig:part1-simplified-circuit-dc}
 \end{figure}
@@ -115,7 +115,7 @@ A Fig.~\ref{fig:part1-dc-simulation} apresenta os resultados obtidos por meio da
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/image.png}
+    \includegraphics[width=0.75\linewidth]{../images/image.png}
     \caption{Simulação DC do circuito}
     \label{fig:part1-dc-simulation}
 \end{figure}
@@ -126,7 +126,7 @@ Para pequenos sinais, o diodo opera como uma resistência linear. Dessa forma, �
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/small-signal-model.png}
+    \includegraphics[width=0.75\linewidth]{../images/small-signal-model.png}
     \caption{Circuito com o diodo no modelo de pequenos sinais}
     \label{fig:small-signal-model}
 \end{figure}
@@ -159,7 +159,7 @@ Para a simulação do modelo obtido, foi realizada uma varredura nas correntes q
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/complete-ac-simulation.png}
+    \includegraphics[width=0.75\linewidth]{../images/complete-ac-simulation.png}
     \caption{Simulação AC completa}
     \label{fig:complete-ac-simulation}
 \end{figure}
@@ -173,7 +173,7 @@ A Fig.~\ref{fig:part2-original} apresenta o circuito original.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Images/part2-original.png}
+    \includegraphics[width=0.8\linewidth]{../images/part2-original.png}
     \caption{Circuito original do amplificador}
     \label{fig:part2-original}
 \end{figure}
@@ -182,7 +182,7 @@ A primeira análise a ser realizada é a análise em corrente contínua (anális
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{Images/dc-analysis-circuit.png}
+    \includegraphics[width=1\linewidth]{../images/dc-analysis-circuit.png}
     \caption{Circuito com elementos AC anulados}
     \label{fig:dc-analysis-circuit}
 \end{figure}
@@ -191,7 +191,7 @@ Após essa anulação dos componentes, o circuito pode ser simplificado como é 
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{Images/part2-dc-simplified-circuit.png}
+    \includegraphics[width=1\linewidth]{../images/part2-dc-simplified-circuit.png}
     \caption{Circuito simplificado para análise DC}
     \label{fig:part2-dc-simplified-circuit}
 \end{figure}
@@ -200,7 +200,7 @@ A Fig.~\ref{fig:part2-magnitudes-dc-simplified-circuit} evidencia as grandezas q
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{Images/part2-magnitudes-dc-simplified-circuit.png}
+    \includegraphics[width=1\linewidth]{../images/part2-magnitudes-dc-simplified-circuit.png}
     \caption{Circuito simplificado para análise DC com grandezas evidentes}
     \label{fig:part2-magnitudes-dc-simplified-circuit}
 \end{figure}
@@ -318,7 +318,7 @@ Com todos esses valores em mãos, é possível simular o circuito e realizar a s
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/part2-simul-DC.png}
+    \includegraphics[width=0.75\linewidth]{../images/part2-simul-DC.png}
     \caption{Simulação DC do circuito amplificador}
     \label{fig:part2-simul-DC}
 \end{figure}
@@ -350,7 +350,7 @@ A Fig.~\ref{fig:small-signal-model-ac} apresenta o circuito completo, com a subs
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/small-signal-model-ac.png}
+    \includegraphics[width=0.75\linewidth]{../images/small-signal-model-ac.png}
     \caption{Substituição do transistor pelo modelo de híbrido-\(\pi\)}
     \label{fig:small-signal-model-ac}
 \end{figure}
@@ -359,7 +359,7 @@ Considerando que o amplificador opere com uma frequência da ordem de GHz, o cap
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Images/ac-simplified-circuit2.png}
+    \includegraphics[width=0.75\linewidth]{../images/ac-simplified-circuit2.png}
     \caption{Circuito AC simplificado}
     \label{fig:ac-simplified-circuit}
 \end{figure}
