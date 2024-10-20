@@ -213,7 +213,7 @@ $$
   H(j\omega) = \frac{V_{o2}}{V_{i2}}=\frac{X_LR_L}{X_LX_C+R_LX_C+X_LR_L}
 $$
 
-Assim, a tensão na carga pode ser calculada como
+em que, aqui, $X_L=j\omega L$ e $X_C=(j\omega C)^{-1}$. Assim, a tensão na carga pode ser calculada como
 
 $$
   V_{o2}=H(j\omega)V_{i2}
@@ -296,8 +296,19 @@ $$
   \begin{split}
     \sqrt{\text{IL}}&=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)\implies\\
     &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+R_L\frac{X_LX_C+R_LX_C+X_LR_L}{X_LR_L}\right)\implies\\
+    &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{X_LX_C+R_LX_C+X_LR_L}{X_L}\right)\implies\\
+    &=\frac{1}{(R_s+R_L)}\left(\frac{R_sX_L+R_LR_s+X_LX_C+R_LX_C+X_LR_L}{X_L}\right)\implies\\
+    &=\frac{R_sX_L+R_LR_s+X_LX_C+R_LX_C+X_LR_L}{X_LR_s+X_LR_L}
   \end{split}
 $$
+
+Se for feito $X_L=jX_L^{'}$ e $X_C=-jX_C^{'}$, essa equação resulta em
+
+$$
+  \begin{split}
+    \sqrt{\text{IL}}&=\frac{R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L-j(R_LR_s+X_L^{'}X_C^{'})}{X_L^{'}R_s+X_L^{'}R_L}
+  \end{split}
+$$ {#eq-insertion-loss-sqrt}
 
 
 
