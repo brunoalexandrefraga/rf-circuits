@@ -306,11 +306,52 @@ Se for feito $X_L=jX_L^{'}$ e $X_C=-jX_C^{'}$, essa equação resulta em
 
 $$
   \begin{split}
-    \sqrt{\text{IL}}&=\frac{R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L-j(R_LR_s+X_L^{'}X_C^{'})}{X_L^{'}R_s+X_L^{'}R_L}
+    \sqrt{\text{IL}}&=\frac{R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L-j(R_LR_s+X_L^{'}X_C^{'})}{X_L^{'}R_s+X_L^{'}R_L}\implies\\
+    \text{IL}&=\frac{(R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L)^2+(R_LR_s+X_L^{'}X_C^{'})^2}{\left(X_L^{'}\right)^2(R_s+R_L)^2}
   \end{split}
 $$ {#eq-insertion-loss-sqrt}
 
+Como pode-se perceber, o resultado de obter a função de transferência é exatamente o mesmo que a [Eq. @eq-insertion-loss]. E, portanto, não parece ser uma solução muito boa, por conta da complexidade de sua solução.
 
+Assim, a próxima ideia é utilizar uma abordagem de simplificar o circuito, ou seja, calcular o circuito, inicialmente somente com o capacitor e depois será acoplado um indutor adequado para que o insertion loss esteja dentro dos limites para as frequências desejadas.
 
+### Simplificação do circuito
 
+#### Obtenção do capacitor
 
+Para iniciar a análise, visualiza-se o circuito somente com o capacitor do *bias-tee* na Fig.\ref{fig:circuit-simplified-biasTee-capacitor}.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+	  \draw (-1, -4) coordinate(point1) node[ground]{} to[vsource, invert, l=$V_s$] ++(0, 2) to[R, l=$R_s$] ++(0, 2) to[C, l=C, a=$X_C$, i^>=$I_{L2}$, -*] (3.5, 0) to[R, l=$R_L$, *-] (3.5, -4) coordinate(point2) ;
+	  \draw (point1) to[short] (point2) ;
+
+    % Add the marker for V_{L2}
+    \node at (3.5, 0) [above right] [above] {$V_{L2}$};
+  \end{circuitikz}
+  \caption{Circuito com o \textit{bias-Tee} simplificado}
+  \label{fig:circuit-simplified-biasTee-capacitor}
+\end{figure}
+```
+
+Agora, calcula-se a potência dissipada pela carga $R_L$.
+
+$$
+  P_{L2}=\frac{1}{2}\mathfrak{R}\left\{V_{L2}I_{L2}^*\right\}
+$$
+
+Analisando o circuito, verifica-se que
+
+$$
+  I_{L2}=\frac{V_s}{R_s+X_C+R_L}
+$$
+
+E,
+
+$$
+  \begin{split}
+    V_{L2}&=V_s-I_{L2}\left(R_s+X_C\right)\implies\\
+  \end{split}
+$$

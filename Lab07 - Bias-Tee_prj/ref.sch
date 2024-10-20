@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-151,-64,2596,2432,0.709433,141,0
+View=-91,-41,2596,2432,0.507937,0,240
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -44,7 +44,7 @@ Eqn Eqn8 1 200 680 0 8 0 0 "Vi2_calc=(RL*XL_line*Vs)/(RL*XL_line+XL_line*Rs*H2_c
 Eqn Int1 1 380 550 0 8 0 0 "XC_line=1/(j*omega*C)=" 1 "XL_line=j*omega*L=" 1 "no" 0
 Eqn Eqn5 1 370 230 0 8 0 0 "Vo_h_calc=Vi2*H2_calc=" 1 "PL2_H=real(Vo_h_calc*conj(Vo_h_calc))/(2*RL)=" 1 "PL2_meas=real(VL2*conj(IL2))/2=" 1 "yes" 0
 Eqn Eqn4 1 360 110 0 8 0 0 "H2=Vo2/Vi2=" 1 "H2_calc=(XL_line*RL)/(XL_line*XC_line+RL*XC_line+XL_line*RL)=" 1 "yes" 0
-Eqn Eqn7 1 370 380 0 8 0 0 "IL_meas_H=PL1_calc/PL2_H=" 1 "IL_meas_H2=abs((Vi1)^2/(Vi2*H2_calc)^2)=" 1 "IL_CALC12=abs(((1/(Rs+RL)) * (Rs + (RL * Rs) / XL_line + RL / H2_calc))^2)=" 1 "IL_test122=abs(((Rs*XL_line+RL*Rs+XL_line*XC_line+RL*XC_line+XL_line*RL)/(XL_line*Rs+XL_line*RL))^2)=" 1 "IL_test1111=abs((       (Rs*XI-RL*XC+XI*RL-j*(RL*Rs+XI*XC))/(XI*Rs+XI*RL)     )^2)=" 1 "no" 0
+Eqn Eqn7 1 370 380 0 8 0 0 "IL_meas_H=PL1_calc/PL2_H=" 1 "IL_meas_H2=abs((Vi1)^2/(Vi2*H2_calc)^2)=" 1 "IL_CALC12=abs(((1/(Rs+RL)) * (Rs + (RL * Rs) / XL_line + RL / H2_calc))^2)=" 1 "IL_test122=abs(((Rs*XL_line+RL*Rs+XL_line*XC_line+RL*XC_line+XL_line*RL)/(XL_line*Rs+XL_line*RL))^2)=" 1 "IL_test1111=((      (((Rs*XI-RL*XC+XI*RL)^2+((RL*Rs+XI*XC)^2)))/(XI^2*(Rs+RL)^2)   ))=" 1 "no" 0
 </Components>
 <Wires>
 1180 770 1180 850 "" 0 0 0 ""
@@ -151,7 +151,7 @@ Eqn Eqn7 1 370 380 0 8 0 0 "IL_meas_H=PL1_calc/PL2_H=" 1 "IL_meas_H2=abs((Vi1)^2
 	<"IL_meas_H2" "" #0000ff 0 3 1 0 0 0 "">
 	<"10*log10(IL_meas_H2)" "" #0000ff 0 7 1 0 0 0 "">
 </Tab>
-<Tab 974 330 394 101 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+<Tab 973 363 575 135 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
 	<"IL_CALC12" "" #0000ff 0 3 1 0 0 0 "">
 	<"IL_test122" "" #0000ff 0 3 1 0 0 0 "">
 	<"IL_test1111" "" #0000ff 0 3 1 0 0 0 "">
