@@ -50,15 +50,15 @@ format:
 
 ## Perda por inserção no Bias-Tee
 
-A perda por inserção, $\text{IL}$ é definida como @steer2019microwavev3
+### Análise do circuito
+
+A perda por inserção, $\text{IL}$ é definida como @steer2019microwavev3.
 
 $$
   \text{IL}=\frac{P_{L1}}{P_{L2}}
 $$
 
 em que $P_{L1}$ é a potência dissipada na carga sem o dispositivo a ser medido (DUT, do inglês *Device Under Test*) e $P_{L2}$ é o dispositivo a ser medido com o DUT acoplado ao circuito de medição.
-
-### Perda por inserção pela potência
 
 ```{=latex}
 \begin{figure}[h]
@@ -74,6 +74,7 @@ em que $P_{L1}$ é a potência dissipada na carga sem o dispositivo a ser medido
   \label{fig:circuit-no-biasTee}
 \end{figure}
 ```
+
 O circuito apresentado na Fig.\ref{fig:circuit-no-biasTee} está sem o DUT. Dessa forma, é possível calcular a potência entregue à carga $R_L$ antes do acoplamento do DUT.
 
 $$
@@ -84,7 +85,7 @@ No caso do circuito da Fig. \ref{fig:circuit-no-biasTee} a tensão sob a carga �
 
 $$
   V_{L1}=V_s\frac{R_L}{R_s+R_L}
-$$
+$$ {#eq-voltage-before}
 
 A corrente de carga, $I_{L1}$, para essa configuração é dada por
 
@@ -183,67 +184,120 @@ $$
   \end{split}
 $$ {#eq-insertion-loss}
 
-### Perda por inserção pelos parâmetros s
+Entrentanto, essa equação é bem complicada e de difícil solução. Uma outra maneira é obter a função de transferência do *bias-Tee* e calcular a potência dissipada na carga. Essa abordagem parece ser bem interessante, uma vez que é possível utilizar os conhecimentos de síntese de filtros para obter o *insertion loss* desejado.
 
-## Equações de projeto
+### Função de Transferência
 
-Dado que o cálculo da perda por inserção foi devidamente expressa pela [Eq. @eq-insertion-loss], é possível obter as equações para o projeto do *bias-Tee* com os requisitos do problema. Abrindo, reaorganizando e substituindo os valores de $R_s$ e $R_L$ nos termos da equação, obtém-se
+A análise inicia-se buscando pela função de transferência do circuito com o *bias-tee* acoplado. Toma-se como base o circuito ilustrado na Fig.\ref{fig:circuit-biasTee-H}.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+	  \draw (1, -1) coordinate(point1) to[R, l=$R_s$, *-] ++(0, -2) to[vsource, l=$V_s$] ++(0, -1.5) to[short] ++(3, 0) coordinate(point2) node[ground]{} ;
+	  \draw (point1) to[C, l=C, a=$X_C$, i^>=$I_s$] ++(3, 0) coordinate(point3) to[L, l=L, a=$X_L$, i>^=$I_{dc}$] (point2) ;
+	  \draw (point3) to[short, -*] ++(2, 0) to[R, l=$R_L$, i>^=$I_{L2}$] ++(0, -3.5) to[short] (point2) ;
+  
+    % Add the marker for V_{L2}
+    \node at (point1) [above] {$V_{i2}$};
+    \node at ($(point3) + (2, 0)$) [above] {$V_{o2}$};
+  \end{circuitikz}
+  \caption{Função de transferência do circuito com \textit{bias-Tee}}
+  \label{fig:circuit-biasTee-H}
+\end{figure}
+```
+
+Dessa forma, a função de transferência do circuito é dada por
 
 $$
-  \text{IL}=\frac{2500^2 + (\frac{\omega L}{\omega C})^2 + 10000(\omega L)^2 + 2500(\frac{1}{\omega C})^2 - 5000\frac{\omega L}{\omega C}}{(\omega L)^2 (100)^2}
-$$ {#eq-insertion-loss-values}
+  H(j\omega) = \frac{V_{o2}}{V_{i2}}=\frac{X_LR_L}{X_LX_C+R_LX_C+X_LR_L}
+$$
 
-Pelas restrições impostas pelo problema, a perda por inserção deve ser de no máximo 1 dB entre 100 kHz e 10 GHz. Dessa forma, é obtém-se que 
+Assim, a tensão na carga pode ser calculada como
+
+$$
+  V_{o2}=H(j\omega)V_{i2}
+$$
+
+E a potência dissipada pela carga pode ser calculada por
+
+$$
+  P_{L2}=\frac{V_{o2}^2}{2R_L}
+$$
+
+Semelhantemente, pode-se calcular a potência dissipada na carga sem o *bias-tee*
+
+$$
+  P_{L1}=\frac{V_{o1}^2}{2R_L}
+$$
+
+Visualizando o circuito apresentado na Fig.\ref{fig:circuit-no-biasTee-transfer} chega-se à conclusão de que $V_{i1}=V_{o1}$.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+	  \draw (0.5, -1.5) coordinate(point1) to[vsource, l=$V_s$] ++(0, -2) to[short] ++(4.5, 0) coordinate(point2) ;
+	  \draw (point1) to[R, l=$R_s$] ++(0, 2) to[short, *-*] ++(4.5, 0) to[R, l=$R_L$, i>^=$I_{L1}$, *-] (point2) ;
+
+    % Add the marker for V_{L1}
+    \node at (5, 0.5) [above right] [above] {$V_{o1}$};
+    \node at ($(point1) + (0, 2)$) [above] {$V_{i1}$};
+  \end{circuitikz}
+  \caption{Circuito sem \textit{bias-Tee}}
+  \label{fig:circuit-no-biasTee-transfer}
+\end{figure}
+```
+
+Dessa forma, a equação torna-se
+
+$$
+  P_{L1}=\frac{V_{i1}^2}{2R_L}
+$$
+
+Portanto, o *insertion loss*, IL, do circuito é dado por
+
+$$
+\begin{split}
+  \text{IL}&=\frac{P_{L1}}{P_{L2}}\implies\\
+  &=\frac{V_{i1}^2}{V_{i2}^2H(j\omega)^2}
+\end{split}
+$$
+
+Pela [Eq. @eq-voltage-before] tem-se a tensão antes do acoplamento do DUT. A tensão de entrada após o acoplamento do DUT é dada por
 
 $$
   \begin{split}
-    \text{IL}\big|_\text{dB}&=10\log\left(\text{IL}\right)\implies\\
-    1\;\text{dB}&=10\log\left(\text{IL}\right)\implies\\
-    IL&=10^{1/10}\approx 1,26
+    I_s&=I_{dc}+I_{L2}\implies\\
+    \frac{V_s+V_{i2}}{R_s}&=V_o\left(\frac{1}{R_L}+\frac{1}{X_L}\right)\implies\\
+    V_s-V_{i2}&=R_sV_{i2}H(j\omega)\left(\frac{1}{R_L}+\frac{1}{X_L}\right)
   \end{split}
 $$
 
+Assim, obtém-se
 
-Assim, a equação [Eq. @eq-insertion-loss-values] pode ser manipulada como se segue
+$$
+  V_{i2}=\frac{R_LX_LV_s}{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}
+$$
+
+Para facilitar o processo, calcula-se a raiz quadrada do *insertion loss*, ou seja
 
 $$
   \begin{split}
-    1,26(\omega L)^2 (100)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + 10000(\omega L)^2 + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
-    12600(\omega L)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + 10000(\omega L)^2 + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
-    2600(\omega L)^2=2500^2 + \frac{(\omega L)^2}{(\omega C)^2} + \frac{2500}{(\omega C)^2} - 5000\frac{\omega L}{\omega C}\implies\\
-    2600(\omega L)^2-2500^2 + 5000\frac{\omega L}{\omega C}=\frac{(\omega L)^2+2500}{(\omega C)^2}\implies\\
-    2600\omega^4L^2C^2 - 2500^2\omega^2C^2 + 5000\omega^2LC=\omega^2L^2+2500\implies\\
+    \sqrt{\text{IL}}&=\frac{V_sR_L}{(R_s+R_L)}\frac{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}{R_LX_LV_sH(j\omega)}\implies\\
+    &=\frac{1}{(R_s+R_L)}\frac{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}{X_LH(j\omega)}\implies\\
+    &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)
   \end{split}
 $$
 
-$$
-  2600\omega^4L^2C^2 - 2500^2\omega^2C^2 - \omega^2L^2 - 2500 + 5000\omega^2LC=0
-$$ {#eq-algebric}
-
-Para dar continuidade à resolução das equações, nota-se que a análise deve ser feita para a frequência de 100 kHz, assim, $\omega=2\pi f=2\pi 100\cdot 10^3$. Substituindo essa relação na [Eq. @eq-algebric], obtém-se
+Substituindo a equação obtida para a função de transferência, $H(j\omega)$,
 
 $$
-  2600(16\cdot 10^{20})\pi^4L^2C^2 - 2500^2(40\cdot 10^9)\pi^2C^2 - (40\cdot 10^9)\pi^2L^2 - 2500 + 5000(40\cdot 10^9)\pi^2LC=0
+  \begin{split}
+    \sqrt{\text{IL}}&=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)\implies\\
+    &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+R_L\frac{X_LX_C+R_LX_C+X_LR_L}{X_LR_L}\right)\implies\\
+  \end{split}
 $$
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
