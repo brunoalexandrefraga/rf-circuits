@@ -44,22 +44,123 @@ format:
 # Prelab
 ## Potência dissipada na carga
 
-A potência dissipada na carga, $P_L$, é dada pela seguinte expressão
+
+O circuito original é apresentado na Fig.\ref{fig:original-circuit}.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+    \begin{circuitikz}[american]
+      \draw (1.5, 0.5) coordinate(point1) to[R, l=$Y_s$] ++(0, -4.5) coordinate(point2) node[ground]{} to[short] ++(-2.5, 0) to[isource, l=$I_s$] ++(0, 4.5) to[short] (point1) to[short] ++(2, 0) coordinate(point3) to[L, l=$B_s$, a=L] ++(0, -4.5) coordinate(point4) to[short] (point2) ;
+      \draw (point3) to[short] ++(2.5, 0) to[generic, l=$Y_L$] ++(0, -4.5) to[short] (point4) ;
+    \end{circuitikz}
+  \caption{Circuito original}
+  \label{fig:original-circuit}
+\end{figure}
+```
+
+Parte-se da restrição principal em que a carga $Y_L$ dissipa uma certa potência com uma eficiência de 80%. Dessa forma, calcula-se
 
 $$
-  P_L=\frac{V_L\cdot I_L^*}{2}
+  \eta=\frac{P_L}{P_s}
 $$
 
-em que $V_L$ é a tensão na carga e $I_L^*$ o conjugado da corrente que passa pela mesma.
+Em que a potência dissipada na carga, $P_L$, é dada pela seguinte expressão
 
-Como o circuito está todo em paralelo, a tensão na carga é a mesma tensão do circuito todo, ou seja, $V_L=V_s$, como pode-se verificar na [Fig. @fig-original-circuit].
+$$
+  P_L=\frac{1}{2}\mathfrak{R}\left\{V_LI_L^*\right\}
+$$
 
-![Circuito para medição da admitância total](../images/circuit-original.png){width=300, #fig-original-circuit}
+sendo $V_L$ a tensão na carga e $I_L^*$ o conjugado da corrente que passa pela mesma.
+
+$$
+  I_L=\frac{I_sY_L}{Y_s+Y_L}
+$$
+
+e, que $Y_s=G_s+jB_s$, sendo $G_s=1/R_s$ e $B_s=-1/(\omega L)$
+
+$$
+  V_L=\frac{I_s}{Y_s+Y_L}
+$$
+
+Calculadndo $P_L$, obtém-se
+
+$$
+  \begin{split}
+    P_L=\frac{1}{2}\frac{|I_s|^2}{|Y_s+Y_L|^2}\mathfrak{R}\left\{Y_L^*\right\}
+  \end{split}
+$$
+
+
+A variável $P_s$, por sua vez é dada por
+
+$$
+  \begin{split}
+    P_s&=\frac{1}{2}\mathfrak{R}\left\{V_LI_s^*\right\}\implies\\
+    &=\frac{|I_s|^2}{2\mathfrak{R}\left\{(Y_s+Y_L)\right\}}\implies\\
+    &=\frac{|I_s|^2\mathfrak{R}\left\{(Y_s+Y_L)^*\right\}}{2\mathfrak{R}\left\{(Y_s+Y_L)\right\}\mathfrak{R}\left\{(Y_s+Y_L)^*\right\}}\implies\\
+    &=\frac{|I_s|^2\mathfrak{R}\left\{(Y_s+Y_L)^*\right\}}{2|Y_s+Y_L|^2}
+  \end{split}
+$$
+
+Assim, o cálculo da eficiência é realizado da seguinte forma
+
+$$
+  \begin{split}
+    \eta&=\frac{|I_s|^2\mathfrak{R}\left\{Y_L^*\right\}}{2|Y_s+Y_L|^2}\cdot\frac{2|Y_s+Y_L|^2}{|I_s|^2\mathfrak{R}\left\{(Y_s+Y_L)^*\right\}}\implies\\
+    &=\frac{\mathfrak{R}\left\{Y_L^*\right\}}{\mathfrak{R}\left\{(Y_s+Y_L)^*\right\}}\implies\\
+    &=\frac{\mathfrak{R}\left\{(G_L+jB_L)^*\right\}}{\mathfrak{R}\left\{(G_s+jB_s+G_L+jB_L)^*\right\}}\implies\\
+    &=\frac{\mathfrak{R}\left\{(G_L+jB_L)^*\right\}}{\mathfrak{R}\left\{[G_s+G_L+j(B_s+B_L)]^*\right\}}\implies\\
+    &=\frac{\mathfrak{R}\left\{G_L-jB_L\right\}}{\mathfrak{R}\left\{G_s+G_L-j(B_s+B_L)\right\}}\implies\\
+    &=\frac{G_L}{G_s+G_L}
+  \end{split}
+$$
+
+Dessa forma, deseja-se obter uma equação para $Y_L$.
+
+$$
+  \begin{split}
+    G_L&=(G_s+G_L)\eta\implies\\
+    G_L-\eta G_L&=\eta G_s\implies\\
+    G_L(1-\eta)&=\eta G_s\implies\\
+    G_L&=G_s\frac{\eta}{1-\eta}
+  \end{split}
+$$
+
+Para uma eficiência de 80%, a relação anterior leva a $G_L=4G_s$. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Com base nisso, percebe-se que
 
 $$
-  P_L=\frac{V_s\cdot V_s^*}{2R_L}
+  P_L=\frac{1}{2}\mathfrak{R}\left\{\frac{V_s\cdot V_s^*}{R_L^*}\right\}
 $$
 
 pois $I_L=V_s/R_L$. E assim obtém-se que
