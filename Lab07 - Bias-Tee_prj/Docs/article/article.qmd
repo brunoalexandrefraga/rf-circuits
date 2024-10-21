@@ -345,13 +345,20 @@ $$
 Analisando o circuito, verifica-se que
 
 $$
-  I_{L2}=\frac{V_s}{R_s+X_C+R_L}
+  \begin{split}
+    I_{L2}&=\frac{V_s}{R_s+X_C+R_L}\implies\\
+    &=\frac{V_s}{R_s+R_L-jX_C^{'}}\implies\\
+    &=V_s\frac{R_s+R_L+jX_C^{'}}{(R_s+R_L)^2+X_C^{'2}}\implies\\
+  \end{split}
 $$
 
-E,
+em que $X_C=-jX_C^{'}$.
 
 $$
   \begin{split}
     V_{L2}&=V_s-I_{L2}\left(R_s+X_C\right)\implies\\
+    &=V_s\left[1-\frac{(R_s+X_C)}{R_s+X_C+R_L}\right]\implies\\
+    &=V_s\left[1-\frac{(R_s-jX_C^{'})(R_s+R_L+jX_C^{'})}{(R_s+R_L)^2+X_C^{'2}}\right]\implies\\
+    &=V_s\left[1-\frac{R_s^2+R_sR_L+X_C^{'2}-jX_C^{'}R_L}{(R_s+R_L)^2+X_C^{'2}}\right]\implies\\
   \end{split}
 $$
