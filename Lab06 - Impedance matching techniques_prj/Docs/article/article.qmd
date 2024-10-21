@@ -51,8 +51,11 @@ O circuito original é apresentado na Fig.\ref{fig:original-circuit}.
 \begin{figure}[h]
   \centering
     \begin{circuitikz}[american]
-      \draw (1.5, 0.5) coordinate(point1) to[R, l=$Y_s$] ++(0, -4.5) coordinate(point2) node[ground]{} to[short] ++(-2.5, 0) to[isource, l=$I_s$] ++(0, 4.5) to[short] (point1) to[short] ++(2, 0) coordinate(point3) to[L, l=$B_s$, a=L] ++(0, -4.5) coordinate(point4) to[short] (point2) ;
-      \draw (point3) to[short] ++(2.5, 0) to[generic, l=$Y_L$] ++(0, -4.5) to[short] (point4) ;
+      \draw (1.5, 0.5) coordinate(point1) to[R, l=$G_s$] ++(0, -4.5) coordinate(point2) node[ground]{} to[short] ++(-2.5, 0) to[isource, l=$I_s$] ++(0, 4.5) to[short] (point1) to[short, -*] ++(2, 0) coordinate(point3) to[L, l=$B_s$, a=$L$, *-] ++(0, -4.5) coordinate(point4) to[short] (point2) ;
+      \draw (point3) to[short, *-] ++(2.5, 0) to[generic, l=$Y_L$, i>^=$I_L$] ++(0, -4.5) to[short] (point4) ;
+
+      % Add the marker for V_{L}
+      \node at (point3) [above right] [above] {$V_{L}$};
     \end{circuitikz}
   \caption{Circuito original}
   \label{fig:original-circuit}
@@ -127,7 +130,75 @@ $$
   \end{split}
 $$
 
-Para uma eficiência de 80%, a relação anterior leva a $G_L=4G_s$. 
+Para uma eficiência de 80%, a relação anterior resulta em $G_L=4G_s$. A seguir, busca-se determinar a parte imaginária da admitância de carga, ou seja, determinar $B_L$. O problema em questão exige que o amplificador transfira a máxima potência possível com uma eficiência de 80%. Essa máxima potência possível traduz-se em realizar uma análise de forma a maximizar a potência fornecida pelo amplificador, $P_s$. Relembrando a equação,
+
+$$
+  \begin{split}
+    P_s&=\frac{|I_s|^2\mathfrak{R}\left\{(Y_s+Y_L)^*\right\}}{2|Y_s+Y_L|^2}\implies\\
+    &=\frac{|I_s|^2(G_s+G_L)}{2(G_s+G_L)^2+2(B_L+B_s)^2}
+  \end{split}
+$$
+
+A seguir, demonstra-se matematicamente como que a função $P_s$ pode ser minimizada em função de $B_L$.
+
+$$
+    \frac{\partial P_s}{\partial B_L}=0\implies
+$$
+$$
+    \frac{\partial}{\partial B_L}\left[\frac{|I_s|^2(G_s+G_L)}{2(G_s+G_L)^2+2(B_L+B_s)^2}\right]=0
+$$
+
+Como o valor de $I_s$ já é conhecido, pode-se remover o símbolo de módulo. Além disso, uma forma simples de se calcular essa derivada é utilizando a regra do quosciente, ou seja,
+
+$$
+  \frac{\partial}{\partial B_L}\left[\frac{f(B_L)}{g(B_L)}\right]=\frac{f'(B_L)g(B_L)-f(B_L)g'(B_L)}{[g(B_L)]^2}
+$$
+
+em que $f(B_L)=I_s^2(G_s + G_L)$ e $g(B_L)=2(G_s+G_L)^2+2(B_L+B_s)^2$.
+
+Como $f(B_L)$ não depende de $B_L$, $f'(B_L)=0$. E a derivada de $g(B_L)$ é dada por
+
+$$
+  \begin{split}
+    g'(B_L)&=\left[2(B_L+B_s)^2\right]^{'}\implies\\
+    &=2(B_L^2+2B_LB_s+B_s^2)^{'}\implies\\
+    &=4(B_L+B_s)\implies\\
+  \end{split}
+$$
+
+Calculando a derivada completa, obtém-se
+
+$$
+  \begin{split}
+    \frac{\partial P_s}{\partial B_L}&=\frac{-I_s^2(G_s + G_L)4(B_L+B_s)}{[4(B_L+B_s)]^2}=0\implies\\
+    B_L&=-B_s=\frac{1}{\omega L}
+  \end{split}
+$$
+
+Finalmente, é possível calcular um valor de admitância de carga,
+
+$$
+  \begin{split}
+    Y_L&=G_L+jB_L\implies\\
+    &=G_s\frac{\eta}{1-\eta}+j\frac{1}{\omega L}\implies\\
+  \end{split}
+$$
+
+Aplicando os valores $\eta=80%$, $G_s=1/R_s=1/65$, $L=10$ nH e $\omega=2\pi f$, em que $f=2,4$ GHz.
+
+$$
+  \begin{split}
+    Y_L&=\frac{1}{65}\cdot\frac{0,8}{1-0,8}+j\frac{1}{2\cdot \pi\cdot 2,4\cdot 10^9\cdot 10\cdot 10^{-9}}\implies\\
+    &=\frac{4}{65}+j\frac{1}{48\pi}\implies\\
+    &\approx 61,54+j6,63\;\text{mS}\implies\\
+  \end{split}
+$$
+
+Semelhantemente, obtém-se uma impedância de carga, $Z_L$, igual a
+
+$$
+  Z_L\approx 16-j1,73\;\Omega
+$$
 
 
 
@@ -136,26 +207,7 @@ Para uma eficiência de 80%, a relação anterior leva a $G_L=4G_s$.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Incorreto
 
 Com base nisso, percebe-se que
 
