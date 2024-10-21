@@ -348,11 +348,17 @@ $$
   \begin{split}
     I_{L2}&=\frac{V_s}{R_s+X_C+R_L}\implies\\
     &=\frac{V_s}{R_s+R_L-jX_C^{'}}\implies\\
-    &=V_s\frac{R_s+R_L+jX_C^{'}}{(R_s+R_L)^2+X_C^{'2}}\implies\\
+    &=V_s\frac{R_s+R_L+jX_C^{'}}{(R_s+R_L)^2+X_C^{'2}}
   \end{split}
 $$
 
-em que $X_C=-jX_C^{'}$.
+em que $X_C=-jX_C^{'}$. E o conjugado, é
+
+$$
+  I_{L2}^*=V_s\frac{R_s+R_L-jX_C^{'}}{(R_s+R_L)^2+X_C^{'2}}
+$$
+
+A tensão na carga $R_L$, por sua vez é dada por
 
 $$
   \begin{split}
@@ -360,5 +366,33 @@ $$
     &=V_s\left[1-\frac{(R_s+X_C)}{R_s+X_C+R_L}\right]\implies\\
     &=V_s\left[1-\frac{(R_s-jX_C^{'})(R_s+R_L+jX_C^{'})}{(R_s+R_L)^2+X_C^{'2}}\right]\implies\\
     &=V_s\left[1-\frac{R_s^2+R_sR_L+X_C^{'2}-jX_C^{'}R_L}{(R_s+R_L)^2+X_C^{'2}}\right]\implies\\
+    &=V_sR_L\left[\frac{R_L+R_s+jX_C^{'}}{(R_s+R_L)^2+X_C^{'2}}\right]\implies\\
+    &=\frac{V_sR_L}{(R_s+R_L)-jX_C^{'}}\implies\\
   \end{split}
 $$
+
+Como foi visto anteriormente, pode-se calcular o *insertion loss* simplesmente pela divisão do quadrado das tensões antes do acoplamento do DUT e após o acoplamento. Dessa forma, o insertion loss pode ser calculado como
+
+$$
+  \begin{split}
+    \text{IL}&=20\log\left\|\frac{V_sR_L}{R_s+R_L}\cdot\frac{(R_s+R_L)-jX_C^{'}}{V_sR_L}\right\|\implies\\
+    &=10\log\left[\frac{\left|(R_s+R_L)-jX_C^{'}\right|^2}{(R_s+R_L)^2}\right]\implies\\
+    &=10\log\left[\frac{(R_s+R_L)^2+X_C^{'2}}{(R_s+R_L)^2}\right]\implies\\
+    &=10\log\left[1+\frac{X_C^{'2}}{(R_s+R_L)^2}\right]
+  \end{split}
+$$
+
+Isolando o $X_C$ na equação, pode-se obter o valor do capacitor para um determinado valor de IL.
+
+$$
+  \begin{split}
+    10^{\text{IL}/10}&=1+\frac{X_C^{'2}}{(R_s+R_L)^2}\implies\\
+    10^{\text{IL}/10}-1&=\frac{X_C^{'2}}{(R_s+R_L)^2}\implies\\
+    X_C^{'2}&=(R_s+R_L)^2\left(10^{\text{IL}/10}-1\right)\implies\\
+    X_C&=(R_s+R_L)\sqrt{\left(10^{\text{IL}/10}-1\right)}\implies\\
+    \omega C&=\left[(R_s+R_L)\sqrt{\left(10^{\text{IL}/10}-1\right)}\right]^{-1}\implies\\
+    C&=\left[\omega(R_s+R_L)\sqrt{\left(10^{\text{IL}/10}-1\right)}\right]^{-1}
+  \end{split}
+$$
+
+
