@@ -184,23 +184,93 @@ $$
   \end{split}
 $$
 
-Aplicando os valores $\eta=80%$, $G_s=1/R_s=1/65$, $L=10$ nH e $\omega=2\pi f$, em que $f=2,4$ GHz.
+```{python}
+#| echo: false
+import numpy as np
+# Definição das constantes
+eta = 0.80 # Eficiência
+Rs = 65 # Resistência
+Gs = 1 / Rs # Condutância
+L = 10e-9 # Indutância em Henry
+f = 2.4e9 # Frequência em Hz
+omega = 2 * np.pi * f # Frequência angular
+```
+
+```{python}
+#| echo: false
+def format(value):
+    if value >= 1e9:
+        return f"{value / 1e9:.1f} G"
+    elif value >= 1e6:
+        return f"{value / 1e6:.0f} M"
+    elif value >= 1e3:
+        return f"{value / 1e3:.0f} k"
+    elif value >= 1:
+        return f"{value:.0f} "
+    elif value >= 1e-3:
+        return f"{value * 1e3:.2f} m"
+    elif value >= 1e-6:
+        return f"{value * 1e6:.0f} μ"
+    elif value >= 1e-9:
+        return f"{value * 1e9:.0f} n"
+    elif value >= 1e-12:
+        return f"{value * 1e12:.0f} p"
+    else:
+        return f"{value:.0e} "
+```
+
+Aplicando os valores $\eta =$ `{python} eta*100`%, $G_s = 1/R_s$, $R_s =$ `{python} format(Rs)`$\Omega$, $L =$ `{python} format(L)`H e $\omega=2\pi f$, em que $f =$ `{python} format(f)`Hz.
+
+```{python}
+#| echo: false
+# Função que calcula G_s * (eta / (1 - eta))
+def load_admittance(Gs, eta):
+    return Gs * (eta / (1 - eta))
+
+# Função que calcula 1 / (omega * L)
+def load_susceptance(omega, L):
+    return 1 / (omega * L)
+```
+
+```{python}
+#| echo: false
+GL = load_admittance(Gs, eta)
+admittance_value = GL * 1000  # Multiplica por 1000 para converter para mS
+formatted_admittance = f"{admittance_value:.2f}"    # Formata para 2 casas decimais
+
+BL = load_susceptance(omega, L)
+susceptance_value = BL * 1000  # Multiplica por 1000 para converter para mS
+formatted_susceptance = f"{susceptance_value:.2f}"    # Formata para 2 casas decimais
+```
 
 $$
   \begin{split}
     Y_L&=\frac{1}{65}\cdot\frac{0,8}{1-0,8}+j\frac{1}{2\cdot \pi\cdot 2,4\cdot 10^9\cdot 10\cdot 10^{-9}}\implies\\
-    &=\frac{4}{65}+j\frac{1}{48\pi}\implies\\
-    &\approx 61,54+j6,63\;\text{mS}\implies\\
+    &=\frac{4}{65}+j\frac{1}{48\pi}
   \end{split}
 $$
 
-Semelhantemente, obtém-se uma impedância de carga, $Z_L$, igual a
 
-$$
-  Z_L\approx 16-j1,73\;\Omega
-$$
+```{python}
+#| echo: false
+# Função que calcula G_s * (eta / (1 - eta))
+def load_resistence(GL, BL):
+    RL = GL/(GL**2 + BL**2)
+    return RL
 
+# Função que calcula 1 / (omega * L)
+def load_reactance(GL, BL):
+    BL = BL/(GL**2 + BL**2)
+    return BL
+```
 
+```{python}
+#| echo: false
+def format_2_decimals(value):
+    return f"{value:.2f}"
+```
+
+Finalmente, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{python} formatted_susceptance` mS. Semelhantemente, obtém-se uma impedância de carga, $Z_L =$ `{python} format_2_decimals(load_resistence(GL, BL))` - j`{python} format_2_decimals(load_reactance(GL, BL))` $\Omega$.
 
 
 
