@@ -435,3 +435,71 @@ Outro ponto a se verificar é em relação à simulação. Como pode-se verifica
 ![Verificação do capacitor projetado](../images/simple-capacitor-verification.png){width=300, #fig-simple-capacitor-verification}
 
 O cálculo do indutor $L$ é iniciado analisando-se o circuito apresentado na Fig.\ref{fig:circuit-biasTee}. Como esse circuito já foi devidamente analisado, será utilizada a [Eq. @eq-insertion-loss] para obter um valor ideal para o indutor $L$.
+
+```{python}
+#| echo: false
+import sympy as sp
+import cmath
+
+def calcular_indutancia(f, C, IL_dB, R_L=50, R_s=50):
+    # Definindo a variável simbólica para L
+    L = sp.symbols('L')  # Indutância (H)
+    
+    # Definindo as expressões para XL e XC
+    omega = 2 * sp.pi * f
+    X_L = omega * L  # Reatância indutiva
+    X_C = 1 / (omega * C)  # Reatância capacitiva
+
+    # Convertendo IL de dB para linear
+    IL_linear = 10**(IL_dB / 10)
+
+    # Definindo o numerador e o denominador da equação
+    numerator = (R_L * R_s + X_L * X_C)**2 + (X_L * R_s + X_L * R_L - R_L * X_C)**2
+    denominator = X_L**2 * (R_s + R_L)**2
+
+    # Definindo a equação IL = Numerador / Denominador
+    equation = sp.Eq(IL_linear, numerator / denominator)
+
+    # Resolvendo a equação para L
+    solution = sp.solve(equation, L)
+
+    # Exibindo as soluções para L na forma polar
+    print("Solução para L (H):")
+    for sol in solution:
+        # Avalia a solução numérica
+        sol_value = sol.evalf()
+        
+        # Converte a solução para número complexo
+        sol_value = complex(sol_value)
+
+        # Calcula o módulo e o argumento
+        magnitude = abs(sol_value)  # Módulo
+        angle = cmath.phase(sol_value)  # Argumento em radianos
+        angle_degrees = sp.N(sp.deg(angle))  # Converte para graus
+
+        if angle_degrees == 0:
+          return magnitude
+
+        #return f"{IL*1:.2f} dB"
+
+        #print(f"L = {sol_value:.4e} H -> Módulo: {magnitude:.10e}, Ângulo: {angle_degrees:.4f}°")
+
+def format_inductance(L):
+    if L >= 1e-3:
+        return f"{L * 1e3:.4f} mH"
+    elif L >= 1e-6:
+        return f"{L * 1e6:.4f} µH"
+    elif L >= 1e-9:
+        return f"{L * 1e9:.4f} nH"
+    else:
+        return f"{L * 1e12:.4f} pH"
+```
+
+Utilizando a equação em questão, obtém-se uma indutância de $L =$ `{python} format_inductance(calcular_indutancia(f=100e3, C=31.277555e-09, IL_dB=1, R_L=50, R_s=50))`. Com esses dois valores, pode-se utilizar a equação [Eq. @eq-insertion-loss] para calcular o *insertion loss* dessa configuração **pendente**. Para garantir que o circuito está se comportando conforme o esperado, utiliza-se a simulação no QucsStudio para validar os valores calculados. Pode-se verificar na [Fig. @fig-simple-complete-verification] que o *insertion loss* obtido é exatamente o mesmo que o que foi calculado, validando, assim, os cálculos realizados (com muito mais casas decimais utilizadas para os cálculos).
+
+![Verificação do bias-tee projetado](../images/simple-complete-verification.png){width=300, #fig-simple-complete-verification}
+
+Além disso, visualizando a curva de resposta do circuito na [Fig. @fig-response], verifica-se que atende exatamente aos critérios estabelecidos.
+
+
+![Curva de insertion loss do bias-tee projetado](../images/Response.png){width=300, #fig-response}
