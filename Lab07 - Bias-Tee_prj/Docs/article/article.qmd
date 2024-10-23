@@ -55,7 +55,7 @@ format:
 A perda por inserção, $\text{IL}$ é definida como @steer2019microwavev3.
 
 $$
-  \text{IL}=\frac{P_{L1}}{P_{L2}}
+  \text{IL}\big|_\text{dB}=10\log\left\|\frac{P_{L1}}{P_{L2}}\right\|
 $$
 
 em que $P_{L1}$ é a potência dissipada na carga sem o dispositivo a ser medido (DUT, do inglês *Device Under Test*) e $P_{L2}$ é o dispositivo a ser medido com o DUT acoplado ao circuito de medição.
@@ -180,7 +180,7 @@ Dessa forma, é possível calcular a perda por inserção, $\text{IL}$ como
 
 $$
   \begin{split}
-    \text{IL}&=\frac{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}{X_L^2\left(R_s+R_L\right)^2}
+    \text{IL}\big|_\text{dB}&=10\log\left\|\frac{(R_LR_s+X_LX_C)^2+(X_LR_s+X_LR_L-R_LX_C)^2}{X_L^2\left(R_s+R_L\right)^2}\right\|
   \end{split}
 $$ {#eq-insertion-loss}
 
@@ -259,8 +259,8 @@ Portanto, o *insertion loss*, IL, do circuito é dado por
 
 $$
 \begin{split}
-  \text{IL}&=\frac{P_{L1}}{P_{L2}}\implies\\
-  &=\frac{V_{i1}^2}{V_{i2}^2H(j\omega)^2}
+  \text{IL}&=\left\|\frac{P_{L1}}{P_{L2}}\right\|\implies\\
+  &=\left\|\frac{V_{i1}^2}{V_{i2}^2H(j\omega)^2}\right\|
 \end{split}
 $$
 
@@ -284,9 +284,9 @@ Para facilitar o processo, calcula-se a raiz quadrada do *insertion loss*, ou se
 
 $$
   \begin{split}
-    \sqrt{\text{IL}}&=\frac{V_sR_L}{(R_s+R_L)}\frac{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}{R_LX_LV_sH(j\omega)}\implies\\
-    &=\frac{1}{(R_s+R_L)}\frac{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}{X_LH(j\omega)}\implies\\
-    &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)
+    \sqrt{\text{IL}}&=\left\|\frac{V_sR_L}{(R_s+R_L)}\frac{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}{R_LX_LV_sH(j\omega)}\right\|\implies\\
+    &=\left\|\frac{1}{(R_s+R_L)}\frac{X_LR_sH(j\omega)+R_LR_sH(j\omega)+R_LX_L}{X_LH(j\omega)}\right\|\implies\\
+    &=\left\|\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)\right\|
   \end{split}
 $$
 
@@ -294,21 +294,21 @@ Substituindo a equação obtida para a função de transferência, $H(j\omega)$,
 
 $$
   \begin{split}
-    \sqrt{\text{IL}}&=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)\implies\\
-    &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+R_L\frac{X_LX_C+R_LX_C+X_LR_L}{X_LR_L}\right)\implies\\
-    &=\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{X_LX_C+R_LX_C+X_LR_L}{X_L}\right)\implies\\
-    &=\frac{1}{(R_s+R_L)}\left(\frac{R_sX_L+R_LR_s+X_LX_C+R_LX_C+X_LR_L}{X_L}\right)\implies\\
-    &=\frac{R_sX_L+R_LR_s+X_LX_C+R_LX_C+X_LR_L}{X_LR_s+X_LR_L}
+    \sqrt{\text{IL}}&=\left\|\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{R_L}{H(j\omega)}\right)\right\|\implies\\
+    &=\left\|\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+R_L\frac{X_LX_C+R_LX_C+X_LR_L}{X_LR_L}\right)\right\|\implies\\
+    &=\left\|\frac{1}{(R_s+R_L)}\left(R_s+\frac{R_LR_s}{X_L}+\frac{X_LX_C+R_LX_C+X_LR_L}{X_L}\right)\right\|\implies\\
+    &=\left\|\frac{1}{(R_s+R_L)}\left(\frac{R_sX_L+R_LR_s+X_LX_C+R_LX_C+X_LR_L}{X_L}\right)\right\|\implies\\
+    &=\left\|\frac{R_sX_L+R_LR_s+X_LX_C+R_LX_C+X_LR_L}{X_LR_s+X_LR_L}\right\|
   \end{split}
 $$
 
 Se for feito $X_L=jX_L^{'}$ e $X_C=-jX_C^{'}$, essa equação resulta em
 
 $$
-  \begin{split}
-    \sqrt{\text{IL}}&=\frac{R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L-j(R_LR_s+X_L^{'}X_C^{'})}{X_L^{'}R_s+X_L^{'}R_L}\implies\\
-    \text{IL}&=\frac{(R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L)^2+(R_LR_s+X_L^{'}X_C^{'})^2}{\left(X_L^{'}\right)^2(R_s+R_L)^2}
-  \end{split}
+  \sqrt{\text{IL}}=\left\|\frac{R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L-j(R_LR_s+X_L^{'}X_C^{'})}{X_L^{'}R_s+X_L^{'}R_L}\right\|\implies
+$$
+$$
+  \text{IL}\big|_\text{dB}=10\log\left\|\frac{(R_sX_L^{'}-R_LX_C^{'}+X_L^{'}R_L)^2+(R_LR_s+X_L^{'}X_C^{'})^2}{\left(X_L^{'}\right)^2(R_s+R_L)^2}\right\|
 $$ {#eq-insertion-loss-sqrt}
 
 Como pode-se perceber, o resultado de obter a função de transferência é exatamente o mesmo que a [Eq. @eq-insertion-loss]. E, portanto, não parece ser uma solução muito boa, por conta da complexidade de sua solução.
@@ -376,7 +376,7 @@ Como foi visto anteriormente, pode-se calcular o *insertion loss* simplesmente p
 $$
   \begin{split}
     \text{IL}&=20\log\left\|\frac{V_sR_L}{R_s+R_L}\cdot\frac{(R_s+R_L)-jX_C^{'}}{V_sR_L}\right\|\implies\\
-    &=10\log\left[\frac{\left|(R_s+R_L)-jX_C^{'}\right|^2}{(R_s+R_L)^2}\right]\implies\\
+    &=10\log\left[\frac{\left\|(R_s+R_L)-jX_C^{'}\right\|^2}{(R_s+R_L)^2}\right]\implies\\
     &=10\log\left[\frac{(R_s+R_L)^2+X_C^{'2}}{(R_s+R_L)^2}\right]\implies
   \end{split}
 $$
@@ -400,6 +400,7 @@ $$
 $$ {#eq-capacitor-value}
 
 ```{python}
+#| echo: false
 import numpy as np
 
 def calc_capacitance(f, Rs=50, RL=50, IL_ideal=1):
@@ -429,4 +430,8 @@ def format_insertion_loss(IL):
 
 Aplicando os valores na [Eq. @eq-capacitor-value], obtém-se um capacitor com a capacitância $C =$ `{python} format_capacitance(calc_capacitance(100e3))`. Para testar esse valor obtido, pode-se utilizar a [Eq. @eq-IL-simplified-capacitor], resultando em um *insertion loss* de IL = `{python} format_insertion_loss(calc_insertion_loss(calc_capacitance(100e3), 100e3))`.
 
-Outro ponto a se verificar é em relação à simulação.
+Outro ponto a se verificar é em relação à simulação. Como pode-se verificar na @fig-simple-capacitor-verification.
+
+![Verificação do capacitor projetado](../images/simple-capacitor-verification.png){width=300, #fig-simple-capacitor-verification}
+
+O cálculo do indutor $L$ é iniciado analisando-se o circuito apresentado na Fig.\ref{fig:circuit-biasTee}. Como esse circuito já foi devidamente analisado, será utilizada a [Eq. @eq-insertion-loss] para obter um valor ideal para o indutor $L$.
