@@ -270,8 +270,11 @@ def format_2_decimals(value):
     return f"{value:.2f}"
 ```
 
-Finalmente, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{python} formatted_susceptance` mS. Semelhantemente, obtém-se uma impedância de carga, $Z_L =$ `{python} format_2_decimals(load_resistence(GL, BL))` - j`{python} format_2_decimals(load_reactance(GL, BL))` $\Omega$.
+Finalmente, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{python} formatted_susceptance` mS. Semelhantemente, obtém-se uma impedância de carga, $Z_L =$ `{python} format_2_decimals(load_resistence(GL, BL))` - j`{python} format_2_decimals(load_reactance(GL, BL))` $\Omega$. Assim, obtém-se que para que para que a carga dissipe potência com uma eficiência, $\eta$ de `{python} eta*100`%, esta deve ter como parte real da sua admitância, $G_L =$ `{python} formatted_admittance` mS. Além disso, foi demonstrado que, para que o amplificador forneça a máxima potência possível, essa carga deve ter uma parte imaginária de admitância, $B_L$, igual a `{python} formatted_susceptance` mS.
 
+A seguir, são apresentadas as verificações no simulador QucsStudio. Para realizar as devidas verificações, toma-se como base o circuito da [Fig. @fig-circuit-qucs-original]. Em essência, o circuito apresentado é o mesmo fornecido com o problema, com a inclusão de um monopolo que serve como uma carga aterrada (esse bloco foi selecionado, pois permite informar uma admitância).
+
+![Circuito para verificação da impedância obtida](../images/Qucs-circuit-reference.png){width=300, #fig-circuit-qucs-original}
 
 
 
