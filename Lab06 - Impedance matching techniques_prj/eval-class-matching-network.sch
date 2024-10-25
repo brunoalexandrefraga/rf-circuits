@@ -31,7 +31,7 @@ GND * 1 0 190 0 0 0 0
 </Wires>
 <Diagrams>
 <Tab 50 590 200 250 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
-	<"1/real(rtoz(S[1,1]))" "" #0000ff 0 3 1 0 0 0 "">
+	<"1/real(rtoz(S[1,1]))" "" #0000ff 0 7 1 0 0 0 "">
 </Tab>
 </Diagrams>
 <Paintings>

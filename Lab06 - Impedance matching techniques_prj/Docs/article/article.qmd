@@ -92,7 +92,7 @@ $$
   \begin{split}
     P_L=\frac{1}{2}\frac{|I_s|^2}{|Y_s+Y_L|^2}\mathfrak{R}\left\{Y_L^*\right\}
   \end{split}
-$$
+$$ {#eq-power-load}
 
 
 A variável $P_s$, por sua vez é dada por
@@ -194,6 +194,7 @@ Gs = 1 / Rs # Condutância
 L = 10e-9 # Indutância em Henry
 f = 2.4e9 # Frequência em Hz
 omega = 2 * np.pi * f # Frequência angular
+Bs = -1 / (omega*L) # Condutância
 ```
 
 ```{python}
@@ -274,258 +275,59 @@ Finalmente, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{pytho
 
 A seguir, são apresentadas as verificações no simulador QucsStudio. Para realizar as devidas verificações, toma-se como base o circuito da [Fig. @fig-circuit-qucs-original]. Em essência, o circuito apresentado é o mesmo fornecido com o problema, com a inclusão de um monopolo que serve como uma carga aterrada (esse bloco foi selecionado, pois permite informar uma admitância).
 
-![Circuito para verificação da impedância obtida](../images/Qucs-circuit-reference.png){width=300, #fig-circuit-qucs-original}
+![Circuito para verificação da admitância obtida](../images/Qucs-circuit-reference.png){width=300, #fig-circuit-qucs-original}
 
+Na [Fig. @fig-y-real-validation] é possível verificar que se a curva da da eficiência de potência na carga for traçada em função da parte real da admitância de carga, $G_L$, o valor que atinge `{python} eta*100`% é exatamente o que foi obtido anteriormente.
 
+![Validação da parte real da admitância (condutância) de carga](../images/GLxEta_validation.png){width=300, #fig-y-real-validation}
 
+Além disso, a [Fig. @fig-y-imaginary-validation] demonstra que a eficiência de potência na carga não varia em nada com a susceptância da carga, conforme previsto.
 
+![Validação da parte imaginária da admitância (susceptância) de carga](../images/BLxEta_validation.png){width=300, #fig-y-imaginary-validation}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Incorreto
-
-Com base nisso, percebe-se que
+Outra validação que é necessária é em relação ao valor da susceptância de carga, $B_L$. Nesse caso, a restrição diz que, dada a eficiência de `{python} eta*100`%, a amplificador deve transmitir a maior potência possível à carga. Além de validar a susceptância da carga, também pode ser realizada a validação da potência dissipada pela carga. Para isso, é realizada a adaptação da [Eq. @eq-power-load] para aplicar os valores obtidos anteriormente.
 
 $$
-  P_L=\frac{1}{2}\mathfrak{R}\left\{\frac{V_s\cdot V_s^*}{R_L^*}\right\}
-$$
+  P_L=\frac{I_s^2G_L}{2(G_s + G_L)^2 + 2(B_s + B_L)^2}
+$$ {#eq-power-load-formatted}
 
-pois $I_L=V_s/R_L$. E assim obtém-se que
-
-$$
-  V_s=\frac{I_s}{Y_N}
-$$
-
-em que $Y_N$ é a admitância de Norton do circuito. Essa admitância é calculada como se segue
+Como a restrição para a máxima transferência de energia (possível para a eficiência desejada) impõe que $B_s=-B_L$, a [Eq. @eq-power-load-formatted] pode ser escrita como
 
 $$
-  \begin{split}
-    Y_N&=R_s^{-1}-jX_s^{-1}+Y_L\implies\\
-    &=\frac{X_s\left(1+Y_LR_s\right)-jR_s}{X_sR_s}
-  \end{split}
-$$
-
-dessa forma, obtém-se que a tensão em cima da carga é de
-
-$$
-  V_s=\frac{I_sX_sR_s}{X_s\left(1+Y_LR_s\right)-jR_s}
-$$
-
-Substituindo $X_s=\omega L_s$, obtém-se
-
-$$
-  V_s=\frac{I_s\omega L_sR_s}{\omega L_s\left(1+Y_LR_s\right)-jR_s}
-$$
-
-Assim, a forma mais simples de se calcular a potência sobre a carga é obter o valor de $V_s$, e calcular a potência por meio da expressão já obtida anteriormente.
-
-## Eficiência
-
-Tendo o valor de $V_s$ já definido, a obtenção do valor da potência da fonte do circuito, $P_s$ é simples, como pode-se verificar a seguir
-
-$$
-  P_s=\frac{V_sI_s^*}{2}
-$$
-
-A expressão de $V_s$ já foi estabelecida e $I_s$ é uma hipótese do problema.
-
-A fim de se verificar as expressões obtidas, é realizada simulação de parâmetros S para obter a impedância do circuito. Essa comparação é apresentada na [Tab @tbl-admitances].
-
-| $Y_N$ simulado (mS)        | $Y_N$ calculado (mS)       |
-|----------------------------|----------------------------|
-|$28,8\phase{-13.3^{\circ}}$ |$28,8\phase{-13.3^{\circ}}$ |
-
-: Admitâncias simulada e calculada {#tbl-admitances}
-
-A impedância referente a essa admitância ($Y_N^{-1}$) que foi simulada pode ser verificada na [Fig @fig-admita-smith].
-
-
-![Circuito para medição da admitância total](../images/admita-smith.png){width=300, #fig-admita-smith}
-
-Com base em tudo que foi discutido até então, pode-se realizar a análise da eficiência $\eta=P_s/P_L$ pela resistência da carga, $R_L$. A curva obtida pode ser visualizada na [Fig @fig-admita-smith].
-
-![Circuito para medição da admitância total](../images/load-80eff.png){width=300, #fig-load-80eff}
-
-Além da curva, também foi evidenciado o ponto em que a eficiência de 80% é atingido, ou seja $29,3\;\Omega$.
-
-# Rede de adaptação
-
-Para que o circuito fornecido pelo problema realize uma dissipação de 80% da potência fornecida pela fonte, essa carga deve ser de 29,3 $\Omega$. Entretanto, a carga do problema é de 50 $\Omega$, sendo assim, o circuito equivalente do amplificador deve enxergar uma resistência de carga de 29,3 $\Omega$ ao invés de 50 $\Omega$. Essa adaptação é realizada por meio da rede tipo L @steer2019microwavev3.
-
-Para essa tarefa, imaginou-se que a impedância de $R_s=50\;\Omega$ deva ser adaptada para $R_L=29,3\;\Omega$. Assim, obtém-se
-
-$$
-  Q=\sqrt{\frac{R_s}{R_L}-1}=0,84
-$$
-
-Como o circuito é o modelo equivalente de um amplificador, optou-se por bloquear a passagem de AC e, assim, utilizar a topologia do capacitor em paralelo. A impedância reativa desse capacitor é de
-
-$$
-\begin{split}
-  X_c&=QR_L=24,6\;\Omega\implies\\
-  C&=2,7\;\text{pF}
-\end{split}
-$$
-
-e a impedância reativa do indutor em paralelo é dada por
-
-$$
-\begin{split}
-  X_L&=\frac{R_s}{Q}=59,5\;\Omega\implies\\
-  L&=3,9\;nH
-\end{split}
-$$
-
-O circuito da rede de adaptação em questão pode ser visualizado na [Fig. @fig-L-net].
-
-![Circuito para medição da admitância total](../images/L-net.png){width=300, #fig-L-net}
-
-Esse circuito possui uma impedância de 29,3 $\Omega$, conforme pode ser visualizado na [Fig. @fig-impedance-smith-Lnet].
-
-![Circuito para medição da admitância total](../images/impedance-smith-Lnet.png){width=300, #fig-impedance-smith-Lnet}
-
-As [Fig. @fig-admit-allfreqe] e [Fig. @fig-reflex-allfreq] apresentam a admitância e o coeficiente de reflexão da rede de adaptação ao longo de um amplo espectro de frequência (100 MHz a 10 GHz), com a carga de 50 $\Omega$.
-
-
-![Circuito para medição da admitância total](../images/admit-allfreqe.png){width=300, #fig-admit-allfreqe}
-
-
-![Circuito para medição da admitância total](../images/reflex-allfreq.png){width=300, #fig-reflex-allfreq}
-
-# Teste da rede L ao circuito equivalente do amplificador
-
-Ao finalizar os testes e medições da rede L isoladamente, essa rede é acoplada ao circuito equivalente do amplificador. E pode-se perceber, pela [Fig. @fig-test-Lnet], que a rede projetada adequou corretamente a impedância do amplificador, de modo que a eficiência da potência dissipada na carga foi de 80%.
-
-
-![Circuito para medição da admitância total](../images/test-Lnet.png){width=300, #fig-test-Lnet}
-
-# Simulação Monte Carlo
-
-Para garantir a robustez do projeto, analiza-se a simulação Monte Carlo e pode-se verificar estatisticamente se o projeto atende a alguns padrões estabelecidos (como o de ter os resultados dentro de uma faixa de 3 vezes o desvio padrão da distribuição).
-
-A [Fig. @fig-monte-carlo] mostra o arranjo utilizado para realizar a simulação Monte Carlo. Os dados obtidos por meio dessa simulação foram exportados e serão apresentados a seguir.
-
-![Circuito para medição da admitância total](../images/monte-carlo.png){width=300, #fig-monte-carlo}
-
-
-Pela [Fig. @fig-efficiency-points] pode-se verificar que a média da eficiência do circuito, com componentes de 5% de tolerância foi de 79%, sendo que, exatamente todas as amostras, no espaço amostral de 100 testes, ficaram dentro dos 3$\sigma$, o que é um excelente resultado, tendo em vista que, com base nesse teste, pode-se concluir inicialmente que 99,7% dos casos o circuito terá uma variação máxima de 3$\sigma$ a mais e a menos em relação à média de 79%. Isso significa que os valores podem variar, no máximo, de 75,83% a 82,15%.
+  P_L=\frac{I_s^2G_L}{2(G_s + G_L)^2}
+$$ {#eq-power-load-finished}
 
 ```{python}
-#| label: fig-efficiency-points
-#| fig-cap: A meaningless scatterplot
-#| fig-width: 5
-#| fig-height: 5
-#| fig-align: center
-#| out-width: 50%
 #| echo: false
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Lendo o arquivo CSV
-df = pd.read_csv('../../Output/efficiency-points.csv', delimiter=';', quotechar='"')
-
-# Extraindo a coluna de interesse
-valores = df['r_eta']
-
-# Calculando média e desvio padrão
-media = np.mean(valores)
-desvio_padrao = np.std(valores)
-
-# Plotando o histograma
-plt.figure(figsize=(8, 6))
-plt.hist(valores, bins=20, color='blue', alpha=0.7, edgecolor='black')
-plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
-plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='Média + 3σ')
-plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='Média - 3σ')
-
-# Adicionando título e rótulos
-plt.title('Histograma da Eficiência com Limites de 3-Sigma')
-plt.xlabel('Eficiência (r_eta)')
-plt.ylabel('Frequência')
-plt.legend()
-
-# Exibindo o gráfico
-plt.tight_layout()
-plt.show()
+Is = 100e-3
+def calculate_power_load():
+  return (Is**2*GL)/(2*(Gs+GL)**2)
 ```
 
-A potência dissipada na carga, por sua vez, apresenteou um comportamento em que a média da potência é de 93,7 mW, sendo que os 99,7% das amostras (3$\sigma$) ficaram dentro de um intervalo de 86,4 mW e 100 mW.
+Aplicando os valores à equação [Eq. @eq-power-load-finished] obtém-se uma potência $P_L =$ `{python} format(calculate_power_load())`W. Todos esses valores que foram previstos matematicamente podem ser visualizados na [Fig. @fig-y-imaginary-validation], em que é apresentado o gráfico da potência na carga pela susceptância da carga. Além disso, a função `max` do QucsStudio foi utilizada para obter o ponto máximo da função da potência pela susceptância e a função `xvalue` é utilizada para obter o valor de $B_L$ correspondente para essa potência.
 
-```{python}
-#| label: fig-power-points
-#| fig-cap: A meaningless scatterplot
-#| fig-width: 5
-#| fig-height: 5
-#| fig-align: center
-#| out-width: 50%
-#| echo: false
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Lendo o arquivo CSV
-df = pd.read_csv('../../Output/power-points.csv', delimiter=';', quotechar='"')
-
-# Extraindo a coluna de interesse
-valores = df['r_PL']
-
-# Calculando média e desvio padrão
-media = np.mean(valores)
-desvio_padrao = np.std(valores)
-
-# Plotando o histograma
-plt.figure(figsize=(8, 6))
-plt.hist(valores, bins=20, color='blue', alpha=0.7, edgecolor='black')
-plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
-plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='Média + 3σ')
-plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='Média - 3σ')
-
-# Adicionando título e rótulos
-plt.title('Histograma da Potência com Limites de 3-Sigma')
-plt.xlabel('Eficiência (r_eta)')
-plt.ylabel('Frequência')
-plt.legend()
-
-# Exibindo o gráfico
-plt.tight_layout()
-plt.show()
+![Validação da parte imaginária da admitância (susceptância) de carga](../images/PLxBL_validation.png){width=300, #fig-y-imaginary-validation}
 
 
-```
 
 
-# Discussão
 
-Com essa atividade, tive a oportunidade de consolidar o conhecimento de adaptação de impedâncias pela técnica da rede L. Entretanto, a parte de mais valor da atividade é a análise estatística que deve ser analisada para verificar a robustez do projeto. Eu já havia ouvido falar da simulação Monte Carlo e até já havia performado algumas análises no software Keysight ADS, como parte de um tutorial, mas não tinha muita noção do motivo e da importância da simulação. Além disso, eu particularmente tenho negligenciado a estatística e, com base no que foi verificado nesta atividade, isso não é correto, uma vez que nada no mundo real é ideal e, em se tratando de circuitos de radiofrequência, pequenas não-idealidades podem causar comportamentos muito significativos. 
 
-Outro ponto um pouco menos importante é que esse relatório foi feito utilizando a tecnologia Quarto, apresentada em sala de aula como uma ferramenta essencial para gerar relatórios e documentação acadêmica.
 
-Um dos pontos que ficaram um pouco mal documentados é em relação à análise estatística dos resultados obtidos. Como comentei, minha parte de estatística foi um pouco negligenciada, logo tenho uma certa necessidade de relembrar e aprofundar os conceitos. Minha sugestão de como eu posso mitigar essa lacuna no meu conhecimento é analisar com muito mais atenção quando alguns valores e conceitos estatísticos forem apresentados em algum artigo ou bibliografia (eu costumo passar bem por cima nessas seções), bem como em manter como padrão, realizar análises de robustez nos projetos que tenho a oportunidade de trabalhar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # References {-}
