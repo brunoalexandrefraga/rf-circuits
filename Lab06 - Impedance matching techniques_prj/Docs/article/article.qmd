@@ -321,6 +321,8 @@ Tendo a admitância calculada (e consequentemete a impedância), é possível re
       \draw (4, -3) coordinate(point3) node[ground]{} ;
       \draw (4, 0) coordinate(point4) to[R, l=$R_o$] (point3) ;
       \draw (point2) to[C, l=C, a=$X_C$] (point4) ;
+
+      \draw (2, -3.5) -- ++(0, 1) to[short] ++(0.05, 0) to[short, i=$Z_i$] ++(0.2,0) ;
     \end{circuitikz}
   \caption{Rede de adaptação}
   \label{fig:matching-network}
