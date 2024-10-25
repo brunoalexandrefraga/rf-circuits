@@ -41,9 +41,8 @@ format:
       cite-style: number
 ---
 
-# Prelab
-## Potência dissipada na carga
-
+# Desenvolvimento
+## Admitância ideal
 
 O circuito original é apresentado na Fig.\ref{fig:original-circuit}.
 
@@ -189,11 +188,12 @@ $$
 import numpy as np
 # Definição das constantes
 eta = 0.80 # Eficiência
-Rs = 65 # Resistência
+Rs = 65 # Resistência de fonte
 Gs = 1 / Rs # Condutância
 L = 10e-9 # Indutância em Henry
 f = 2.4e9 # Frequência em Hz
 omega = 2 * np.pi * f # Frequência angular
+RL = 50 # Resistência de carga
 Bs = -1 / (omega*L) # Condutância
 ```
 
@@ -308,11 +308,24 @@ Aplicando os valores à equação [Eq. @eq-power-load-finished] obtém-se uma po
 
 ![Validação da parte imaginária da admitância (susceptância) de carga](../images/PLxBL_validation.png){width=300, #fig-y-imaginary-validation}
 
+## Rede de adaptação 
 
+Tendo a admitância calculada (e consequentemete a impedância), é possível realizar o cálculo da rede de adaptação. Aqui, deseja-se que o circuito equivalente do amplificador visualize a impedância obtida, sendo que a impedância de carga própriamente dita é de `{python} RL` $\Omega$. Dessa forma, deseja-se adaptar uma resistência de `{python} RL` $\Omega$ em `{python} format_2_decimals(load_resistence(GL, BL))` $\Omega$. Para os cálculos apresentados a seguir, considera-se $R_i$ como a impedância a ser adaptada e $R_o$ a impedância desejada. A Fig.\ref{fig:matching-network} apresenta o circuito com a rede de adaptação na topologia que será utilizada. Para essa rede de adaptação, buscou-se a topologia com o capacitor em série e o indutor em paralelo, uma vez que é desejado que o sinal de alta frequência seja tranferido à carga, enquanto bloqueia sinais de baixas frequências. Outra característica da topologia é que trata-se de uma rede L paralelo-série. Essa topologia é necessária, uma vez que deseja-se diminuir $R_i$ para se adaptar à resistência $R_o$ (equivalentemente, deseja-se elevar $R_o$ em relação a $R_i$).
 
-
-
-
+```{=latex}
+\begin{figure}[h]
+  \centering
+    \begin{circuitikz}[american]
+      \draw (-1, 0) coordinate(point1) to[R, l=$R_i$] (-1, -3) node[ground]{} ;
+      \draw (point1) to[short] (1.5, 0) coordinate(point2) to[L, l=L, a=$X_L$] (1.5, -3) node[ground]{} ;
+      \draw (4, -3) coordinate(point3) node[ground]{} ;
+      \draw (4, 0) coordinate(point4) to[R, l=$R_o$] (point3) ;
+      \draw (point2) to[C, l=C, a=$X_C$] (point4) ;
+    \end{circuitikz}
+  \caption{Rede de adaptação}
+  \label{fig:matching-network}
+\end{figure}
+```
 
 
 
