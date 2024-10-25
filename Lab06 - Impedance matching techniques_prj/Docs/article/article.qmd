@@ -328,11 +328,35 @@ Tendo a admitância calculada (e consequentemete a impedância), é possível re
   \label{fig:matching-network}
 \end{figure}
 ```
+Considerando a topologia de rede de adaptação apresentada na Fig.\ref{fig:matching-network}, tem-se que @steer2019microwave
+
+$$
+  Z_i=R_L+jX_s
+$$
+
+e a rede de adaptação tem o objetivo de obter $Z_i=R_s\parallelsum\left(jX_p\right)$, assim,
 
 
+$$
+  \begin{split}
+    Z_i&=\frac{jR_sX_p}{R_s+jX_p}\implies\\
+    &=\frac{R_sX_p^2}{R_s^2+X_p^2} + j\frac{R_s^2X_p}{R_s^2+X_p^2}
+  \end{split}
+$$
 
+Dessa forma, obtém-se
 
+$$
+  R_L=\frac{R_sX_p^2}{R_s^2+X_p^2}
+$$
 
+e
+
+$$
+  X_s=\frac{R_s^2X_p}{R_s^2+X_p^2}
+$$
+
+Antes de prosseguir, calculam-se os fatores de qualidade para dos elementos reativos em série e em paralelo, $X_s$ e $X_p$, respectivamente.
 
 
 
