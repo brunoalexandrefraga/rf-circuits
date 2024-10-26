@@ -50,7 +50,7 @@ O circuito original é apresentado na Fig.\ref{fig:original-circuit}.
 \begin{figure}[h]
   \centering
     \begin{circuitikz}[american]
-      \draw (1.5, 0.5) coordinate(point1) to[R, l=$G_s$] ++(0, -4.5) coordinate(point2) node[ground]{} to[short] ++(-2.5, 0) to[isource, l=$I_s$] ++(0, 4.5) to[short] (point1) to[short, -*] ++(2, 0) coordinate(point3) to[L, l=$B_s$, a=$L$, *-] ++(0, -4.5) coordinate(point4) to[short] (point2) ;
+      \draw (1.5, 0.5) coordinate(point1) to[R, l=$G_s$] ++(0, -4.5) coordinate(point2) node[ground]{} to[short] ++(-2.5, 0) to[isource, l=$I_s$] ++(0, 4.5) to[short] (point1) to[short, -*] ++(2, 0) coordinate(point3) to[L, l=$B_s$, a=$L_s$, *-] ++(0, -4.5) coordinate(point4) to[short] (point2) ;
       \draw (point3) to[short, *-] ++(2.5, 0) to[generic, l=$Y_L$, i>^=$I_L$] ++(0, -4.5) to[short] (point4) ;
 
       % Add the marker for V_{L}
@@ -190,11 +190,11 @@ import numpy as np
 eta = 0.80 # Eficiência
 Rs = 65 # Resistência de fonte
 Gs = 1 / Rs # Condutância
-L = 10e-9 # Indutância em Henry
+Ls = 10e-9 # Indutância em Henry
 f = 2.4e9 # Frequência em Hz
 omega = 2 * np.pi * f # Frequência angular
 RL = 50 # Resistência de carga
-Bs = -1 / (omega*L) # Condutância
+Bs = -1 / (omega*Ls) # Condutância
 ```
 
 ```{python}
@@ -216,11 +216,13 @@ def format(value):
         return f"{value * 1e9:.2f} n"
     elif value >= 1e-12:
         return f"{value * 1e12:.2f} p"
+    elif value >= 1e-15:
+        return f"{value * 1e12:.2f} p"
     else:
         return f"{value:.0e} "
 ```
 
-Aplicando os valores $\eta =$ `{python} eta*100`%, $G_s = 1/R_s$, $R_s =$ `{python} format(Rs)`$\Omega$, $L =$ `{python} format(L)`H e $\omega=2\pi f$, em que $f =$ `{python} format(f)`Hz.
+Aplicando os valores $\eta =$ `{python} eta*100`%, $G_s = 1/R_s$, $R_s =$ `{python} format(Rs)`$\Omega$, $L =$ `{python} format(Ls)`H e $\omega=2\pi f$, em que $f =$ `{python} format(f)`Hz.
 
 ```{python}
 #| echo: false
@@ -239,7 +241,7 @@ GL = load_admittance(Gs, eta)
 admittance_value = GL * 1000  # Multiplica por 1000 para converter para mS
 formatted_admittance = f"{admittance_value:.2f}"    # Formata para 2 casas decimais
 
-BL = load_susceptance(omega, L)
+BL = load_susceptance(omega, Ls)
 susceptance_value = BL * 1000  # Multiplica por 1000 para converter para mS
 formatted_susceptance = f"{susceptance_value:.2f}"    # Formata para 2 casas decimais
 ```
@@ -308,7 +310,7 @@ Aplicando os valores à equação [Eq. @eq-power-load-finished] obtém-se uma po
 
 ![Validação da parte imaginária da admitância (susceptância) de carga](../images/PLxBL_validation.png){width=300, #fig-y-imaginary-validation}
 
-## Rede de adaptação 
+## Rede de adaptação {#sec-network-adapter}
 
 ```{python}
 #| echo: false
@@ -483,15 +485,41 @@ L = Xp/omega
 
 Ao aplicar os valores à equação, a indutância resultante é de $L =$ `{python} format(L)`H.
 
+A rede de adaptação até esse ponto aqui, só da parte real. Entretanto, olhando para a Fig.\ref{fig:original-circuit}, ainda é necessário anular o efeito do indutor $L$. Para anular essa indutância, calcula-se um capacitor, $C_1$, de mesma admitância, $B_s$ (impedância), que será disposto em paralelo com o indutor. O valor dessa capacitância é dado por
+
+$$
+  \begin{split} 
+    \omega L&=\frac{1}{\omega C_1}\implies\\
+    C_1&=\frac{1}{\omega^2 L}
+  \end{split}
+$$
+
+```{python}
+#| echo: false
+C1=1/(omega**2 * Ls)
+```
+
+Entretanto, esse capacitor em paralelo não fornece exatamente a admitância calculada na seção anterior, além disso, como é apresentado na Seção @sec-network-adapter-validation, percebe-se que a topologia da rede está mais próxima de uma rede do tipo Pi do que L. Como a impedância não é a que foi calculada, as restrições de máxima potência na carga, com eficiência de `{python} eta*100`%, não serão atingidas. Uma alteração que pode ser aplicada é calcular um capacitor em série, equivalente ao que foi projetado em paralelo.
 
 
 
+## Validação da Rede de adaptação {#sec-network-adapter-validation}
 
+A intenção dessa validação é atestar se, ao acoplar a rede de adaptação, apresentada na Seção @sec-network-adapter, a um circuito cuja carga seja `{python} RL` $\Omega$ a impedância obtida, do ponto de vista da fonte, seja de `{python} format_2_decimals(Ro)` $\Omega$.
 
+A rede de adaptação acoplada a um circuito de verificação pode ser visualizada na [Fig. @fig-network-adapter-verification]. Pode parecer que a rede de adaptação está invertida em relação à Fig.\ref{fig:matching-network}, mas é a mesma, uma vez que é necessário que o indutor esteja em paralelo com a carga.
 
+![Circuito de validação da rede de adaptação projetada](../images/network-adapter-verification.png){width=300, #fig-network-adapter-verification}
 
+A aplicação dos valores obtidos para o capacitor e para o indutor, além do resultado obtido com o acoplamento da rede de ataptação podem ser visualizados na [Fig. @fig-network-adapter-verification-result].
 
+![Resultados da rede de adaptação projetada](../images/network-adapter-verification-results.png){width=300, #fig-network-adapter-verification-result}
 
+Os resultados apresentados confirmam todos os cálculos que foram feitos até então.
+
+Aplicando os valores à equação, obtém-se $C_1 =$ `{python} format(C1)`F. Em seguida, na @fig-complete-network-adapter-shuntC, é apresentado os resultados com esse capacitor acoplado ao circuito de teste.
+
+![Resultados da rede de adaptação com capacitor em paralelo](../images/complete-network-adapter-shuntC.png){width=300, #fig-complete-network-adapter-shuntC}
 
 
 
