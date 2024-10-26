@@ -141,10 +141,10 @@ $$
 A seguir, demonstra-se matematicamente como que a função $P_s$ pode ser minimizada em função de $B_L$.
 
 $$
-    \frac{\partial P_s}{\partial B_L}=0\implies
+  \frac{\partial P_s}{\partial B_L}=0\implies
 $$
 $$
-    \frac{\partial}{\partial B_L}\left[\frac{|I_s|^2(G_s+G_L)}{2(G_s+G_L)^2+2(B_L+B_s)^2}\right]=0
+  \frac{\partial}{\partial B_L}\left[\frac{|I_s|^2(G_s+G_L)}{2(G_s+G_L)^2+2(B_L+B_s)^2}\right]=0
 $$
 
 Como o valor de $I_s$ já é conhecido, pode-se remover o símbolo de módulo. Além disso, uma forma simples de se calcular essa derivada é utilizando a regra do quosciente, ou seja,
@@ -201,21 +201,21 @@ Bs = -1 / (omega*L) # Condutância
 #| echo: false
 def format(value):
     if value >= 1e9:
-        return f"{value / 1e9:.1f} G"
+        return f"{value / 1e9:.2f} G"
     elif value >= 1e6:
-        return f"{value / 1e6:.0f} M"
+        return f"{value / 1e6:.2f} M"
     elif value >= 1e3:
-        return f"{value / 1e3:.0f} k"
+        return f"{value / 1e3:.2f} k"
     elif value >= 1:
-        return f"{value:.0f} "
+        return f"{value:.2f} "
     elif value >= 1e-3:
         return f"{value * 1e3:.2f} m"
     elif value >= 1e-6:
-        return f"{value * 1e6:.0f} μ"
+        return f"{value * 1e6:.2f} μ"
     elif value >= 1e-9:
-        return f"{value * 1e9:.0f} n"
+        return f"{value * 1e9:.2f} n"
     elif value >= 1e-12:
-        return f"{value * 1e12:.0f} p"
+        return f"{value * 1e12:.2f} p"
     else:
         return f"{value:.0e} "
 ```
@@ -310,7 +310,13 @@ Aplicando os valores à equação [Eq. @eq-power-load-finished] obtém-se uma po
 
 ## Rede de adaptação 
 
-Tendo a admitância calculada (e consequentemete a impedância), é possível realizar o cálculo da rede de adaptação. Aqui, deseja-se que o circuito equivalente do amplificador visualize a impedância obtida, sendo que a impedância de carga própriamente dita é de `{python} RL` $\Omega$. Dessa forma, deseja-se adaptar uma resistência de `{python} RL` $\Omega$ em `{python} format_2_decimals(load_resistence(GL, BL))` $\Omega$. Para os cálculos apresentados a seguir, considera-se $R_i$ como a impedância a ser adaptada e $R_o$ a impedância desejada. A Fig.\ref{fig:matching-network} apresenta o circuito com a rede de adaptação na topologia que será utilizada. Para essa rede de adaptação, buscou-se a topologia com o capacitor em série e o indutor em paralelo, uma vez que é desejado que o sinal de alta frequência seja tranferido à carga, enquanto bloqueia sinais de baixas frequências. Outra característica da topologia é que trata-se de uma rede L paralelo-série. Essa topologia é necessária, uma vez que deseja-se diminuir $R_i$ para se adaptar à resistência $R_o$ (equivalentemente, deseja-se elevar $R_o$ em relação a $R_i$).
+```{python}
+#| echo: false
+Ri = RL
+Ro = load_resistence(GL, BL)
+```
+
+Tendo a admitância calculada (e consequentemete a impedância), é possível realizar o cálculo da rede de adaptação. Aqui, deseja-se que o circuito equivalente do amplificador visualize a impedância obtida, sendo que a impedância de carga própriamente dita é de `{python} RL` $\Omega$. Dessa forma, deseja-se adaptar uma resistência de $R_i =$ `{python} RL` $\Omega$ em $R_o =$ `{python} format_2_decimals(Ro)` $\Omega$. Para os cálculos apresentados a seguir, considera-se $R_i$ como a impedância a ser adaptada e $R_o$ a impedância desejada. A Fig.\ref{fig:matching-network} apresenta o circuito com a rede de adaptação na topologia que será utilizada. Para essa rede de adaptação, buscou-se a topologia com o capacitor em série e o indutor em paralelo, uma vez que é desejado que o sinal de alta frequência seja tranferido à carga, enquanto bloqueia sinais de baixas frequências. Outra característica da topologia é que trata-se de uma rede L paralelo-série. Essa topologia é necessária, uma vez que deseja-se diminuir $R_i$ para se adaptar à resistência $R_o$ (equivalentemente, deseja-se elevar $R_o$ em relação a $R_i$).
 
 ```{=latex}
 \begin{figure}[h]
@@ -331,32 +337,161 @@ Tendo a admitância calculada (e consequentemete a impedância), é possível re
 Considerando a topologia de rede de adaptação apresentada na Fig.\ref{fig:matching-network}, tem-se que @steer2019microwave
 
 $$
-  Z_i=R_L+jX_s
+  Z_i=R_o+jX_s
 $$
 
-e a rede de adaptação tem o objetivo de obter $Z_i=R_s\parallelsum\left(jX_p\right)$, assim,
-
+e a rede de adaptação tem o objetivo de obter $Z_i=R_i\parallelsum\left(jX_p\right)$, assim,
 
 $$
   \begin{split}
-    Z_i&=\frac{jR_sX_p}{R_s+jX_p}\implies\\
-    &=\frac{R_sX_p^2}{R_s^2+X_p^2} + j\frac{R_s^2X_p}{R_s^2+X_p^2}
+    Z_i&=\frac{jR_iX_p}{R_i+jX_p}\implies\\
+    &=\frac{R_iX_p^2}{R_i^2+X_p^2} + j\frac{R_i^2X_p}{R_i^2+X_p^2}
   \end{split}
 $$
 
 Dessa forma, obtém-se
 
 $$
-  R_L=\frac{R_sX_p^2}{R_s^2+X_p^2}
+  R_o=\frac{R_iX_p^2}{R_i^2+X_p^2}
+$$ {#eq-matching-network-R_o}
+
+e
+
+$$
+  X_s=\frac{R_i^2X_p}{R_i^2+X_p^2}
+$$ {#eq-matching-network-X_s}
+
+Antes de prosseguir, calculam-se os fatores de qualidade para dos elementos reativos em série e em paralelo, $X_s$ e $X_p$, respectivamente.
+
+Como já é de conhecimento, o fator de qualidade ($Q$) é a razão entre a energia média armazenada no elemento reativo na frequência de ressonância (potência reativa) e a potência dissipada @steer2019microwave. Para um elemento reativo de impedância $X_s$, em série com um resistor $R_s$, a energia média armazenada no elemento reativo, $P_{as}$, é dada por
+
+$$
+  P_{as}=I_\text{rms}^2X_s
+$$
+
+Enquanto que a potência dissipada, $P_d$, é dada por
+
+$$
+  P_d=I_\text{rms}^2R_s
+$$
+
+Consequentemente, o fator de qualidade, $Q_s$, para o reativo em série é calculado como
+
+$$
+  \begin{split}
+    Q_s&=\frac{I_\text{rms}^2X_s}{I_\text{rms}^2R_s}\implies\\
+    &=\frac{X_s}{R_s}
+  \end{split}
+$$
+
+Por outro lado, se é desejado calcular o fator de qualidade, $Q_p$, para o elemento reativo, $X_p$, em paralelo com um resistor, $R_p$, essa equação é dada por
+
+$$
+  \begin{split}
+    Q_p&=\frac{V_\text{rms}^2/X_p}{V_\text{rms}^2/R_p}\implies\\
+    &=\frac{R_p}{X_p}
+  \end{split}
+$$
+
+Tendo essas relações, é possível estabelecer que, para a rede apresentada,
+
+$$
+  Q_p=\frac{R_i}{X_p}
 $$
 
 e
 
 $$
-  X_s=\frac{R_s^2X_p}{R_s^2+X_p^2}
+  Q_s=\frac{X_s}{R_o}
 $$
 
-Antes de prosseguir, calculam-se os fatores de qualidade para dos elementos reativos em série e em paralelo, $X_s$ e $X_p$, respectivamente.
+Sendo assim, utiliza-se a [Eq. @eq-matching-network-X_s] para chegar à seguinte conclusão
+
+$$
+  \begin{split}
+    \frac{X_s}{R_o}&=\frac{R_i^2X_p}{R_iX_p^2}=\frac{R_i}{X_p}
+  \end{split}
+$$
+
+Ou seja, $\left|Q_s\right|=\left|Q_p\right|$ (nesse caso, até mesmo $Q_s=Q_p$). Após isso, calcula-se
+
+$$
+  \begin{split}
+    \frac{R_i}{R_o}&=R_i\frac{R_i^2+X_p^2}{R_iX_p^2}\implies\\
+    &=\frac{R_i^2+X_p^2}{X_p^2}\implies\\
+    &=\frac{R_i^2}{X_p^2}+1\implies\\
+    \frac{R_i}{R_o}-1&=\left(\frac{R_i}{X_p}\right)^2
+  \end{split}
+$$
+
+Isolando $R_i/X_p$, obtém-se
+
+$$
+  \frac{R_i}{X_p}=\sqrt{\frac{R_i}{R_o}-1}
+$$
+
+Que é exatamente uma das expressões para os fatores de qualidade. Sendo assim,
+
+$$
+  \left|Q_s\right|=\left|Q_p\right|=\sqrt{\frac{R_i}{R_o}-1}
+$$
+
+```{python}
+#| echo: false
+def format_decimal(value, prec):
+  return '{:.{prec}f}'.format(value, prec=prec)
+```
+
+```{python}
+#| echo: false
+import math
+
+Q = Qs = Qp = math.sqrt(Ri/Ro-1)
+Xp = Ri/Qp
+Xs = Ro*Qs
+```
+
+Assim, aplicando os valores, obtém-se $Q_s = Q_p =$ `{python} format_decimal(Qs, 3)`. Dessa forma, a impedância em série é dada por $X_s =$ `{python} format(Xs)`$\Omega$ e a impedância em paralelo $X_p =$ `{python} format(Xp)`$\Omega$. 
+
+Como a impedância em série trata-se de um capacitor, o valor desse capacitor, $C$, é dado por
+
+$$
+  \begin{split}
+    X_s&=\frac{1}{\omega C}\implies\\
+    C&=\frac{1}{\omega X_s}
+  \end{split}
+$$
+
+```{python}
+#| echo: false
+C = 1/(omega*Xs)
+```
+
+que, aplicando os valores, obtêm-se $C =$ `{python} format(C)`F. Em paralelo, a impedância é de um indutor. Dessa forma, a indutância necessária para realizar a adaptação de impedância é de
+
+$$
+\begin{split}
+  X_p&=\omega L\implies\\
+  L&=\frac{X_p}{\omega}
+\end{split}
+$$
+
+```{python}
+#| echo: false
+L = Xp/omega
+```
+
+Ao aplicar os valores à equação, a indutância resultante é de $L =$ `{python} format(L)`H.
+
+
+
+
+
+
+
+
+
+
 
 
 
