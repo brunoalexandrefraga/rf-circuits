@@ -44,6 +44,16 @@ format:
 
 # Prelab
 
+Segundo o documento de referência de *Part numbering* da MuRata, os *part numbers* são montados com o identificador da série do capacitor, dimensões do *chip*, expessura, temperatura característica, tensão nominal, capacitância, tolerância de capacitância, código de especificação individual e encapsulamento.
+
+Segundo o documento, um capacitor de 47 pF, dielétrico X7R, tamanho 1,0 mm x 0,5 mm x 0,5 mm, 16V, tolerância de 10 % e aplicação “*Chip Multilayer Ceramic Capacitors for Consumer Electronics & Industrial Equipment*” seria algo como: `GRM155R71C470KA01#`. Entretanto, esse componente não pode ser encontrado no site do próprio fabricante. Sendo assim, busca-se por um modelo semelhante. Um ponto crítico do componente solicitado é a faixa de temperatura de operação.
+
+O problema especifica que deve-se selecionar um capacitor de dielétrico X7R, cuja faixa de temperatura é de $-55^\circ\text{C}$ a $125^\circ\text{C}$. Porém, o site do fabricante não disponibiliza capacitores abaixo de 56 pF com o dielétrico X7R e, os capacitores com esse valor são fabricados em materiais cuja faixa de temperatura fica entre $20^\circ\text{C}$ a $125^\circ\text{C}$. Dessa forma, opta-se por selecionar dois capacitores de dielétrico X7R, com capacitâncias de 68 pF e 150 pF. Ao associar tais capacitores em série, a capacitância final é de aproximadamente 46,79 pF, bem próximo ao que foi estabelecido pelo problema.
+
+Para o capacitor de 68 pF, o modelo que é mais próximo ao que foi solicitado pelo problema tem as dimensões 01005 (0,5 mm X 0,2 mm), com expessura de 0,2 mm, 16 V, tolerância de 10% e para a mesma série de aplicações do que foi indicado. Conforme o documento de *Part numbering*, esse capacitor deveria ter um *Part number* próximo a: `GRM022R71C680KA01#`. Encontra-se, no site do fabricante, o modelo `GRM022R71C680KE14#`, que é basicamente o que foi montado sem consulta, com exceção do código de especificação individual, cuja especificação não é muito clara.
+
+Semelhante ao que foi feito para o capacitor de 68 pF, o de 150 pF encontra-se nas mesmas dimensões, com o material especificado e demais especificações. Seguindo a mesma lógica do capacitor anteriormente selecionado, espera-se que o *part number* seja algo parecido com: `GRM022R71C151KE14#`. De fato, esse capacitor existe na base do fabricante com esse exato código.
+
 
 
 # Laboratório
