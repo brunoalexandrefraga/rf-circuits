@@ -54,6 +54,7 @@ Para o capacitor de 68 pF, o modelo que é mais próximo ao que foi solicitado p
 
 Semelhante ao que foi feito para o capacitor de 68 pF, o de 150 pF encontra-se nas mesmas dimensões, com o material especificado e demais especificações. Seguindo a mesma lógica do capacitor anteriormente selecionado, espera-se que o *part number* seja algo parecido com: `GRM022R71C151KE14#`. De fato, esse capacitor existe na base do fabricante com esse exato código.
 
+Tanto a loja *Digikey* quanto a *Mouser* tem os dois capacitores disponíveis. Na *Digikey*, para ambos os compenentes, a compra mínima é de 40 mil unidades a um preço de $0,0047 (total: $188,00), equanto que a *Mouser* não tem pedido mínimo e, para uma compra de menos de 100 unidades, cada capacitor sai por $0,018. Não foi encontrado modelo semelhante no Aliexpress e, levando em consideração a boa reputação da loja *Mouser*, certamente essa é a melhor opção.
 
 
 # Laboratório
@@ -510,6 +511,5 @@ Utilizando a equação em questão, obtém-se uma indutância de $L =$ `{python}
 ![Verificação do bias-tee projetado](../images/simple-complete-verification.png){width=300, #fig-simple-complete-verification}
 
 Além disso, visualizando a curva de resposta do circuito na [Fig. @fig-response], verifica-se que atende exatamente aos critérios estabelecidos.
-
 
 ![Curva de insertion loss do bias-tee projetado](../images/Response.png){width=300, #fig-response}
