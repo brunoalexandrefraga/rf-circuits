@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-237,-42,2935,1303,1,0,0
+View=-271,-42,2922,1341,0.795048,0,67
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -12,6 +12,11 @@ FrameText2=Date:
 FrameText3=Revision:
 </Properties>
 <Symbol>
+.ID -20 14 SUB
+Line -20 -10 40 0 #000080 2 1
+Line 20 -10 0 20 #000080 2 1
+Line -20 10 40 0 #000080 2 1
+Line -20 -10 0 20 #000080 2 1
 </Symbol>
 <Components>
 GND * 1 110 710 0 0 0 0

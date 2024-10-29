@@ -1,0 +1,21 @@
+Settings file, QucsFilter 4.3.1
+FilterWindow=607,310
+Combo_Realize=0
+Combo_Type=0
+Combo_Class=0
+Edit_Order=3
+Edit_Corner=1
+Combo_Corner=3
+Edit_Stop=2
+Combo_Stop=3
+Edit_BandStop=3
+Combo_BandStop=3
+Edit_Ripple=0.1
+Edit_Impedance=50
+Radio_Topology=0
+Check_Microstrip=0
+Combo_Er=9.8
+Edit_Thickness=12.5,3
+Edit_Height=1.0,3
+Edit_MinWidth=20
+Edit_MaxWidth=400
