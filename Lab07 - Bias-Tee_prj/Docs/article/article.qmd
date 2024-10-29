@@ -513,3 +513,13 @@ Utilizando a equação em questão, obtém-se uma indutância de $L =$ `{python}
 Além disso, visualizando a curva de resposta do circuito na [Fig. @fig-response], verifica-se que atende exatamente aos critérios estabelecidos.
 
 ![Curva de insertion loss do bias-tee projetado](../images/Response.png){width=300, #fig-response}
+
+Tendo feito o projeto do *bias-tee*, agora analisa-se a robustez. Como pode-se visualizar na [Fig. @fig-monte-carlo-IL1dB], com uma variação de 10% nos componentes selecionados, o *insertion-loss* do circuito tende a variar bastante e extrapolar os limites estabelecido.
+
+![Insertion loss com Monte Carlo](../images/monte-carlo-IL1dB.png){width=300, #fig-monte-carlo-IL1dB}
+
+Supondo que não seja possível selecionar um componente com uma menor tolerância, uma forma de solucionar essa extrapolação é projetando o circuito para que esse a perda por inserção, sem considerar a tolerância, seja de menos de 1 dB. Como foi obtido um valor de 2,02 dB na simulação apresentada na [Fig. @fig-monte-carlo-IL1dB], um valor que pode ser adequado seja de 0,5 dB. Dessa forma, o projeto deve ser refeito, considerando que a perda por inserção não deva ultrapassar 0,5 dB na frequência de 100 kHz.
+
+Para que o circuito seja devidamente obtido, primeiramente calcula-se o capacitor por meio da equação [Eq. @eq-capacitor-value]. Dessa forma, obtém-se um capacitor de $C =$ `{python} format_capacitance(calc_capacitance(f=100e3, IL_ideal=0.5))`. Semelhantemente, utiliza-se a [Eq. @eq-insertion-loss] para o cálculo do indutor, levando a um indutor $L =$ `{python} format_inductance(calcular_indutancia(f=100e3, C=4.5562481787255145e-08, IL_dB=0.5, R_L=50, R_s=50))`.
+
+L=`{python} calcular_indutancia(f=100e3, C=4.5562481787255145e-08, IL_dB=0.5, R_L=50, R_s=50)`
