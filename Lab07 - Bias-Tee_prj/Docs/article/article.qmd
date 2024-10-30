@@ -506,7 +506,7 @@ def format_inductance(L):
         return f"{L * 1e12:.4f} pH"
 ```
 
-Utilizando a equação em questão, obtém-se uma indutância de $L =$ `{python} format_inductance(calcular_indutancia(f=100e3, C=31.277555e-09, IL_dB=1, R_L=50, R_s=50))`. Com esses dois valores, pode-se utilizar a equação [Eq. @eq-insertion-loss] para calcular o *insertion loss* dessa configuração **pendente**. Para garantir que o circuito está se comportando conforme o esperado, utiliza-se a simulação no QucsStudio para validar os valores calculados. Pode-se verificar na [Fig. @fig-simple-complete-verification] que o *insertion loss* obtido é exatamente o mesmo que o que foi calculado, validando, assim, os cálculos realizados (com muito mais casas decimais utilizadas para os cálculos).
+Utilizando a equação em questão, obtém-se uma indutância de $L =$ `{python} format_inductance(calcular_indutancia(f=100e3, C=31.277555e-09, IL_dB=1, R_L=50, R_s=50))`. Com esses dois valores, pode-se utilizar a equação [Eq. @eq-insertion-loss] para calcular o *insertion loss* dessa configuração. Para garantir que o circuito está se comportando conforme o esperado, utiliza-se a simulação no QucsStudio para validar os valores calculados. Pode-se verificar na [Fig. @fig-simple-complete-verification] que o *insertion loss* obtido é exatamente o mesmo que o que foi calculado, validando, assim, os cálculos realizados (com muito mais casas decimais utilizadas para os cálculos).
 
 ![Verificação do bias-tee projetado](../images/simple-complete-verification.png){width=300, #fig-simple-complete-verification}
 
@@ -516,37 +516,114 @@ Além disso, visualizando a curva de resposta do circuito na [Fig. @fig-response
 
 Tendo feito o projeto do *bias-tee*, agora analisa-se a robustez. Como pode-se visualizar na [Fig. @fig-monte-carlo-IL1dB], com uma variação de 10% nos componentes selecionados, o *insertion-loss* do circuito tende a variar bastante e extrapolar os limites estabelecido.
 
-![Insertion loss com Monte Carlo](../images/monte-carlo-IL1dB.png){width=300, #fig-monte-carlo-IL1dB}
+![Insertion loss com Monte Carlo (0.5 dB)](../images/monte-carlo-IL1dB.png){width=200, #fig-monte-carlo-IL1dB}
 
+Uma análise estatística pode ser realizada visualizando-se a [Fig. @fig-pdf-1dB]. A figura apresenta um histograma da simulação monte-carlo para 10 mil interações e é possível perceber que o valor médio ocorre depois da marca de 1 dB. Dessa forma, pode-se interpretar que em mais de 50% dos casos, o circuito apresentará mais de 1 dB na frequência de 100 kHz. Assim, conclui-se que este projeto não é adequado. levando em consideração o fato da robustez.
 
+::: {#fig-pdf-1dB}
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import lognorm
 
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Analysis/monte-carlo/1dB-simulation.csv', delimiter=';', quotechar='"')
+valores = df['r IL_meas']
 
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
 
+# Ajuste para a distribuição log-normal
+shape, loc, scale = lognorm.fit(valores, floc=0)  # Fixando loc=0 para evitar deslocamento
 
+# Criando valores para a curva de densidade log-normal
+x = np.linspace(min(valores), max(valores), 1000)
+densidade_log_normal = lognorm.pdf(x, shape, loc=loc, scale=scale)
 
+# Plotando o histograma com contagem de ocorrências
+plt.figure(figsize=(8, 6))
+contagens, bins, _ = plt.hist(valores, bins=20, density=False, color='blue', alpha=0.7, edgecolor='black')
 
+# Ajustando a curva de densidade log-normal para escala de contagens
+densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - bins[0])
 
+# Plotando a curva de densidade ajustada para contagens
+plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
 
+# Adicionando linhas para média e desvio padrão
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
 
-
+# Adicionando título e rótulos
+plt.xlabel('Perda por Inserção (dB)')
+plt.ylabel('Ocorrências')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+Distribuição projeto de IL = 1 dB
+:::
 
 Supondo que não seja possível selecionar um componente com uma menor tolerância, uma forma de solucionar essa extrapolação é projetando o circuito para que a perda por inserção seja de menos de 1 dB com componentes ideais, dessa forma, ao utilizar componentes com tolerância, a extrapolação pode ser minimizada ou, idealmente, anulada.
 
+Como foi obtido um valor de 2,04 dB na simulação apresentada na [Fig. @fig-monte-carlo-IL1dB], um valor que pode ser adequado seja de 0,5 dB. Dessa forma, o projeto deve ser refeito, considerando que a perda por inserção não deva ultrapassar 0,5 dB na frequência de 100 kHz. Para que o circuito seja devidamente obtido, primeiramente calcula-se o capacitor por meio da equação [Eq. @eq-capacitor-value]. Dessa forma, obtém-se um capacitor de $C =$ `{python} format_capacitance(calc_capacitance(f=100e3, IL_ideal=0.5))`. Semelhantemente, utiliza-se a [Eq. @eq-insertion-loss] para o cálculo do indutor, levando a um indutor $L =$ `{python} format_inductance(calcular_indutancia(f=100e3, C=4.5562481787255145e-08, IL_dB=0.5, R_L=50, R_s=50))`.
 
+Com os valores obtidos, ao realizar 20 iterações com a simulação monte-carlo, obtém-se a curva apresentada na [Fig. @fig-monte-carlo-IL0R5dB].
 
+![Insertion loss com Monte Carlo (0.5 dB)](../images/monte-carlo-IL0R5dB.png){width=200, #fig-monte-carlo-IL0R5dB}
 
+Em algumas simulações, como essa que foi apresentada na [Fig. @fig-monte-carlo-IL0R5dB], a perda por inserção extrapolou o limite de 1 dB. Dessa forma, é necessário analisar estatisticamente se o projeto é robusto o suficiente. Inicialmente, busca-se fazer com que o limite de 1 dB esteja compreendido entre o limite de $3\sigma$, ou seja, aproximadamente 99.73% das iterações ficarem abaixo de 1 dB.
 
+::: {#fig-pdf-0R5dB}
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import lognorm
 
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Analysis/monte-carlo/0R5dB-simulation.csv', delimiter=';', quotechar='"')
+valores = df['r IL_meas']
 
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
 
+# Ajuste para a distribuição log-normal
+shape, loc, scale = lognorm.fit(valores, floc=0)  # Fixando loc=0 para evitar deslocamento
 
+# Criando valores para a curva de densidade log-normal
+x = np.linspace(min(valores), max(valores), 1000)
+densidade_log_normal = lognorm.pdf(x, shape, loc=loc, scale=scale)
 
+# Plotando o histograma com contagem de ocorrências
+plt.figure(figsize=(8, 6))
+contagens, bins, _ = plt.hist(valores, bins=20, density=False, color='blue', alpha=0.7, edgecolor='black')
 
+# Ajustando a curva de densidade log-normal para escala de contagens
+densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - bins[0])
 
+# Plotando a curva de densidade ajustada para contagens
+plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
 
-Como foi obtido um valor de 2,02 dB na simulação apresentada na [Fig. @fig-monte-carlo-IL1dB], um valor que pode ser adequado seja de 0,5 dB. Dessa forma, o projeto deve ser refeito, considerando que a perda por inserção não deva ultrapassar 0,5 dB na frequência de 100 kHz.
+# Adicionando linhas para média e desvio padrão
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
 
-Para que o circuito seja devidamente obtido, primeiramente calcula-se o capacitor por meio da equação [Eq. @eq-capacitor-value]. Dessa forma, obtém-se um capacitor de $C =$ `{python} format_capacitance(calc_capacitance(f=100e3, IL_ideal=0.3))`. Semelhantemente, utiliza-se a [Eq. @eq-insertion-loss] para o cálculo do indutor, levando a um indutor $L =$ `{python} format_inductance(calcular_indutancia(f=100e3, C=4.5562481787255145e-08, IL_dB=0.3, R_L=50, R_s=50))`.
+# Adicionando título e rótulos
+plt.xlabel('Perda por Inserção (dB)')
+plt.ylabel('Ocorrências')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+Distribuição projeto de IL = 0,5 dB
+:::
 
-$C =$ `{python} calc_capacitance(f=100e3, IL_ideal=0.3)`.
-$L =$ `{python} calcular_indutancia(f=100e3, C=5.9512540245923864e-08, IL_dB=0.3, R_L=50, R_s=50)`.
+Como pode-se perceber pela [Fig. @fig-monte-carlo-IL0R5dB], os critérios estabelecidos pelo projeto são devidamente atendidos, uma vez que a marcação de 1 dB coincide com a linha de $3\sigma$.

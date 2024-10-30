@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=403,58,3595,1421,0.816095,0,13
+View=280,58,3602,1421,0.972496,1390,250
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -33,8 +33,10 @@ VProbe VL1 1 1300 340 -16 28 0 3 "SIL-2" 0
 IProbe IL1 1 1110 230 -26 16 0 0 "SIL-2" 0
 Eqn Eqn1 1 490 770 0 8 0 0 "IL_meas=-20*log10(abs(Vo2.v/Vo1.v))=" 1 "yes" 0
 .AC AC1 1 500 390 0 38 0 0 "lin" 1 "90 kHz" 1 "110 kHz" 1 "10000" 1 "no" 0 "none" 0
-Eqn Consts 1 490 580 0 8 0 0 "RL=50 Ω=" 1 "Rs=50 Ω=" 1 "C=tol(5.9512540245923864e-08 F, 10)=" 1 "L=tol(9.567215296397115e-05 H, 10)=" 1 "Vs=1 V=" 1 "IL_ideal=1=" 1 "no" 0
+Eqn Consts 1 490 580 0 8 0 0 "RL=50 Ω=" 1 "Rs=50 Ω=" 1 "C=tol(31.277555e-09 F, 10)=" 1 "L=tol(7.958971181507123e-05 H, 10)=" 1 "Vs=1 V=" 1 "IL_ideal=1=" 1 "no" 0
 .MC MC1 1 500 220 0 63 0 0 "AC1" 1 "20" 1
+.AC AC2 0 320 390 0 38 0 0 "list" 1 "90 kHz" 0 "110 kHz" 0 "100 kHz" 1 "no" 0 "none" 0
+.MC MC2 0 310 220 0 63 0 0 "AC2" 1 "10000" 1
 </Components>
 <Wires>
 790 740 790 790 "" 0 0 0 ""
@@ -75,10 +77,10 @@ Eqn Consts 1 490 580 0 8 0 0 "RL=50 Ω=" 1 "Rs=50 Ω=" 1 "C=tol(5.95125402459238
 	<Legend 10 -100 0>
 	<"IL2.i" "" #0000ff 0 3 0 0 0 0 "">
 </Rect>
-<Rect 1367 784 752 566 31 #c0c0c0 1 00 1 0 10000 100000 1 -12.6172 20 140 1 0 0 0 315 0 225 "Frequency" "Insertion loss" "">
+<Rect 1597 874 752 566 31 #c0c0c0 1 00 1 0 1000 10000 1 0 0.5 3.34554 1 0 0 0 315 0 225 "Frequency" "Insertion loss" "">
 	<Legend 10 -100 0>
 	<"IL_meas" "" #0000ff 0 3 0 0 0 0 "">
-	  <Mkr 99997/20 403 -454 3 1 0 0 0 50>
+	  <Mkr 100123/16 403 -454 3 1 0 0 0 50>
 </Rect>
 </Diagrams>
 <Paintings>
