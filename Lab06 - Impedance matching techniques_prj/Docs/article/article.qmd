@@ -499,9 +499,29 @@ $$
 C1=1/(omega**2 * Ls)
 ```
 
-Entretanto, esse capacitor em paralelo não fornece exatamente a admitância calculada na seção anterior, além disso, como é apresentado na Seção @sec-network-adapter-validation, percebe-se que a topologia da rede está mais próxima de uma rede do tipo Pi do que L. Como a impedância não é a que foi calculada, as restrições de máxima potência na carga, com eficiência de `{python} eta*100`%, não serão atingidas. Uma alteração que pode ser aplicada é calcular um capacitor em série, equivalente ao que foi projetado em paralelo.
+Aplicando os valores à equação, obtém-se $C_1 =$ `{python} format(C1)`F. Entretanto, esse capacitor em paralelo não fornece exatamente a admitância calculada na seção anterior, além disso, como é apresentado na Seção @sec-network-adapter-validation, percebe-se que a topologia da rede está mais próxima de uma rede do tipo Pi do que L. Como a impedância não é a que foi calculada, as restrições de máxima potência na carga, com eficiência de `{python} eta*100`%, não serão atingidas. Uma alteração que pode ser aplicada é calcular um capacitor em série, equivalente ao que foi projetado em paralelo. Assim, deseja-se calcular um capacitor $C_i^{'}$ que seja equivalente ao paralelo. Para isso, primeiro calcula-se o fator de qualidade como se segue
 
+$$
+    Q=\frac{\omega C_i}{G_i}
+$$
 
+```{python}
+#| echo: false
+Q_line = (omega*C1)/GL
+```
+
+ e esse fator de qualidade é referente ao capacitor em paralelo e a condutância de carga, $G_i$. Aplicando os valores, obtém-se um fator de qualidade, $Q =$ `{python} format_decimal(Q_line, 4)`. Em seguida, é possível calcular o capacitor em série, $C_1^{'}$, do circuito transformado como
+
+$$
+    C_1^{'}=\left(1+Q^{-2}\right)C_1
+$$
+
+```{python}
+#| echo: false
+C1_line=(1+Q_line**(-2))*C1
+```
+
+Finalmente, obtém-se uma capacitância $C_1^{'} =$ `{python} format(C1_line)`F em série.
 
 ## Validação da Rede de adaptação {#sec-network-adapter-validation}
 
@@ -515,9 +535,9 @@ A aplicação dos valores obtidos para o capacitor e para o indutor, além do re
 
 ![Resultados da rede de adaptação projetada](../images/network-adapter-verification-results.png){width=300, #fig-network-adapter-verification-result}
 
-Os resultados apresentados confirmam todos os cálculos que foram feitos até então.
+Os resultados apresentados confirmam todos os cálculos que foram feitos até então. Em seguida, na @fig-complete-network-adapter-shuntC, é apresentado os resultados com esse capacitor acoplado ao circuito de teste.
 
-Aplicando os valores à equação, obtém-se $C_1 =$ `{python} format(C1)`F. Em seguida, na @fig-complete-network-adapter-shuntC, é apresentado os resultados com esse capacitor acoplado ao circuito de teste.
+
 
 ![Resultados da rede de adaptação com capacitor em paralelo](../images/complete-network-adapter-shuntC.png){width=300, #fig-complete-network-adapter-shuntC}
 
