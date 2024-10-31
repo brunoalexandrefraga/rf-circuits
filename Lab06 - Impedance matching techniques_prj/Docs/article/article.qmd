@@ -85,7 +85,7 @@ $$
   V_L=\frac{I_s}{Y_s+Y_L}
 $$
 
-Calculadndo $P_L$, obtém-se
+Calculando $P_L$, obtém-se
 
 $$
   \begin{split}
@@ -195,6 +195,7 @@ f = 2.4e9 # Frequência em Hz
 omega = 2 * np.pi * f # Frequência angular
 RL = 50 # Resistência de carga
 Bs = -1 / (omega*Ls) # Condutância
+Is = 100e-3
 ```
 
 ```{python}
@@ -275,6 +276,19 @@ def format_2_decimals(value):
 
 Finalmente, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{python} formatted_susceptance` mS. Semelhantemente, obtém-se uma impedância de carga, $Z_L =$ `{python} format_2_decimals(load_resistence(GL, BL))` - j`{python} format_2_decimals(load_reactance(GL, BL))` $\Omega$. Assim, obtém-se que para que para que a carga dissipe potência com uma eficiência, $\eta$ de `{python} eta*100`%, esta deve ter como parte real da sua admitância, $G_L =$ `{python} formatted_admittance` mS. Além disso, foi demonstrado que, para que o amplificador forneça a máxima potência possível, essa carga deve ter uma parte imaginária de admitância, $B_L$, igual a `{python} formatted_susceptance` mS.
 
+Além disso, pode-se obter o valor da potência máxima transmitida à carga. Partindo da [Eq. @eq-power-load], obtém-se
+
+$$
+  P_L=\frac{I_s^2G_L}{2\left(G_s+G_L\right)^2}
+$$
+
+```{python}
+#| echo: false
+PL=max_PL=(Is**2 * GL)/(2*(Gs+GL)**2)
+```
+
+Finalmente, obtém-se uma impedância máxima $P_L =$ `{python} format(max_PL)`W.
+
 A seguir, são apresentadas as verificações no simulador QucsStudio. Para realizar as devidas verificações, toma-se como base o circuito da [Fig. @fig-circuit-qucs-original]. Em essência, o circuito apresentado é o mesmo fornecido com o problema, com a inclusão de um monopolo que serve como uma carga aterrada (esse bloco foi selecionado, pois permite informar uma admitância).
 
 ![Circuito para verificação da admitância obtida](../images/Qucs-circuit-reference.png){width=300, #fig-circuit-qucs-original}
@@ -301,7 +315,6 @@ $$ {#eq-power-load-finished}
 
 ```{python}
 #| echo: false
-Is = 100e-3
 def calculate_power_load():
   return (Is**2*GL)/(2*(Gs+GL)**2)
 ```
@@ -499,7 +512,7 @@ $$
 C1=1/(omega**2 * Ls)
 ```
 
-Aplicando os valores à equação, obtém-se $C_1 =$ `{python} format(C1)`F. Entretanto, esse capacitor em paralelo não fornece exatamente a admitância calculada na seção anterior, além disso, como é apresentado na Seção @sec-network-adapter-validation, percebe-se que a topologia da rede está mais próxima de uma rede do tipo Pi do que L. Como a impedância não é a que foi calculada, as restrições de máxima potência na carga, com eficiência de `{python} eta*100`%, não serão atingidas. Uma alteração que pode ser aplicada é calcular um capacitor em série, equivalente ao que foi projetado em paralelo. Assim, deseja-se calcular um capacitor $C_i^{'}$ que seja equivalente ao paralelo. Para isso, primeiro calcula-se o fator de qualidade como se segue
+Aplicando os valores à equação, obtém-se $C_1 =$ `{python} format(C1)`F. Entretanto, esse capacitor em paralelo não fornece exatamente a admitância calculada na seção anterior, além disso, como é apresentado na [Seção @sec-network-adapter-validation], percebe-se que a topologia da rede está mais próxima de uma rede do tipo Pi do que L. Como a impedância não é a que foi calculada, as restrições de máxima potência na carga, com eficiência de `{python} eta*100`%, não serão atingidas. Uma alteração que pode ser aplicada é calcular um capacitor em série, equivalente ao que foi projetado em paralelo. Assim, deseja-se calcular um capacitor $C_i^{'}$ que seja equivalente ao paralelo. Para isso, primeiro calcula-se o fator de qualidade como se segue
 
 $$
     Q=\frac{\omega C_i}{G_i}
@@ -525,31 +538,144 @@ Finalmente, obtém-se uma capacitância $C_1^{'} =$ `{python} format(C1_line)`F 
 
 ## Validação da Rede de adaptação {#sec-network-adapter-validation}
 
-A intenção dessa validação é atestar se, ao acoplar a rede de adaptação, apresentada na Seção @sec-network-adapter, a um circuito cuja carga seja `{python} RL` $\Omega$ a impedância obtida, do ponto de vista da fonte, seja de `{python} format_2_decimals(Ro)` $\Omega$.
+A intenção dessa validação é atestar se, ao acoplar a rede de adaptação, apresentada na [Seção @sec-network-adapter], a um circuito cuja carga seja `{python} RL` $\Omega$ a impedância obtida, do ponto de vista da fonte, seja de `{python} format_2_decimals(Ro)` $\Omega$.
 
-A rede de adaptação acoplada a um circuito de verificação pode ser visualizada na [Fig. @fig-network-adapter-verification]. Pode parecer que a rede de adaptação está invertida em relação à Fig.\ref{fig:matching-network}, mas é a mesma, uma vez que é necessário que o indutor esteja em paralelo com a carga.
-
-![Circuito de validação da rede de adaptação projetada](../images/network-adapter-verification.png){width=300, #fig-network-adapter-verification}
-
-A aplicação dos valores obtidos para o capacitor e para o indutor, além do resultado obtido com o acoplamento da rede de ataptação podem ser visualizados na [Fig. @fig-network-adapter-verification-result].
+A rede de adaptação acoplada a um circuito de verificação pode ser visualizada na [Fig. @fig-network-adapter-verification-result]. Pode parecer que a rede de adaptação está invertida em relação à Fig.\ref{fig:matching-network}, mas é a mesma, uma vez que é necessário que o indutor esteja em paralelo com a carga. Além disso, pode-se verificar a aplicação dos valores obtidos para o capacitor e para o indutor e os resultados obtidos com o acoplamento da rede de ataptação.
 
 ![Resultados da rede de adaptação projetada](../images/network-adapter-verification-results.png){width=300, #fig-network-adapter-verification-result}
 
-Os resultados apresentados confirmam todos os cálculos que foram feitos até então. Em seguida, na @fig-complete-network-adapter-shuntC, é apresentado os resultados com esse capacitor acoplado ao circuito de teste.
-
-
+Os resultados apresentados confirmam todos os cálculos que foram feitos até então. Em seguida, na [Fig. @fig-complete-network-adapter-shuntC], é apresentado os resultados com esse capacitor acoplado ao circuito de teste.
 
 ![Resultados da rede de adaptação com capacitor em paralelo](../images/complete-network-adapter-shuntC.png){width=300, #fig-complete-network-adapter-shuntC}
 
+Pode-se perceber que os resultados da impedância não são os que foram obtidos de maneira analítica. Dessa forma, essa topologia não se adequou às necessidades do projeto. Uma das formas que foi encontrada para adequar o circuito, de forma que seja obtida a impedância desajada, é transformar esse capacitor em parlelo, em um capacitor em série. Essa etapa também foi realizada na [Seção @sec-network-adapter] e os resultados obtidos são apresentados na [Fig. @fig-complete-network-adapter-seriesC]. Com essa alteração, o circuito apresenta exatamente a impedância calculada.
 
+![Resultados da rede de adaptação com capacitor em série](../images/complete-network-adapter-seriesC.png){width=300, #fig-complete-network-adapter-seriesC}
 
+```{python}
+#| echo: false
+C_eq=1/(1/C+1/C1_line)
+```
 
+Uma outra alteração que é interessante de ser realizada é obter um capacitor equivalente, fazendo com que somente um capacitor seja necessário. O capacitor equivalente é $C =$ `{python} format(C_eq)`F. Com essa modificação, a impedância continua conforme o que foi projetado, atendendo aos requisitos do projeto. A rede de adaptação final é apresentada na [Fig. @fig-complete-network-adapter-equivalentC].
 
+![Resultados da rede de adaptação final](../images/complete-network-adapter-equivalentC.png){width=300, #fig-complete-network-adapter-equivalentC}
 
+Em seguida, esse mesmo circuito de adaptação de impedância é acoplado ao circuito do amplificador. A [Fig. @fig-matching-network-test]. Percebe-se que o critério da eficiência foi atendido, bem como a máxima potência possível na carga. Dessa forma, pode-se concluir que esta rede de adaptação é adequada às necessidades desse projeto.
 
+![Teste da rede de adaptação completa](../images/matching-network-test.png){width=300, #fig-matching-network-test}
 
+# Estudo de robustez
 
+```{python}
+#| echo: false
+component_tolerance = 5
+variation_tolerance = 5
+variation_eff = eta*variation_tolerance/100
+eff_min = (eta - variation_eff)*100
+eff_max = (eta + variation_eff)*100
 
+variation_PL = PL*variation_tolerance/100
+PL_min = PL - variation_PL
+PL_max = PL + variation_PL
+```
 
+O objetivo desta Seção é validar se o circuito mantém o comportamento adequado, mesmo que haja uma variação nos componentes da rede de adaptação. Para validar o circuito sob a tolerância dos componentes, será utilizado o mesmo *test-bench* apresentado na [Fig. @fig-matching-network-test]. Com a diferença de que será aplicada uma tolerância de `{python} component_tolerance`%. Além disso, será avaliada a média e os valores referentes à variação de $3\sigma$. Para concluir que o projeto é inadequado, será inferido que aproximadamente 99% das iterações tenham uma variação de no máximo, 5%. Dessa forma, espera-se que 99% dos casos estejam entre `{python} format_decimal(eff_min, 0)`% e `{python} format_decimal(eff_max, 0)`% para a eficiência e entre `{python} format(PL_min)`W e `{python} format(PL_max)`W para a potência na carga.
+
+::: {#fig-pdf-0R5dB}
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import lognorm
+
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Output/efficiency-points.csv', delimiter=';', quotechar='"')
+valores = df['r n*100']
+
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
+
+# Ajuste para a distribuição log-normal
+shape, loc, scale = lognorm.fit(valores, floc=0)  # Fixando loc=0 para evitar deslocamento
+
+# Criando valores para a curva de densidade log-normal
+x = np.linspace(min(valores), max(valores), 1000)
+densidade_log_normal = lognorm.pdf(x, shape, loc=loc, scale=scale)
+
+# Plotando o histograma com contagem de ocorrências
+plt.figure(figsize=(8, 6))
+contagens, bins, _ = plt.hist(valores, bins=20, density=False, color='blue', alpha=0.7, edgecolor='black')
+
+# Ajustando a curva de densidade log-normal para escala de contagens
+densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - bins[0])
+
+# Plotando a curva de densidade ajustada para contagens
+plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
+
+# Adicionando linhas para média e desvio padrão
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
+
+# Adicionando título e rótulos
+plt.xlabel('Eficiência (%)')
+plt.ylabel('Ocorrências')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+Distribuição da eficiência 
+:::
+
+::: {#fig-pdf-0R5dB}
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import lognorm
+
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Output/power-points.csv', delimiter=';', quotechar='"')
+valores = df['r PL*1000']
+
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
+
+# Ajuste para a distribuição log-normal
+shape, loc, scale = lognorm.fit(valores, floc=0)  # Fixando loc=0 para evitar deslocamento
+
+# Criando valores para a curva de densidade log-normal
+x = np.linspace(min(valores), max(valores), 1000)
+densidade_log_normal = lognorm.pdf(x, shape, loc=loc, scale=scale)
+
+# Plotando o histograma com contagem de ocorrências
+plt.figure(figsize=(8, 6))
+contagens, bins, _ = plt.hist(valores, bins=20, density=False, color='blue', alpha=0.7, edgecolor='black')
+
+# Ajustando a curva de densidade log-normal para escala de contagens
+densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - bins[0])
+
+# Plotando a curva de densidade ajustada para contagens
+plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
+
+# Adicionando linhas para média e desvio padrão
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
+
+# Adicionando título e rótulos
+plt.xlabel('Potência na carga (mW)')
+plt.ylabel('Ocorrências')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+Distribuição da potência na carga 
+:::
 
 # References {-}
