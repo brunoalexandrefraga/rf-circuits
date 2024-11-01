@@ -565,7 +565,7 @@ Em seguida, esse mesmo circuito de adaptação de impedância é acoplado ao cir
 
 ![Teste da rede de adaptação completa](../images/matching-network-test.png){width=300, #fig-matching-network-test}
 
-# Estudo de robustez
+## Estudo de robustez
 
 ```{python}
 #| echo: false
@@ -580,9 +580,11 @@ PL_min = PL - variation_PL
 PL_max = PL + variation_PL
 ```
 
-O objetivo desta Seção é validar se o circuito mantém o comportamento adequado, mesmo que haja uma variação nos componentes da rede de adaptação. Para validar o circuito sob a tolerância dos componentes, será utilizado o mesmo *test-bench* apresentado na [Fig. @fig-matching-network-test]. Com a diferença de que será aplicada uma tolerância de `{python} component_tolerance`%. Além disso, será avaliada a média e os valores referentes à variação de $3\sigma$. Para concluir que o projeto é inadequado, será inferido que aproximadamente 99% das iterações tenham uma variação de no máximo, 5%. Dessa forma, espera-se que 99% dos casos estejam entre `{python} format_decimal(eff_min, 0)`% e `{python} format_decimal(eff_max, 0)`% para a eficiência e entre `{python} format(PL_min)`W e `{python} format(PL_max)`W para a potência na carga.
+O objetivo desta Seção é validar se o circuito mantém o comportamento adequado, mesmo que haja uma variação nos componentes da rede de adaptação. Para validar o circuito sob a tolerância dos componentes, será utilizado o mesmo *test-bench* apresentado na [Fig. @fig-matching-network-test]. Com a diferença de que será aplicada uma tolerância de `{python} component_tolerance`%. Além disso, será avaliada a média e os valores referentes à variação de $3\sigma$. Para concluir que o projeto é inadequado, será inferido que aproximadamente 99% das iterações tenham uma variação de no máximo, `{python} variation_tolerance`%. Dessa forma, espera-se que 99% dos casos estejam entre `{python} format_decimal(eff_min, 0)`% e `{python} format_decimal(eff_max, 0)`% para a eficiência e entre `{python} format(PL_min)`W e `{python} format(PL_max)`W para a potência na carga.
 
-::: {#fig-pdf-0R5dB}
+Analisando tudo com base em 100 iterações para a simulação monte carlo, verifica-se, pela [Fig. @fig-pdf-eff5], que o critério da eficiência é atendido mais precisamente do que os limites estabelecidos. Porém, analisando-se a [Fig. @fig-pdf-power5], verifica-se que o critério da potência não foi atendido, uma vez que o limite de `{python} variation_tolerance`% de variação para a potência foi extrapolado.
+
+::: {#fig-pdf-power5}
 ```{python}
 #| echo: false
 import pandas as pd
@@ -615,10 +617,13 @@ densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - b
 # Plotando a curva de densidade ajustada para contagens
 plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
 
-# Adicionando linhas para média e desvio padrão
-plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
-plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
-plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
+# Adicionando linhas para média e desvio padrão com os valores na legenda
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, 
+            label=f'Média: {media:.1f}')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, 
+            label=f'Média - 3σ: {media - 3 * desvio_padrao:.1f}')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, 
+            label=f'Média + 3σ: {media + 3 * desvio_padrao:.1f}')
 
 # Adicionando título e rótulos
 plt.xlabel('Eficiência (%)')
@@ -627,10 +632,10 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
-Distribuição da eficiência 
+Distribuição da eficiência
 :::
 
-::: {#fig-pdf-0R5dB}
+::: {#fig-pdf-eff5}
 ```{python}
 #| echo: false
 import pandas as pd
@@ -663,10 +668,13 @@ densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - b
 # Plotando a curva de densidade ajustada para contagens
 plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
 
-# Adicionando linhas para média e desvio padrão
-plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
-plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
-plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
+# Adicionando linhas para média e desvio padrão com os valores na legenda
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, 
+            label=f'Média: {media:.1f}')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, 
+            label=f'Média - 3σ: {media - 3 * desvio_padrao:.1f}')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, 
+            label=f'Média + 3σ: {media + 3 * desvio_padrao:.1f}')
 
 # Adicionando título e rótulos
 plt.xlabel('Potência na carga (mW)')
@@ -677,5 +685,11 @@ plt.show()
 ```
 Distribuição da potência na carga 
 :::
+
+Uma forma de se minimizar a questão do limite de variação é restringindo a tolerância dos componentes.
+
+# Discussão
+
+Essa atividade foi de extrema importância para consolidar o conhecimento sobre redes de adaptação de impedância. Tive um pouco de dificuldades em entender o escopo do projeto e o desenvolvimento em conjunto com o professor, em sala de aula, foi essencial para entender quais foram os meus equívocos cometidos em minha primeira entrega. Tendo esses pontos sanados, pude desenvolver um relatório relativamente robusto e customizável, uma vez que os valores e equações aqui apresentados são obtidos programaticamente. Caso deseja-se analisar os valores de uma outra impedância, nenhuma alteração muito profunda seria necessária.
 
 # References {-}

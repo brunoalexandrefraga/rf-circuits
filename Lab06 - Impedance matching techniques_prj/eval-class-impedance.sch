@@ -33,8 +33,8 @@ RFEDD X1 1 990 150 20 -19 0 3 "Y" 1 "1" 0 "open" 0 "1/50" 1
 Eqn Eqn2 1 1090 300 0 8 0 0 "Ps=0.5*real(Vs.dv*conj(Is.i))=" 1 "PL=0.5*real(VL.dv*conj(IL.i))=" 1 "n=PL/Ps=" 1 "yes" 0
 .AC AC1 1 1200 0 0 38 0 0 "list" 1 "1 GHz" 0 "10 GHz" 0 "fs" 1 "no" 0 "none" 0
 Eqn Eqn1 1 1200 120 0 8 0 0 "fs=2.4e9=" 1 "ws=2*pi*fs=" 1 "Gs=1/65=" 1 "Ls=10 nH=" 1 "Bs=-1/(ws*Ls)=" 1 "GL=4*Gs=" 1 "is=100 mA=" 1 "BL=0.1=" 1 "yes" 0
-.MC MC1 1 1370 0 0 63 0 0 "AC1" 1 "10000" 1
 Eqn Eqn4 1 810 300 0 8 0 0 "La=tol(2.281207192549063 nH, 5)=" 1 "Ceq=tol(2.6442039878213333 pF, 5)=" 1 "yes" 0
+.MC MC1 1 1370 0 0 63 0 0 "AC1" 1 "100" 1
 </Components>
 <Wires>
 480 80 540 80 "" 0 0 0 ""
