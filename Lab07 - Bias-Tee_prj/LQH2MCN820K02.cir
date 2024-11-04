@@ -1,0 +1,11 @@
+*Note:This model does not correspond to magnetic saturation.
+.SUBCKT LQH2MCN820_02 port1 port2
+L1	port1	1	7.3221u
+L2	1	2	66.5692u
+L3	2	3	14.5744u
+R1	port1	1	9.6277
+R2	1	2	59377.7958
+R3	2	3	46418.2025
+R4	3	port2	7.5
+CP	port1	2	0.7929p
+.ENDS

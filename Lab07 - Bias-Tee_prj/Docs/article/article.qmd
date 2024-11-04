@@ -611,10 +611,13 @@ densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - b
 # Plotando a curva de densidade ajustada para contagens
 plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
 
-# Adicionando linhas para média e desvio padrão
-plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
-plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
-plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
+# Adicionando linhas para média e desvio padrão com os valores na legenda
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, 
+            label=f'Média: {media:.1f}')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, 
+            label=f'Média - 3σ: {media - 3 * desvio_padrao:.1f}')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, 
+            label=f'Média + 3σ: {media + 3 * desvio_padrao:.1f}')
 
 # Adicionando título e rótulos
 plt.xlabel('Perda por Inserção (dB)')
@@ -630,7 +633,7 @@ Como pode-se perceber pela [Fig. @fig-monte-carlo-IL0R5dB], os critérios estabe
 
 O próximo passo para adaptar o circuito projetado à vida real é utilizar valores de componentes existentes. Para isso, utilizou-se o portal de pesquisa de componentes da MuRata e, para o capacitor, selecionou-se o componente de *part number* `KRM55V5C2J443JDL2#`. Segundo o documento de *part numbering*, trata-se de um capacitor de 44 nF, dielétrico C0G, temperatura de operação de –55 a 125°C, tamanho 5,7 x 5,0mm, expessura de 6,2mm, 630 Vdc, tolerância de 5% e aplicação “*Metal Terminal Type Multilayer Ceramic Capacitors for Consumer Electronics & Industrial Equipment*”.
 
-Semelhantemente ao que foi realizado para o capacitor, inicialmente selecionou-se um indutor com valor próximo ao que foi obtido analiticamente. Sendo assim, o indutor selecionado foi o de *part number* `LQH32MN820J23#`. Esse trata-se de um indutor de 82 $\mu\text{H}$, dimensões de 1210 (*inches*), temperatura de operação de -40°C a 85°C, SRF (*self resonance frequency*) de 8,5 MHz o que é extremamente baixo, ainda mais para o presente circuito (será avaliado poseteriormente) e tolerância de 5%.
+Semelhantemente ao que foi realizado para o capacitor, inicialmente selecionou-se um indutor com valor próximo ao que foi obtido analiticamente. Sendo assim, o indutor selecionado foi o de *part number* `LQH2MCN820K02#`. Trata-se de um indutor de 82 $\mu\text{H}$, dimensões de 2,0 x 1,6 mm (1210 *inches*), temperatura de operação de -40°C a 85°C, SRF (*self resonance frequency*) de 14 MHz e tolerância de 10%.
 
 A análise estatística leva em consideração a tolerância de 5% dos componentes selecionados e é feita para 10 mil iterações. É apresentado, na [Fig. @fig-pdf-0R5dB-offtheshelf] que a distribuição é extremamente adequada e dentro dos limites estabelecidos.
 
@@ -667,10 +670,13 @@ densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - b
 # Plotando a curva de densidade ajustada para contagens
 plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
 
-# Adicionando linhas para média e desvio padrão
-plt.axvline(media, color='red', linestyle='dashed', linewidth=2, label='Média')
-plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, label='+3σ')
-plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, label='-3σ')
+# Adicionando linhas para média e desvio padrão com os valores na legenda
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, 
+            label=f'Média: {media:.1f}')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, 
+            label=f'Média - 3σ: {media - 3 * desvio_padrao:.1f}')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, 
+            label=f'Média + 3σ: {media + 3 * desvio_padrao:.1f}')
 
 # Adicionando título e rótulos
 plt.xlabel('Perda por Inserção (dB)')
@@ -683,3 +689,103 @@ Distribuição projeto de IL = 0,5 dB componentes de mercado
 :::
 
 O próximo passo é obter os modelos de simulação dos componentes selecionados e utilizá-los no circuito.
+
+## Componentes reais
+
+A escolha daqueles componentes anteriormente citados não foi somente baseada nos seus parâmetros, mas também na existência de um modelo Spice que pudesse ser utilizado nas simulações.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+::: {#fig-pdf-real-100kHz}
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import lognorm
+
+# Lendo o arquivo CSV
+df = pd.read_csv('../../Analysis/monte-carlo/real-100kHz-simulation.csv', delimiter=';', quotechar='"')
+valores = df['r IL_meas']
+
+# Calculando média e desvio padrão
+media = np.mean(valores)
+desvio_padrao = np.std(valores)
+
+# Ajuste para a distribuição log-normal
+shape, loc, scale = lognorm.fit(valores, floc=0)  # Fixando loc=0 para evitar deslocamento
+
+# Criando valores para a curva de densidade log-normal
+x = np.linspace(min(valores), max(valores), 1000)
+densidade_log_normal = lognorm.pdf(x, shape, loc=loc, scale=scale)
+
+# Plotando o histograma com contagem de ocorrências
+plt.figure(figsize=(8, 6))
+contagens, bins, _ = plt.hist(valores, bins=20, density=False, color='blue', alpha=0.7, edgecolor='black')
+
+# Ajustando a curva de densidade log-normal para escala de contagens
+densidade_log_normal_escala = densidade_log_normal * len(valores) * (bins[1] - bins[0])
+
+# Plotando a curva de densidade ajustada para contagens
+plt.plot(x, densidade_log_normal_escala, color='purple', linewidth=2, label='PDF')
+
+# Adicionando linhas para média e desvio padrão com os valores na legenda
+plt.axvline(media, color='red', linestyle='dashed', linewidth=2, 
+            label=f'Média: {media:.1f}')
+plt.axvline(media - 3 * desvio_padrao, color='orange', linestyle='dashed', linewidth=2, 
+            label=f'Média - 3σ: {media - 3 * desvio_padrao:.1f}')
+plt.axvline(media + 3 * desvio_padrao, color='green', linestyle='dashed', linewidth=2, 
+            label=f'Média + 3σ: {media + 3 * desvio_padrao:.1f}')
+
+# Adicionando título e rótulos
+plt.xlabel('Perda por Inserção (dB)')
+plt.ylabel('Ocorrências')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+Distribuição componentes reais 100 kHz
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# References {-}
+
