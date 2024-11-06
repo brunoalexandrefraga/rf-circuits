@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-306,-77,1528,971,0.715977,79,7
+View=-306,-73,1528,1125,0.605827,0,17
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -24,7 +24,7 @@ IProbe i_in 1 290 120 -26 16 0 0 "SIL-2" 0
 .AC AC1 1 -130 120 0 38 0 0 "list" 1 "1 GHz" 0 "10 GHz" 0 "2.4 GHz" 1 "no" 0 "none" 0
 Eqn Eqn3 1 -140 380 0 8 0 0 "eta=PL/Ps=" 1 "yes" 0
 Eqn Eqn1 1 60 890 0 8 0 0 "YN=(Xs*(1+YL*Rs)-j*Rs)/(Xs*Rs)=" 1 "Vs=Is/YN=" 1 "yes" 0
-.SW SW1 0 700 430 0 63 0 0 "AC1" 1 "RL" 1 "lin" 1 "5" 1 "100" 1 "1000" 1
+.SW SW1 1 700 430 0 63 0 0 "AC1" 1 "RL" 1 "lin" 1 "5" 1 "100" 1 "1000" 1
 Eqn Constants 1 -140 470 0 8 0 0 "Is=100 mA=" 1 "yes" 0
 Eqn Admitances 1 -140 550 0 8 0 0 "Ys=1/Rs=" 1 "Bs=1/Xs=" 1 "YL=1/RL=" 1 "yes" 0
 Eqn Eqn2 1 10 550 0 8 0 0 "PL_calc=(Vs*conj(Vs))/(2*RL)=" 1 "PL=(conj(i_L)*v_L)/2=" 1 "Ps_calc=(conj(Is)*Is)/(2*YN)=" 1 "Ps=(conj(i_in)*v_in)/2=" 1 "yes" 0
@@ -77,7 +77,7 @@ VProbe v_L 1 730 220 -16 28 0 3 "SIL-2" 0
 <Rect 918 559 569 480 31 #c0c0c0 1 00 1 5 10 100 1 47.7328 5 100.502 1 0 0 0 315 0 225 "" "" "">
 	<Legend 10 -100 0>
 	<"abs(eta)*100" "" #0000ff 0 3 0 0 0 0 "">
-	  <Mkr 1 92 -419 3 1 0 0 0 50>
+	  <Mkr 55.971 92 -419 3 1 0 0 0 50>
 </Rect>
 </Diagrams>
 <Paintings>

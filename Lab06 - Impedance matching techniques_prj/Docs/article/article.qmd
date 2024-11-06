@@ -61,7 +61,22 @@ O circuito original é apresentado na Fig.\ref{fig:original-circuit}.
 \end{figure}
 ```
 
-Parte-se da restrição principal em que a carga $Y_L$ dissipa uma certa potência com uma eficiência de 80%. Dessa forma, calcula-se
+```{python}
+#| echo: false
+import numpy as np
+# Definição das constantes
+eta = 0.80 # Eficiência
+Rs = 65 # Resistência de fonte
+Gs = 1 / Rs # Condutância
+Ls = 10e-9 # Indutância em Henry
+f = 2.4e9 # Frequência em Hz
+omega = 2 * np.pi * f # Frequência angular
+RL = 50 # Resistência de carga
+Bs = -1 / (omega*Ls) # Condutância
+Is = 100e-3
+```
+
+Parte-se da restrição principal em que a carga $Y_L$ dissipa uma certa potência com uma eficiência de `{python} eta*100`%. Dessa forma, calcula-se
 
 $$
   \eta=\frac{P_L}{P_s}
@@ -129,7 +144,12 @@ $$
   \end{split}
 $$
 
-Para uma eficiência de 80%, a relação anterior resulta em $G_L=4G_s$. A seguir, busca-se determinar a parte imaginária da admitância de carga, ou seja, determinar $B_L$. O problema em questão exige que o amplificador transfira a máxima potência possível com uma eficiência de 80%. Essa máxima potência possível traduz-se em realizar uma análise de forma a maximizar a potência fornecida pelo amplificador, $P_s$. Relembrando a equação,
+```{python}
+#| echo: false
+GL_p_Gs = int(eta/(1-eta))
+```
+
+Para uma eficiência de `{python} eta*100`%, a relação anterior resulta em $G_L =$ `{python} GL_p_Gs`$G_s$. A seguir, busca-se determinar a parte imaginária da admitância de carga, ou seja, determinar $B_L$. O problema em questão exige que o amplificador transfira a máxima potência possível com uma eficiência de `{python} eta*100`%. Essa máxima potência possível traduz-se em realizar uma análise de forma a maximizar a potência fornecida pelo amplificador, $P_s$. Relembrando a equação,
 
 $$
   \begin{split}
@@ -185,21 +205,6 @@ $$
 
 ```{python}
 #| echo: false
-import numpy as np
-# Definição das constantes
-eta = 0.80 # Eficiência
-Rs = 65 # Resistência de fonte
-Gs = 1 / Rs # Condutância
-Ls = 10e-9 # Indutância em Henry
-f = 2.4e9 # Frequência em Hz
-omega = 2 * np.pi * f # Frequência angular
-RL = 50 # Resistência de carga
-Bs = -1 / (omega*Ls) # Condutância
-Is = 100e-3
-```
-
-```{python}
-#| echo: false
 def format(value):
     if value >= 1e9:
         return f"{value / 1e9:.2f} G"
@@ -223,8 +228,6 @@ def format(value):
         return f"{value:.0e} "
 ```
 
-Aplicando os valores $\eta =$ `{python} eta*100`%, $G_s = 1/R_s$, $R_s =$ `{python} format(Rs)`$\Omega$, $L =$ `{python} format(Ls)`H e $\omega=2\pi f$, em que $f =$ `{python} format(f)`Hz.
-
 ```{python}
 #| echo: false
 # Função que calcula G_s * (eta / (1 - eta))
@@ -247,14 +250,6 @@ susceptance_value = BL * 1000  # Multiplica por 1000 para converter para mS
 formatted_susceptance = f"{susceptance_value:.2f}"    # Formata para 2 casas decimais
 ```
 
-$$
-  \begin{split}
-    Y_L&=\frac{1}{65}\cdot\frac{0,8}{1-0,8}+j\frac{1}{2\cdot \pi\cdot 2,4\cdot 10^9\cdot 10\cdot 10^{-9}}\implies\\
-    &=\frac{4}{65}+j\frac{1}{48\pi}
-  \end{split}
-$$
-
-
 ```{python}
 #| echo: false
 # Função que calcula G_s * (eta / (1 - eta))
@@ -274,7 +269,7 @@ def format_2_decimals(value):
     return f"{value:.2f}"
 ```
 
-Finalmente, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{python} formatted_susceptance` mS. Semelhantemente, obtém-se uma impedância de carga, $Z_L =$ `{python} format_2_decimals(load_resistence(GL, BL))` - j`{python} format_2_decimals(load_reactance(GL, BL))` $\Omega$. Assim, obtém-se que para que para que a carga dissipe potência com uma eficiência, $\eta$ de `{python} eta*100`%, esta deve ter como parte real da sua admitância, $G_L =$ `{python} formatted_admittance` mS. Além disso, foi demonstrado que, para que o amplificador forneça a máxima potência possível, essa carga deve ter uma parte imaginária de admitância, $B_L$, igual a `{python} formatted_susceptance` mS.
+Aplicando os valores $\eta =$ `{python} eta*100`%, $G_s = 1/R_s$, $R_s =$ `{python} format(Rs)`$\Omega$, $L =$ `{python} format(Ls)`H e $\omega=2\pi f$, em que $f =$ `{python} format(f)`Hz, obtém-se o valor $Y_L =$ `{python} formatted_admittance` + j`{python} formatted_susceptance` mS. Semelhantemente, obtém-se uma impedância de carga, $Z_L =$ `{python} format_2_decimals(load_resistence(GL, BL))` - j`{python} format_2_decimals(load_reactance(GL, BL))` $\Omega$. Assim, obtém-se que para que para que a carga dissipe potência com uma eficiência, $\eta$ de `{python} eta*100`%, esta deve ter como parte real da sua admitância, $G_L =$ `{python} formatted_admittance` mS. Além disso, foi demonstrado que, para que o amplificador forneça a máxima potência possível, essa carga deve ter uma parte imaginária de admitância, $B_L$, igual a `{python} formatted_susceptance` mS.
 
 Além disso, pode-se obter o valor da potência máxima transmitida à carga. Partindo da [Eq. @eq-power-load], obtém-se
 
