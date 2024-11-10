@@ -46,9 +46,6 @@ format:
 
 # Revisão
 
-
-
-
 ## Operação do BJT
 
 A corrente de base $I_B$ de um transistor bipolar de junção (BJT) é dada por
@@ -162,33 +159,20 @@ $$
     i_o&=Av_i-Ai_o\zeta\implies\\
     Av_i&=i_o\left(1+A\zeta\right)\implies\\
     \frac{v_i}{i_o}&=\frac{\left(1+A\zeta\right)}{A}\implies\\
-    \frac{i_o}{v_i}&=\frac{A}{\left(1+A\zeta\right)}
   \end{split}
 $$
 
+$$
+  \frac{i_o}{v_i}=\frac{A}{\left(1+A\zeta\right)}
+$$ {#eq-transconductance-amplifier-gain}
 
+Para o amplificador bom BJT e resistor de emissor, o fator de atenuação de *feedback* é $\zeta=R_E$ e o ganho do amplificador é dado por $A=g_m$, a tensão na entrada do amplificador é $v_e=V_{BE}$, a tensão na entrada do sistema é $v_i=V_B$ e a corrente de saída é $i_o=I_C$. Aplicando essas definições na [Eq. @eq-transconductance-amplifier-gain], obtém-se a seguinte relação
 
+$$
+  \frac{I_C}{V_B}=\frac{g_m}{\left(1+g_mR_E\right)}
+$$
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Quando a corrente de coletor $I_C$ aumenta, a corrente de emissor $I_E$ também aumenta, pois $I_E\propto I_C$. Com o aumento de $I_E$, a queda de tensão sobre $R_E$, dada por $V_{RE} = I_ER_E$ também aumenta. Um aumento de $V_{RE}$ implica em um aumento de $V_E$ e, consequentemente, gera uma redução de $V_{BE}$, já que $V_{BE} = V_B - V_E$, gerando, assim, uma redução em $I_C$, compensando o aumento inicial de $I_C$.
+A seguir, é explicado o motivo de o resistor de emissor funcionar como *feedback* para o amplificador. Quando a corrente de coletor $I_C$ aumenta, a corrente de emissor $I_E$ também aumenta, pois $I_E\propto I_C$. Com o aumento de $I_E$, a queda de tensão sobre $R_E$, dada por $V_{RE} = I_ER_E$ também aumenta. Um aumento de $V_{RE}$ implica em um aumento de $V_E$ e, consequentemente, gera uma redução de $V_{BE}$, já que $V_{BE} = V_B - V_E$, gerando, assim, uma redução em $I_C$, compensando o aumento inicial de $I_C$.
 
 Essa compensação reduz a sensibilidade da corrente de coletor $I_C$ a possíveis flutuações em $\beta$ ou de temperatura. Assim, o circuito se estabiliza em um ponto de operação mais estável, independentemente de variações nas características do BJT.
 
@@ -207,26 +191,6 @@ I_C \approx \frac{V_B - V_{BE}}{R_E}
 $$
 
 Essa expressão mostra que a corrente de coletor depende diretamente da tensão na base $V_B$ e é influenciada pelo valor do resistor de emissor $R_E$ @sedra2014microelectronic.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Série de Taylor
 
@@ -269,36 +233,6 @@ I_C\approx V_i\alpha_1+V_i^2\alpha_2+V_i^3\alpha_3
 $$
 
 em que $\alpha_1=\frac{dI_C}{dV_i}(0)$, $2\alpha_2=\frac{d^2 I_C}{dV_i^2}(0)$ e $6\alpha_3=\frac{d^3 I_C}{dV_i^3}(0)$. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
