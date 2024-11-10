@@ -31,6 +31,9 @@ format:
           \usepackage{amsmath}
           \usepackage{amssymb}
           \usepackage{amsthm}
+          \usepackage{tikz}
+          \usetikzlibrary{shapes,arrows}
+          \usetikzlibrary{shapes,arrows,positioning,calc}
 
           \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
     keep-tex: true
@@ -44,93 +47,228 @@ format:
 # Revisão
 
 
-```{=latex}
-\begin{figure}[h]
-  \centering
-  \begin{circuitikz}[american]
-    \draw (0.98, 0) node[npn](nmos1){};
-    \draw (nmos1.E) to[R, l=$R_E$, i>^=$I_E$] (1, -3) node[ground]{} ;
-    \draw (nmos1.B) to[short, -*] (-1, 0) ;
-    \draw (nmos1.C) node[vcc]{} ;
-  \end{circuitikz}
-  \caption{Circuito original}
-  \label{fig:original-circuit}
-\end{figure}
-```
 
-A corrente de base $I_B$ de um transistor bipolar de junção (BJT) é expressa pela relação entre a corrente de coletor $I_C$ e o ganho de corrente de base ($\beta$) do transistor. A equação é:
+
+## Operação do BJT
+
+A corrente de base $I_B$ de um transistor bipolar de junção (BJT) é dada por
 
 $$
 I_B = \frac{I_C}{\beta}
 $$
 
-onde $I_C$ é a corrente de coletor, $\beta$ é o ganho de corrente de base (ou fator de amplificação de corrente), característico do BJT e geralmente fornecido no datasheet.
+onde $I_C$ é a corrente de coletor, $\beta$ é o ganho de corrente de base (ou fator de amplificação de corrente).
 
-Para um BJT operando na região ativa, a corrente de coletor $I_C$ também pode ser expressa em termos da corrente de saturação reversa ($I_S$) e da tensão base-emissor ($V_{BE}$) pela equação:
+Para um BJT operando na região ativa, a corrente de coletor $I_C$ por ser obtida por
 
 $$
 I_C = I_se^{V_{BE}/V_T}
 $$
 
-onde $I_s$ é a corrente de saturação reversa, $V_T$ é a tensão térmica ($V_T = \frac{kT}{q}$, aproximadamente 26 mV a 300 K), $V_{BE}$ é a tensão entre a base e o emissor.
+onde $I_s$ é a corrente de saturação reversa, $V_T$ é a tensão térmica ($V_T = \frac{kT}{q}$, aproximadamente 26 mV a 300 K) e $V_{BE}$ é a tensão entre base e emissor.
 
-Assim, a corrente de base $I_B$ também pode ser escrita como:
+Assim, a corrente de base $I_B$ também pode ser escrita como @sedra2014microelectronic
 
 $$
 I_B = \frac{I_s}{\beta}e^{V_{BE}/V_T}
 $$
 
-Essa relação indica que $I_B$ depende exponencialmente de $V_{BE}$, mas é uma fração da corrente total devido ao ganho de corrente $\beta$ @sedra2014microelectronic.
+## Feedback degenerativo de emissor
 
-Quando um BJT possui um resistor de emissor $R_E$, a presença deste resistor introduz um feedback negativo que estabiliza o ponto de operação do transistor, reduzindo a sensibilidade do circuito às variações de $\beta$. Com o resistor de emissor, a corrente de base $I_B$, corrente de coletor $I_C$, e a tensão base-emissor $V_{BE}$ têm uma relação que leva em conta a queda de tensão em $R_E$.
+O diagrama geral de um amplificador de transcondutância com *feedback* é apresentado na Fig.\ref{fig:feedback-amp}.
 
-Para o circuito polarizado com $R_E$, assumindo que o transistor está na região ativa, a tensão na base $V_B$ e na emissão $V_E$ são relacionadas pela tensão base-emissor $V_{BE}$:
+```{=latex}
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+% Sum shape
+\node[draw,
+    circle,
+    minimum size=0.6cm,
+] (sum) at (0,0){};
+
+\draw (sum.north east) -- (sum.south west)
+    (sum.north west) -- (sum.south east);
+
+\node[left=-1pt] at (sum.center){\tiny $+$};
+\node[below] at (sum.center){\tiny $-$};
+
+% Amplifier as a triangle rotated 90 degrees clockwise
+\node[draw,
+    isosceles triangle,
+    isosceles triangle apex angle=60,
+    minimum height=1.2cm,
+    minimum width=1.6cm,
+    shape border rotate=0,
+    right=1cm of sum
+] (amplifier) {$A$};
+
+% Feedback network
+\node [draw,
+    minimum width=2cm, 
+    minimum height=1.2cm, 
+    below = 1cm of amplifier
+]  (feedback) {$\zeta$};
+
+% Arrows with text label
+\draw[-stealth] (sum.east) -- (amplifier.west)
+    node[midway,above]{$v_e$};
+
+\draw[-stealth] (amplifier.east) -- ++ (1.25,0) 
+    node[midway](output){}node[midway,above]{$i_o$};
+
+\draw[-stealth] (output.center) |- (feedback.east);
+
+\draw[-stealth] (feedback.west) -| (sum.south) 
+    node[near end,left]{$v_f$};
+
+% Input arrow for v_in (reversed direction)
+\draw[stealth-] (sum.west) -- ++(-1,0) 
+    node[midway,above]{$v_i$};
+
+\end{tikzpicture}
+\caption{Diagrama de bloco de um amplificador de transcondutância com feedback} 
+\label{fig:feedback-amp}
+\end{figure}
+```
+Quando um BJT possui um resistor de emissor $R_E$, a presença deste resistor introduz um feedback negativo que estabiliza o ponto de operação do transistor, reduzindo a sensibilidade do circuito às variações de $\beta$ (ganho de corrente de base) e outros motivos. Um amplificador com transistor BJT e um resistor $R_E$ de *feedback* pode ser visualizado na Fig.\ref{fig:original-circuit-v2}.
+
+Analisando o diagrama, verifica-se que o ganho de malha aberta, $A$, do amplificador é dado por $g_m$, a condutância de transferência do transistor e o atenuador de *feedback*, $\zeta$, é o resistor de emissor, $R_E$.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+
+  \begin{circuitikz}
+    \draw (0.98, 0) node[npn](nmos1){};
+    \draw (nmos1.C) to[short, i_<=$I_C$] ++(0, 1) node[vcc]{} ;
+    \draw (nmos1.E) to[R, l=$R_E$, i>^=$I_E$] (1, -3) node[ground]{} ;
+    \draw (nmos1.B) to[short, i_<=$I_B$, -*] (-1, 0) ;
+  \end{circuitikz}
+
+  \caption{Circuito original}
+  \label{fig:original-circuit-v2}
+\end{figure}
+```
+
+A equação da corrente de saída, com base na Fig.\ref{fig:feedback-amp} é dada por
 
 $$
-V_B = V_E + V_{BE}
+  \begin{split}
+    v_f&=i_o\zeta\implies\\
+    v_e&=v_i-i_o\zeta\implies\\
+    i_o&=A\left(v_i-i_o\zeta\right)\implies\\
+    i_o&=Av_i-Ai_o\zeta\implies\\
+    Av_i&=i_o\left(1+A\zeta\right)\implies\\
+    \frac{v_i}{i_o}&=\frac{\left(1+A\zeta\right)}{A}\implies\\
+    \frac{i_o}{v_i}&=\frac{A}{\left(1+A\zeta\right)}
+  \end{split}
 $$
 
-A corrente de emissor $I_E$ é:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Quando a corrente de coletor $I_C$ aumenta, a corrente de emissor $I_E$ também aumenta, pois $I_E\propto I_C$. Com o aumento de $I_E$, a queda de tensão sobre $R_E$, dada por $V_{RE} = I_ER_E$ também aumenta. Um aumento de $V_{RE}$ implica em um aumento de $V_E$ e, consequentemente, gera uma redução de $V_{BE}$, já que $V_{BE} = V_B - V_E$, gerando, assim, uma redução em $I_C$, compensando o aumento inicial de $I_C$.
+
+Essa compensação reduz a sensibilidade da corrente de coletor $I_C$ a possíveis flutuações em $\beta$ ou de temperatura. Assim, o circuito se estabiliza em um ponto de operação mais estável, independentemente de variações nas características do BJT.
+
+Com o resistor de emissor, a corrente de base $I_B$, corrente de coletor $I_C$, e a tensão base-emissor $V_{BE}$ têm uma relação que leva em conta a queda de tensão em $R_E$.
+
+Para o circuito polarizado com $R_E$, a corrente de emissor $I_E$ é dada por
 
 $$
 I_E = \frac{V_E}{R_E} = \frac{V_B - V_{BE}}{R_E}
 $$
 
-Como a corrente de emissor $I_E$ está aproximadamente relacionada à corrente de coletor $I_C$ e à corrente de base $I_B$ por:
-
-$$
-I_E \approx I_C \quad \text{(quando $\beta$ é alto)}
-$$
-
-podemos então aproximar a corrente de coletor $I_C$ como:
+Como a corrente de emissor $I_E\approx I_C$, pode-se aproximar a corrente de coletor $I_C$ como
 
 $$
 I_C \approx \frac{V_B - V_{BE}}{R_E}
 $$
 
-Essa expressão mostra que a corrente de coletor depende diretamente da tensão na base $V_B$ e é influenciada pelo valor do resistor de emissor $R_E$. Essa configuração proporciona uma operação mais estável porque a queda de tensão em $R_E$ reduz a variação de $I_C$ com mudanças em $V_{BE}$ ou $\beta$, promovendo um efeito de feedback negativo @sedra2014microelectronic.
+Essa expressão mostra que a corrente de coletor depende diretamente da tensão na base $V_B$ e é influenciada pelo valor do resistor de emissor $R_E$ @sedra2014microelectronic.
 
-A expansão de Taylor é uma ferramenta matemática usada para aproximar funções diferenciáveis em torno de um ponto específico $x = a$ (neste caso, o ponto $V_i = V_{i0}$), utilizando as derivadas da função no ponto de interesse. A ideia é escrever a função como uma soma infinita de termos, onde cada termo envolve uma derivada da função no ponto de expansão. Quando truncamos a série nos primeiros termos (aqui até a terceira ordem), obtemos uma aproximação polinomial de grau 3, que nos permite capturar a não-linearidade da função até certo ponto.
 
-Para uma função $f(x)$, a expansão de Taylor em torno de um ponto $x = a$ é dada por:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Série de Taylor
+
+Para apresentar as demonstrações do fenômeno de intermodulação, antes é necessário abordar a expansão de Taylor, uma ferramenta matemática usada para aproximar funções em torno de um ponto específico $x = a$. A ideia é escrever a função como uma soma infinita de termos, onde cada termo envolve uma derivada da função no ponto de expansão. Quando a série é truncada nos primeiros termos, obtém-se uma aproximação polinomial da função original.
+
+Para uma função $f(x)$, a expansão de Taylor em torno de um ponto $x = a$ é dada por
 
 $$
-f(x) \approx f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \frac{f'''(a)}{3!}(x - a)^3 + \dots
+f^{'}(x)=f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \frac{f'''(a)}{3!}(x - a)^3 + \dots
+$$ {#eq-taylor-series}
+
+Cada termo da expansão representa uma correção que considera a variação da função em torno do ponto de operação $a$ @guidozzi2018cursoVol1.
+
+## Produtos de intermodulação
+
+No caso do transistor com feedback de emissor, a deia é expandir a função da corrente $I_C$ em torno de uma tensão de entrada (na base) $V_{i0}$. Então, aplica-se a expansão de Taylor para a função $I_C = f(V_i)$ em torno de $V_i = V_{i0}$. Para isso, substitui-se, $f(V_i) = I_C$, $a = V_{i0}$, e $\Delta V_i = \left(V_i - V_{i0}\right)$. Assim, a série de Taylor até a terceira ordem fica
+
+$$
+I_C^{'}=I_C(V_{i0}) + \left(V_i - V_{i0}\right)\frac{dI_C}{dV_i}\left(V_{i0}\right)  + \frac{\left(V_i - V_{i0}\right)^2}{2} \frac{d^2 I_C}{dV_i^2}\left(V_{i0}\right)  + \frac{\left(V_i - V_{i0}\right)^3}{6} \frac{d^3 I_C}{dV_i^3}\left(V_{i0}\right)+\dots
+$$ {#eq-taylor-series-intermodulation}
+
+onde $\frac{d^nI_C}{dV_i^n}\left(V_{i0}\right)$ é a derivada de orden $n$ da função $I_C$ em relação a $V_i$ avaliadas no ponto $V_{i0}$.
+
+A fim de possibilitar os cálculos, são tomados somente os 3 primeiros termos da [Eq. @eq-taylor-series-intermodulation], levando a @razavi2011rf
+
+$$
+I_C\approx I_C(V_{i0}) + \left(V_i - V_{i0}\right)\frac{dI_C}{dV_i}\left(V_{i0}\right)  + \frac{\left(V_i - V_{i0}\right)^2}{2} \frac{d^2 I_C}{dV_i^2}\left(V_{i0}\right)  + \frac{\left(V_i - V_{i0}\right)^3}{6} \frac{d^3 I_C}{dV_i^3}\left(V_{i0}\right)
 $$
 
-Cada termo da expansão representa uma correção que considera a variação da função em torno do ponto de operação $a$. Os termos de ordem mais alta (segunda, terceira, etc.) capturam as componentes de não-linearidade @guidozzi2018cursoVol1.
-
-No caso do transistor com feedback de emissor, queremos expandir a corrente $I_C$ em torno de uma tensão de entrada $V_{i0}$. Então, aplicamos a expansão de Taylor para a função $I_C = f(V_i)$ em torno de $V_i = V_{i0}$. Usamos $f(V_i) = I_C$, $a = V_{i0}$, e $\Delta V_i = V_i - V_{i0}$. Assim, a série de Taylor até a terceira ordem fica:
+Simplificando $V_{i0}=0$ e consequentemente $I_C(V_{i0})=0$
 
 $$
-I_C \approx I_{C0} + \left( \frac{dI_C}{dV_i} \right)_{V_{i0}} \Delta V_i + \frac{1}{2} \left( \frac{d^2 I_C}{dV_i^2} \right)_{V_{i0}} \Delta V_i^2 + \frac{1}{6} \left( \frac{d^3 I_C}{dV_i^3} \right)_{V_{i0}} \Delta V_i^3
+I_C\approx V_i\frac{dI_C}{dV_i}(0) + \frac{V_i^2}{2} \frac{d^2 I_C}{dV_i^2}(0)  + \frac{V_i^3}{6} \frac{d^3 I_C}{dV_i^3}(0)
 $$
 
-onde $I_{C0} = I_C(V_{i0})$, $\left( \frac{dI_C}{dV_i} \right)_{V_{i0}}$, $\left( \frac{d^2 I_C}{dV_i^2} \right)_{V_{i0}}$, e $\left( \frac{d^3 I_C}{dV_i^3} \right)_{V_{i0}}$ são as derivadas primeira, segunda e terceira da função $I_C$ em relação a $V_i$ avaliadas no ponto $V_{i0}$.
+Escrevendo de uma forma mais sucinta, obtém-se
 
-Essa fórmula é uma aplicação direta da série de Taylor. Cada termo da série adiciona uma correção para modelar a resposta de $I_C$ à variação em $V_i$ (distorção não-linear). A expansão permite uma aproximação da função em forma de polinômio, o que facilita o cálculo de componentes de distorção até a ordem desejada @razavi2011rf.
+$$
+I_C\approx V_i\alpha_1+V_i^2\alpha_2+V_i^3\alpha_3
+$$
 
-
+em que $\alpha_1=\frac{dI_C}{dV_i}(0)$, $2\alpha_2=\frac{d^2 I_C}{dV_i^2}(0)$ e $6\alpha_3=\frac{d^3 I_C}{dV_i^3}(0)$. 
 
 
 
