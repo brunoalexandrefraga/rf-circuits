@@ -43,8 +43,6 @@ format:
 
 # Prelab
 
-Segundo o documento de referência de *Part numbering* da MuRata, os *part numbers* são montados com o identificador da série do capacitor, dimensões do *chip*, expessura, temperatura característica, tensão nominal, capacitância, tolerância de capacitância, código de especificação individual e encapsulamento.
-
 
 
 # References {-}
