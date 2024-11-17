@@ -230,18 +230,45 @@ Escrevendo de uma forma mais sucinta, obtém-se
 
 $$
 I_C\approx V_i\alpha_1+V_i^2\alpha_2+V_i^3\alpha_3
-$$
+$$ {#eq-ic-generic}
 
 em que $\alpha_1=\frac{dI_C}{dV_i}(0)$, $2\alpha_2=\frac{d^2 I_C}{dV_i^2}(0)$ e $6\alpha_3=\frac{d^3 I_C}{dV_i^3}(0)$. 
 
+Para o circuito sem a degeneração de emissor, tem-se
 
+$$
+  \alpha_1=\frac{I_C(0)}{V_T}=g_m
+$$
 
+Além disso,
 
+$$
+  \alpha_2=\frac{g_m}{V_T}
+$$
 
+e
 
+$$
+  \alpha_3=\frac{g_m}{V_T^2}
+$$
 
+Dessa forma, a [Eq. @eq-ic-generic] torna-se
 
+$$
+  I_C\approx g_mV_i+\frac{g_m}{V_T}V_i^2+\frac{g_m}{V_T^2}V_i^3
+$$
 
+Se o amplificador tiver degeneração de emissor (resistor de *feedback*),
+
+$$
+  V_i=V_{BE}=V_B-R_EI_C
+$$
+
+Aplicando essa definição na [Eq. @eq-ic-generic], obtém-se
+
+$$
+  I_C=\alpha_1\left(V_B-R_EI_C\right)+\alpha_2\left(V_B-R_EI_C\right)^2+\alpha_3\left(V_B-R_EI_C\right)^3
+$$
 
 
 
