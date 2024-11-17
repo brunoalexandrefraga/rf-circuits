@@ -1,0 +1,71 @@
+---
+title: Componentes Passivos em RF 
+subtitle: Laboratório 07
+author:
+  - name: Bruno Alexandre Fraga
+    email: bruno.fraga@posgrad.ufsc.br
+    affiliations: 
+        - id: some-tech
+          name: Universidade Federal de Santa Catarina
+          department: Departamento de Engenharia Elétrica e Eletrônica
+          address: R. Delfino Conti
+          city: Florianópolis
+          state: Santa Catarina
+          postal-code: 88040-370
+abstract: |
+  Este trabalho tem por objetivo consolidar a técnica de projeto de redes de casamento de impedância, em especial a técnica pela rede L. Para isso, é proposto realizar o casamento de impedância da saída de um amplificador para uma carga de 50 $\Omega$ de modo que a eficiência da potência dissipada na carga seja de 80%. Após algumas análises o projeto foi concluído com sucesso e realizada uma simulação Monte Carlo com 100 iterações para verificar a robustez do projeto por técnicas estatísticas. Os resultados obtidos foram brevemente discutidos.
+keywords: 
+  - Robustez
+  - Adaptação de impedância
+  - Análise estatística
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    include-in-header:
+      - text: |
+          \usepackage{steinmetz}
+          \usepackage[a4paper, margin=1in]{geometry}
+          \usepackage{graphicx} % Required for inserting images
+          \usepackage{circuitikz}
+          \usepackage{amsmath}
+          \usepackage{amssymb}
+          \usepackage{amsthm}
+
+          \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
+    keep-tex: true
+    journal:
+      name: RF Circuits
+      formatting: preprint
+      # model: 3p # Don't set a model with preprint
+      cite-style: number
+---
+
+# Curva
+
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import special
+
+# Lendo o arquivo CSV
+df = pd.read_csv('../Output/transconductance-gain.csv', delimiter=';', quotechar='"')
+valores = df['r (yvalue(ic.Ib, fs)/(x*Ut))/gm']
+x_values = df['x']
+
+
+
+fig, ax = plt.subplots()
+x = np.linspace(0.001, 20, 100)
+ax.plot(x, 2*special.iv(1, x)/special.iv(0, x)/x, label=f'$I_{0!r}$')
+ax.plot(x_values, valores, label=f'$sim$')
+ax.legend()
+plt.show()
+
+
+```
+
+# References {-}

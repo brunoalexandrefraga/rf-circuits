@@ -41,7 +41,108 @@ format:
       cite-style: number
 ---
 
-# Prelab
+# Revisão diodo
+
+Este trabalho inicia-se medindo o ponto de interceptação de terceira-orcem (IP3) do circuito com diodo.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+    \draw (0.5, -4.5) node[ground]{} to[sV, l=$v_{s1}$] ++(0, 2) to[sV, l=$v_{s2}$] ++(0, 2) to[C, l=$C$] ++(3, 0) coordinate(point1) to[L, l=$L$] ++(0, -2) coordinate(point2) ;
+    \draw (3.5, -4.5) node[ground]{} to[isource, l=$I_b$] (point2) ;
+    \draw (6, -4.5) coordinate(point3) node[ground]{} ;
+    \draw (point1) to[short, -*] ++(2.5, 0) to[empty diode, a=$V_D$, i>^=$I_D$, *-] (point3) ;
+  \end{circuitikz}
+  \caption{Circuito com o \textit{bias-Tee} simplificado}
+  \label{fig:circuit-simplified-biasTee-capacitor}
+\end{figure}
+```
+
+Para calcularmos tal parâmetro, antes de mais nada será realizada aproximação do diodo pelo seu modelo de pequenos sinais. Já é de conhecimento que o modelo de pequenos sinais de um diodo é a simplificação deste elementor por um resistor de resistência $r_d$, de tal forma que
+
+$$
+  r_d^{-1}=y_d=\frac{dI_d}{dV_d}
+$$ {#eq-rd-differential}
+
+Em que
+
+$$
+  I_d=I_s\left(e^{V_d/V_T}\right)
+$$
+
+assumindo $n=1$ (parâmetro dependente da estrutura física do componente) @sedra2014microelectronic. Além disso,
+
+$$
+  V_T=\frac{kT}{q}
+$$
+
+realizando a derivada da equação @eq-rd-differential e invertendo a equação obtida, resulta em
+
+$$
+  r_d=\frac{V_t}{I_d}
+$$
+
+```{python}
+#| echo: false
+import math
+Is=1e-15
+Id=Ib=25e-3
+T0=273.15
+T=26.85
+Deltaf=100 #Hz
+f1=1e3 #Hz
+Rs=50
+f2=f1+Deltaf #Hz
+Pi1=Pi2=10e-9 #W
+Pi=Pi1+Pi2
+Vi1=math.sqrt(8*Pi1*Rs)
+Vi2=math.sqrt(8*Pi2*Rs)
+Vi=Vi1+Vi2
+```
+
+```{python}
+#| echo: false
+from scipy.constants import Boltzmann as k, elementary_charge as q
+
+T_celsius = 26.85
+T_kelvin = T_celsius + T0
+VT = k * T_kelvin / q
+rd=VT/Id
+
+Id1=Vi1/rd
+```
+
+```{python}
+#| echo: false
+def format(value):
+    if value >= 1e9:
+        return f"{value / 1e9:.2f} G"
+    elif value >= 1e6:
+        return f"{value / 1e6:.2f} M"
+    elif value >= 1e3:
+        return f"{value / 1e3:.2f} k"
+    elif value >= 1:
+        return f"{value:.2f} "
+    elif value >= 1e-3:
+        return f"{value * 1e3:.2f} m"
+    elif value >= 1e-6:
+        return f"{value * 1e6:.2f} μ"
+    elif value >= 1e-9:
+        return f"{value * 1e9:.2f} n"
+    elif value >= 1e-12:
+        return f"{value * 1e12:.2f} p"
+    elif value >= 1e-15:
+        return f"{value * 1e12:.2f} p"
+    else:
+        return f"{value:.0e} "
+```
+
+Dessa forma, aplicam-se os valores nas equações, resultando em uma resistência $r_d=$ `{python} format(rd)`$\Omega$. Com base nesse modelo de pequenos sinais, aplicam-se dois tons espaçados de $\Delta_f=$ `{python} format(Deltaf)`Hz, sendo que a primeira frequência selecionada é $f_1=$ `{python} format(f1)`Hz e, consequentemente, o segundo $f_2=$ `{python} format(f2)`Hz. Ambos os tons utilizados nessa seção são de $P_{i1}=P_{i2}=$ `{python} format(Pi1)`W, resultando em tensão igual a $V_i=$ `{python} format(Vi1)`V para a fonte de frequência $f_1$ (pensando em uma fonte de impedância de `{python} format(Rs)`$\Omega$). Assim, a corrente sobre o diodo, na frequência $f_1$, é igual à $V_{s1}/r_d=$ `{python} format(Id1)`A. Esses valores podem ser verificados pela simulação apresentada na [Fig. @fig-diode-validation].
+
+![Validação do circuito com Diodo](../figures/original-circuit-diode-validation.png){width=300, #fig-diode-validation}
+
+# Cálculo do IP3 para circuito com Diodo
 
 
 
