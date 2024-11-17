@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-90,14,1939,1072,0.77158,395,174
+View=-330,-166,1837,1047,0.565826,0,13
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -23,7 +23,6 @@ Vac V2 1 170 320 18 -26 0 0 "vsource" 1 "f2" 1 "0" 0 "0" 0 "SUBCLICK" 0
 Idc I1 1 390 320 18 -26 0 0 "25 mA" 1 "SIL-2" 0
 C C1 1 290 110 -26 17 0 0 "1 F" 1 "0" 0 "" 0 "neutral" 0 "SMD0603" 0
 L L1 1 390 220 -62 -26 0 3 "1 H" 1 "0" 0 "" 0 "SELF-WE-PD3S" 0
-Eqn Eqn2 1 190 520 0 8 0 0 "id1=abs(yvalue(idiode.Ib, f1))=" 1 "id3=abs(yvalue(idiode.Ib, 2*f1-f2))=" 1 "id1_dB=dB(id1)=" 1 "id3_dB=dB(id3)=" 1 "delta=(id1_dB-id3_dB)/2=" 1 "oip3_dB=id1_dB+delta=" 1 "oip3=10^(oip3_dB/20)=" 1 "vd1=abs(yvalue(vdiode.Vb, f1))=" 1 "g=id1/vd1=" 1 "g_dB=dB(g)=" 1 "iip3_dB=oip3_dB-g_dB=" 1 "iip3=10^(iip3_dB/20)=" 1 "yes" 0
 .SW SW1 1 910 40 0 63 0 0 "HB1" 1 "pavs" 1 "log" 1 "1 nW" 1 "10 mW" 1 "1000" 1
 Eqn Eqn1 1 480 540 0 8 0 0 "f1=1 kHz=" 1 "deltaf=100 Hz=" 1 "f2=f1 + deltaf=" 1 "f3=2*f1-f2=" 1 "f4=2*f2-f1=" 1 "pavs=10 nW=" 1 "rs=50=" 1 "vsource=sqrt(8*pavs*rs)=" 1 "yes" 0
 .HB HB1 1 1070 40 0 63 0 0 "3@;3@f1;3@f2;" 0 "no" 0 "1 GHz" 0 "lin" 0 "1 kHz" 0 "10 kHz" 0 "10" 0 "0.001" 0 "1 µA" 0 "500" 0

@@ -54,8 +54,8 @@ Este trabalho inicia-se medindo o ponto de interceptação de terceira-orcem (IP
     \draw (6, -4.5) coordinate(point3) node[ground]{} ;
     \draw (point1) to[short, -*] ++(2.5, 0) to[empty diode, a=$V_D$, i>^=$I_D$, *-] (point3) ;
   \end{circuitikz}
-  \caption{Circuito com o \textit{bias-Tee} simplificado}
-  \label{fig:circuit-simplified-biasTee-capacitor}
+  \caption{Circuito com o diodo}
+  \label{fig:circuit-diode-original}
 \end{figure}
 ```
 
@@ -162,6 +162,48 @@ Além disso, sabe-se que $\text{IIP3}=\text{OIP3}-G$ em que $G$ é o ganho do am
 ![Resultados IP3 para o diodo](../figures/Results-IP3-diode.png){width=300, #fig-results-IP3-diode}
 
 # Cálculo do IP3 para circuito com BJT
+
+Em seguida, é realizada a medição do IP3 do transistor BJT (npn) ideal. O circuito de medição pode ser visualizado na Fig.\ref{fig:circuit-bjt-original}.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+    \draw (1.98, -0.5) node[npn](nmos1){};
+    \draw (nmos1.C) to[short] ++(0, 0.23) to[short, i^<=$I_C$] ++(3.52, 0) to[battery1, l=$V_{cc}$] ++(0, -4) node[ground]{} ;
+    \draw (nmos1.E) to[isource, l=$I_{ee}$] (2, -3.5) node[ground]{} ;
+    \draw (-0.5, -3.5) node[ground]{} to[sV, l=$V_{s2}$] ++(0, 1.5) to[sV, l=$V_{s1}$] ++(0, 1.5) to[battery1, l=$V_B$, invert] (nmos1.B) ;
+    \draw (2, -1.5) to[short] ++(2, 0) to[C, l=$C$] ++(0, -2) node[ground]{} ;
+  \end{circuitikz}
+  \caption{Circuito com o BJT}
+  \label{fig:circuit-bjt-original}
+\end{figure}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
