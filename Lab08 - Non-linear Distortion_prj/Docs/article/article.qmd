@@ -258,6 +258,45 @@ $$
   I_C\approx g_mV_i+\frac{g_m}{V_T}V_i^2+\frac{g_m}{V_T^2}V_i^3
 $$
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Se o amplificador tiver degeneração de emissor (resistor de *feedback*),
 
 $$

@@ -41,7 +41,9 @@ format:
       cite-style: number
 ---
 
-# Revisão diodo
+# Circuito com Diodo
+
+## Revisão
 
 Este trabalho inicia-se medindo o ponto de interceptação de terceira-orcem (IP3) do circuito com diodo.
 
@@ -62,14 +64,14 @@ Este trabalho inicia-se medindo o ponto de interceptação de terceira-orcem (IP
 Para calcularmos tal parâmetro, antes de mais nada será realizada aproximação do diodo pelo seu modelo de pequenos sinais. Já é de conhecimento que o modelo de pequenos sinais de um diodo é a simplificação deste elementor por um resistor de resistência $r_d$, de tal forma que
 
 $$
-  r_d^{-1}=y_d=\frac{dI_d}{dV_d}
+  r_D^{-1}=y_D=\frac{dI_D}{dV_D}
 $$ {#eq-rd-differential}
 
 Em que
 
 $$
-  I_d=I_s\left(e^{V_d/V_T}\right)
-$$
+  I_D=I_s\left(e^{V_D/V_T}-1\right)
+$$ {#eq-diode-current}
 
 assumindo $n=1$ (parâmetro dependente da estrutura física do componente) @sedra2014microelectronic. Além disso,
 
@@ -80,14 +82,14 @@ $$
 realizando a derivada da equação @eq-rd-differential e invertendo a equação obtida, resulta em
 
 $$
-  r_d=\frac{V_t}{I_d}
+  r_D=\frac{V_t}{I_D}
 $$
 
 ```{python}
 #| echo: false
 import math
 Is=1e-15
-Id=Ib=25e-3
+ID=Ib=25e-3
 T0=273.15
 T=26.85
 Deltaf=100 #Hz
@@ -108,9 +110,9 @@ from scipy.constants import Boltzmann as k, elementary_charge as q
 T_celsius = 26.85
 T_kelvin = T_celsius + T0
 VT = k * T_kelvin / q
-rd=VT/Id
+rD=VT/ID
 
-Id1=Vi1/rd
+ID1=Vi1/rD
 ```
 
 ```{python}
@@ -138,11 +140,70 @@ def format(value):
         return f"{value:.0e} "
 ```
 
-Dessa forma, aplicam-se os valores nas equações, resultando em uma resistência $r_d=$ `{python} format(rd)`$\Omega$. Com base nesse modelo de pequenos sinais, aplicam-se dois tons espaçados de $\Delta_f=$ `{python} format(Deltaf)`Hz, sendo que a primeira frequência selecionada é $f_1=$ `{python} format(f1)`Hz e, consequentemente, o segundo $f_2=$ `{python} format(f2)`Hz. Ambos os tons utilizados nessa seção são de $P_{i1}=P_{i2}=$ `{python} format(Pi1)`W, resultando em tensão igual a $V_i=$ `{python} format(Vi1)`V para a fonte de frequência $f_1$ (pensando em uma fonte de impedância de `{python} format(Rs)`$\Omega$). Assim, a corrente sobre o diodo, na frequência $f_1$, é igual à $V_{s1}/r_d=$ `{python} format(Id1)`A. Esses valores podem ser verificados pela simulação apresentada na [Fig. @fig-diode-validation].
+Dessa forma, aplicam-se os valores nas equações, resultando em uma resistência $r_d=$ `{python} format(rD)`$\Omega$. Com base nesse modelo de pequenos sinais, aplicam-se dois tons espaçados de $\Delta_f=$ `{python} format(Deltaf)`Hz, sendo que a primeira frequência selecionada é $f_1=$ `{python} format(f1)`Hz e, consequentemente, o segundo $f_2=$ `{python} format(f2)`Hz. Ambos os tons utilizados nessa seção são de $P_{i1}=P_{i2}=$ `{python} format(Pi1)`W, resultando em tensão igual a $V_i=$ `{python} format(Vi1)`V para a fonte de frequência $f_1$ (pensando em uma fonte de impedância de `{python} format(Rs)`$\Omega$). Assim, a corrente sobre o diodo, na frequência $f_1$, é igual à $V_{s1}/r_d=$ `{python} format(ID1)`A. Esses valores podem ser verificados pela simulação apresentada na [Fig. @fig-diode-validation].
 
 ![Validação do circuito com Diodo](../figures/original-circuit-diode-validation.png){width=300, #fig-diode-validation}
 
-# Cálculo do IP3 para circuito com Diodo
+## Cálculo teórico
+
+Dado o circuito apresentado na Fig.\ref{fig:circuit-diode-original}, se for realizada a expansão de Taylor para o diodo, chega-se a
+
+$$
+  I_D^{'}=a_1V_D+a_2V_D^2+a_3V_D^3
+$$ {#eq-taylor-expansion}
+
+em que, $I_D$ é dado pela [Eq. @eq-diode-current]
+
+$$
+  a_1=\frac{dI_D}{dV_D}=y_D
+$$
+
+continuando,
+
+$$
+  a_2=\frac{d^2I_D}{dV_D^2}=\frac{y_D}{V_T}
+$$
+
+e, finalmente,
+
+$$
+  a_2=\frac{d^3I_D}{dV_D^3}=\frac{y_D}{V_T^2}
+$$
+
+Além disso, pode-se especificar o valor de $V_D$. Para calcular o ponto de interceptação de terceira ordem dos harmônicos, $V_D=V_1\cos\left(\omega_1t\right)$, em que $\omega_1=2\pi f_1$. Aplicando esse sinal à equação [Eq. @eq-taylor-expansion],
+
+$$
+  I_D^{'}=a_1V_1\cos\left(\omega_1t\right)+a_2V_1^2\cos^2\left(\omega_1t\right)+a_3V_1^3\cos^3\left(\omega_1t\right)
+$$
+
+Resultando em
+
+$$
+\begin{aligned}
+  p(x) &= \frac{1}{2} a_2 V_i^2 + \left( a_1 V_i + \frac{3}{4} a_3 V_i^3 \right) \cos(\omega_1 t)\\
+       &+ \frac{1}{2} a_2 V_i^2 \cos(2 \omega_1 t) + \frac{1}{4} a_3 V_i^3 \cos(3 \omega_1 t)
+\end{aligned}
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Validação por simulação
 
 Para que seja possível calcular o IP3 de um circuito, dois testes são realizados. O primeiro teste trata-se da obtenção da curva de compressao de ganho com apenas 1 tom e o segundo teste é a obtenção da mesma curva com dois tons. Para o circuito analisado anteriormente, verifica-se a curva apresentada na [Fig. @fig-diode-IP3].
 
@@ -160,6 +221,67 @@ $$
 Além disso, sabe-se que $\text{IIP3}=\text{OIP3}-G$ em que $G$ é o ganho do amplificador. Aplicando tais equações à mesma configuração que está sendo analisada, obtém-se os resultados apresentados na [Fig. @fig-results-IP3-diode].
 
 ![Resultados IP3 para o diodo](../figures/Results-IP3-diode.png){width=300, #fig-results-IP3-diode}
+
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parâmetros
+Is = 1e-16
+VT = 26e-3  # Tensão térmica típica a temperatura ambiente (26 mV)
+gm = Is / VT
+a1 = gm
+a3 = gm / VT
+
+# Intervalo de Vi
+Vi = np.logspace(np.log10(700e-6), np.log10(2), 500)
+
+# Cálculo de Io
+Io1 = a1 * Vi
+Io3 = 3 / 4 * a3 * Vi**3
+
+# Plot log-log
+plt.figure(figsize=(8, 6))
+plt.loglog(Vi, Io1, linestyle="--", color="blue")
+plt.loglog(Vi, Io3, linestyle="-", color="green")
+plt.xlabel(r"$V_i$ (V)", fontsize=12)
+plt.ylabel(r"$I_o$ (A)", fontsize=12)
+plt.title("Gráfico log-log de $I_{o1}$ e $I_{o3}$ vs $V_i$", fontsize=14)
+plt.grid(which="both", linestyle="--", linewidth=0.5)
+plt.tight_layout()
+plt.show()
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Cálculo do IP3 para circuito com BJT
 

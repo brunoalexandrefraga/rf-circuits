@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=150,94,1533,786,1.38104,103,428
+View=-90,-46,1533,815,0.707952,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -27,6 +27,7 @@ Vac V2 1 230 360 18 -26 0 0 "vsource" 1 "f2" 1 "0" 0 "0" 0 "SUBCLICK" 0
 Eqn Eqn1 1 570 540 0 8 0 0 "f1=1 kHz=" 1 "deltaf=100 Hz=" 1 "f2=f1 + deltaf=" 1 "f3=2*f1-f2=" 1 "pavs=10 nW=" 1 "rs=50=" 1 "vsource=sqrt(8*pavs*rs)=" 1 "yes" 0
 .HB HB1 1 230 20 0 63 0 0 "6@;6@f1;6@f2;" 0 "no" 0 "1 GHz" 0 "lin" 0 "1 kHz" 0 "10 kHz" 0 "10" 0 "0.001" 0 "1 µA" 0 "500" 0
 Eqn Eqn3 1 230 540 0 8 0 0 "id1=yvalue(idiode.Ib, f1)=" 1 "vd1=yvalue(vdiode.Vb, f1)=" 1 "p1=0.5*real(vd1*conj(id1))=" 1 "id3=yvalue(idiode.Ib, f3)=" 1 "vd3=yvalue(vdiode.Vb, f3)=" 1 "p3=0.5*real(vd3*conj(id3))=" 1 "p1_dBm=dBm(p1)=" 1 "p3_dBm=dBm(p3)=" 1 "oip3_calc=1.5*p1_dBm-0.5*p3_dBm=" 1 "g_dB=dB(id1/vd1)=" 1 "iip3_calc=oip3_calc-g_dB=" 1 "yes" 0
+Eqn Eqn4 0 -60 540 0 8 0 0 "id1=abs(yvalue(idiode.Ib, f1))=" 1 "id3=abs(yvalue(idiode.Ib, f3))=" 1 "id1_dB=dB(id1)=" 1 "id3_dB=dB(id3)=" 1 "delta=(id1_dB-id3_dB)/2=" 1 "oip3_dB=id1_dB+delta=" 1 "oip3=10^(oip3_dB/20)=" 1 "vd1=abs(yvalue(vdiode.Vb, f1))=" 1 "g=id1/vd1=" 1 "g_dB=dB(g)=" 1 "iip3_dB=oip3_dB-g_dB=" 1 "iip3=10^(iip3_dB/20)=" 1 "yes" 0
 </Components>
 <Wires>
 230 150 230 230 "vs" 190 190 55 ""
