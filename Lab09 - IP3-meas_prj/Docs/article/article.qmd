@@ -277,10 +277,10 @@ $$
 #| echo: false
 import math
 
-a1_diode = Is/VT 
-a2_diode = Is/VT**2/2 
-a3_diode = Is/VT**3/6
-IP3h_diode = 2*math.sqrt(abs(a1_diode)/abs(a3_diode))
+a1_diode_0 = Is/VT 
+a2_diode_0 = Is/VT**2/2 
+a3_diode_0 = Is/VT**3/6
+IP3h_diode = 2*math.sqrt(abs(a1_diode_0)/abs(a3_diode_0))
 IP3i_diode = IP3h_diode/math.sqrt(3)
 ```
 
@@ -292,14 +292,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Intervalo de Vi
-Vi = np.logspace(np.log10(700e-6), np.log10(2), 1000)
+Vi = np.logspace(np.log10(700e-6), np.log10(2), 10000)
 
-a1_diode_generic = yD
-a3_diode_generic = yD/(6*VT**2)
+a1_diode = yD
+a3_diode = yD/(6*VT**2)
 
 # Cálculo de Io
-Io1 = a1_diode_generic * Vi
-Io3 = 3/4 * a3_diode_generic * Vi**3
+Io1 = a1_diode * Vi
+Io3 = 3/4 * a3_diode * Vi**3
 
 # Determinando o ponto de interceptação
 idx_intercept = np.argmin(np.abs(Io1 - Io3))  # Índice do ponto mais próximo
@@ -310,11 +310,11 @@ I_IP3 = Io3[idx_intercept]  # Valor de Io no ponto de interceptação
 plt.figure(figsize=(8, 6))
 plt.loglog(Vi, Io1, linestyle="-", color="blue", label=r"$I_{o1}$")
 plt.loglog(Vi, Io3, linestyle="-", color="green", label=r"$I_{o3}$")
-plt.axhline(I_IP3, color="red", linestyle=":", label=f"$OIP3 = {I_IP3:.2e}$ A")
-plt.axvline(Vi_IP3, color="purple", linestyle=":", label=f"$IIP3 = {Vi_IP3:.2e}$ V")
-plt.xlabel(r"$V_i$ (V)", fontsize=12)
-plt.ylabel(r"$I_o$ (A)", fontsize=12)
-plt.title("Gráfico log-log de $I_{o1}$ e $I_{o3}$ vs $V_i$", fontsize=14)
+plt.axhline(I_IP3, color="red", linestyle=":", label=f"$OIP3 = {I_IP3:.5e}$ A")
+plt.axvline(Vi_IP3, color="purple", linestyle=":", label=f"$IIP3 = {Vi_IP3:.5e}$ V")
+plt.xlabel(r"$V_i$", fontsize=12)
+plt.ylabel(r"$I_o$", fontsize=12)
+plt.title(r"Gráfico $IP_{3i}$", fontsize=14)
 plt.grid(which="both", linestyle="--", linewidth=0.5)
 plt.legend(fontsize=10)
 plt.tight_layout()
