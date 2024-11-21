@@ -295,7 +295,7 @@ import matplotlib.pyplot as plt
 Vi = np.logspace(np.log10(700e-6), np.log10(2), 1000)
 
 a1_diode_generic = yD
-a3_diode_generic = yD/VT
+a3_diode_generic = yD/(6*VT**2)
 
 # Cálculo de Io
 Io1 = a1_diode_generic * Vi
@@ -319,8 +319,6 @@ plt.grid(which="both", linestyle="--", linewidth=0.5)
 plt.legend(fontsize=10)
 plt.tight_layout()
 plt.show()
-
-Io3
 ```
 
 
