@@ -111,6 +111,7 @@ T_celsius = 26.85
 T_kelvin = T_celsius + T0
 VT = k * T_kelvin / q
 rD=VT/ID
+yD = 1/rD
 
 ID1=Vi1/rD
 ```
@@ -140,6 +141,39 @@ def format(value):
         return f"{value:.0e} "
 ```
 
+```{python}
+#| echo: false
+def format_e_notation(value, decimals=2):
+    format_string = f"{{:.{decimals}f}}"
+    if value >= 1e9:
+        return f"{format_string.format(value / 1e9)}e9"
+    elif value >= 1e6:
+        return f"{format_string.format(value / 1e6)}e6"
+    elif value >= 1e3:
+        return f"{format_string.format(value / 1e3)}e3"
+    elif value >= 1:
+        return f"{format_string.format(value)}"
+    elif value >= 1e-3:
+        return f"{format_string.format(value * 1e3)}e-3"
+    elif value >= 1e-6:
+        return f"{format_string.format(value * 1e6)}e-6"
+    elif value >= 1e-9:
+        return f"{format_string.format(value * 1e9)}e-9"
+    elif value >= 1e-12:
+        return f"{format_string.format(value * 1e12)}e-12"
+    elif value >= 1e-15:
+        return f"{format_string.format(value * 1e15)}e-15"
+    else:
+        return f"{value:.{decimals}}"
+```
+
+```{python}
+#| echo: false
+def format_simple(value, decimals=2):
+    format_string = f"{{:.{decimals}f}}"
+    return f"{format_string.format(value)}"
+```
+
 Dessa forma, aplicam-se os valores nas equações, resultando em uma resistência $r_d=$ `{python} format(rD)`$\Omega$. Com base nesse modelo de pequenos sinais, aplicam-se dois tons espaçados de $\Delta_f=$ `{python} format(Deltaf)`Hz, sendo que a primeira frequência selecionada é $f_1=$ `{python} format(f1)`Hz e, consequentemente, o segundo $f_2=$ `{python} format(f2)`Hz. Ambos os tons utilizados nessa seção são de $P_{i1}=P_{i2}=$ `{python} format(Pi1)`W, resultando em tensão igual a $V_i=$ `{python} format(Vi1)`V para a fonte de frequência $f_1$ (pensando em uma fonte de impedância de `{python} format(Rs)`$\Omega$). Assim, a corrente sobre o diodo, na frequência $f_1$, é igual à $V_{s1}/r_d=$ `{python} format(ID1)`A. Esses valores podem ser verificados pela simulação apresentada na [Fig. @fig-diode-validation].
 
 ![Validação do circuito com Diodo](../figures/original-circuit-diode-validation.png){width=300, #fig-diode-validation}
@@ -155,20 +189,29 @@ $$ {#eq-taylor-expansion}
 em que, $I_D$ é dado pela [Eq. @eq-diode-current]
 
 $$
-  a_1=\frac{dI_D}{dV_D}=y_D
-$$
+\begin{split}
+  a_1&=\frac{dI_D}{dV_D}\bigg|_{V_D=0}\implies\\
+  &=\frac{I_s}{V_T}
+\end{split}
+$$ {#eq-def-a1}
 
 continuando,
 
 $$
-  a_2=\frac{d^2I_D}{dV_D^2}=\frac{y_D}{V_T}
+\begin{split}
+  2a_2&=\frac{d^2I_D}{dV_D^2}\bigg|_{V_D=0}\implies\\
+  &=\frac{I_s}{V_T^2}
+\end{split}
 $$
 
 e, finalmente,
 
 $$
-  a_2=\frac{d^3I_D}{dV_D^3}=\frac{y_D}{V_T^2}
-$$
+\begin{split}
+  6a_3&=\frac{d^3I_D}{dV_D^3}\bigg|_{V_D=0}\implies\\
+  &=\frac{I_s}{V_T^3}
+\end{split}
+$$ {#eq-def-a3}
 
 Além disso, pode-se especificar o valor de $V_D$. Para calcular o ponto de interceptação de terceira ordem dos harmônicos, $V_D=V_1\cos\left(\omega_1t\right)$, em que $\omega_1=2\pi f_1$. Aplicando esse sinal à equação [Eq. @eq-taylor-expansion],
 
@@ -180,25 +223,100 @@ Resultando em
 
 $$
 \begin{aligned}
-  p(x) &= \frac{1}{2} a_2 V_i^2 + \left( a_1 V_i + \frac{3}{4} a_3 V_i^3 \right) \cos(\omega_1 t)\\
-       &+ \frac{1}{2} a_2 V_i^2 \cos(2 \omega_1 t) + \frac{1}{4} a_3 V_i^3 \cos(3 \omega_1 t)
+  I_D^{'}&=\frac{1}{2}a_2V_i^2+\left(a_1V_i+\frac{3}{4}a_3V_i^3\right)\cos(\omega_1t)\\
+       &+\frac{1}{2}a_2V_i^2\cos(2\omega_1t)+\frac{1}{4}a_3V_i^3\cos(3\omega_1t)
 \end{aligned}
 $$
 
+O ponto de interceptação harmônico de terceira ordem, $\text{IP}_{3h}$, ocorre quando a amplitude da frequência fundamental e a amplitude do harmônico de terceira ordem são iguais, ou seja
 
+$$
+\begin{split}
+  \left|a_1V_i\right|&=\left|\frac{1}{4}a_3V_i^3\right|\implies\\
+  \text{IP}_{3h}&=V_i=2\sqrt{\left|\frac{a_1}{a_3}\right|}
+\end{split}
+$$
 
+Semelhante ao que foi obtido para os produtos harmônicos, pode-se realizar para os produtos de intermodulação, nesse caso, com o teste de dois tons $V_D=V_i\left[\cos\left(\omega_1t\right)+\cos\left(\omega_2t\right)\right]$ (tons de mesma amplitude). Aplicando à [Eq. @eq-taylor-expansion], obtém-se
 
+$$
+\begin{aligned}
+  I_D^{'}&=a_1V_i\left[\cos\left(\omega_1t\right)+\cos\left(\omega_2t\right)\right]\\
+  &+a_2V_i^2\left[\cos\left(\omega_1t\right)+\cos\left(\omega_2t\right)\right]^2\\
+  &+a_3V_i^3\left[\cos\left(\omega_1t\right)+\cos\left(\omega_2t\right)\right]^3
+\end{aligned}
+$$
 
+Resultando em
 
+$$
+\begin{aligned}
+    I_D^{'}=&a_1V_i\cos(\omega_1t)+a_1V_i\cos(\omega_2t)\\
+    &+\frac{1}{2} a_2 V_i^2 \big[1 + \cos(2 \omega_1 t)\big] + \frac{1}{2} a_2 V_i^2 \big[1 + \cos(2 \omega_2 t)\big]\\
+    &+a_2V_i^2\cos(\omega_1-\omega_2)t+a_2V_i^2\cos(\omega_1+\omega_2)t\\
+    &+a_3V_i^3\left[\frac{3}{4}\cos(\omega_1t) + \frac{1}{4} \cos(3 \omega_1 t)\right] \\
+    &+a_3V_i^3\left[\frac{3}{4}\cos(\omega_2t) + \frac{1}{4} \cos(3 \omega_2 t)\right] \\
+    &+a_3V_i^3\left[\frac{3}{2}\cos(3\omega_1t) + \frac{3}{4} \cos(2 \omega_2 - \omega_1)t 
+    +\frac{3}{4} \cos(2 \omega_2 + \omega_1)t\right] \\
+    &+ a_3 V_i^3 \left[\frac{3}{2} \cos(3 \omega_2 t) + \frac{3}{4} \cos(2 \omega_1 - \omega_2)t 
+    + \frac{3}{4} \cos(2 \omega_1 + \omega_2)t\right].
+\end{aligned}
+$$
 
+Assim, é possível calcular o ponto de interceptação de terceira ordem para intermodulação, $\text{IP}_{3i}$, igualando as amplitudes da fundamental e da intermodulação de terceira ordem, como é apresentado a seguir
 
+$$
+\begin{split}
+  \left|a_1V_i\right|&=\left|\frac{3}{4}a_3V_i^3\right|\implies\\
+  \text{IP}_{3i}&=V_i=2\sqrt{\frac{\left|a_1\right|}{3\left|a_3\right|}}\\
+  &=\frac{\text{IP}_{3h}}{\sqrt{3}}\\
+\end{split}
+$$
 
+```{python}
+#| echo: false
+import math
 
+a1_diode = Is/VT 
+a2_diode = Is/VT**2/2 
+a3_diode = Is/VT**3/6
+IP3h_diode = 2*math.sqrt(abs(a1_diode)/abs(a3_diode))
+IP3i_diode = IP3h_diode/math.sqrt(3)
+```
 
+Dadas a [Eq. @eq-def-a1] e a [Eq. @eq-def-a3], pode-se quantificar os pontos de interceptação de terceira ordem (harmônico e intermodulação). Dessa forma, $\text{IP}_{3h}=$ `{python} format_simple(IP3h_diode, 4)` V e $\text{IP}_{3i}=$ `{python} format_simple(IP3i_diode, 4)` V.
 
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
 
+# Intervalo de Vi
+Vi = np.logspace(np.log10(700e-6), np.log10(2), 1000)
 
+# Cálculo de Io
+Io1 = a1_diode * Vi
+Io3 = 3/4 * a3_diode * Vi**3
 
+# Determinando o ponto de interceptação
+idx_intercept = np.argmin(np.abs(Io1 - Io3))  # Índice do ponto mais próximo
+Vi_IP3 = Vi[idx_intercept]  # Valor de Vi no ponto de interceptação
+I_IP3 = Io1[idx_intercept]  # Valor de Io no ponto de interceptação
+
+# Plot log-log
+plt.figure(figsize=(8, 6))
+plt.loglog(Vi, Io1, linestyle="-", color="blue", label=r"$I_{o1}$")
+plt.loglog(Vi, Io3, linestyle="-", color="green", label=r"$I_{o3}$")
+plt.axhline(I_IP3, color="red", linestyle=":", label=f"$OIP3 = {I_IP3:.2e}$ A")
+plt.axvline(Vi_IP3, color="purple", linestyle=":", label=f"$IIP3 = {Vi_IP3:.2e}$ V")
+plt.xlabel(r"$V_i$ (V)", fontsize=12)
+plt.ylabel(r"$I_o$ (A)", fontsize=12)
+plt.title("Gráfico log-log de $I_{o1}$ e $I_{o3}$ vs $V_i$", fontsize=14)
+plt.grid(which="both", linestyle="--", linewidth=0.5)
+plt.legend(fontsize=10)
+plt.tight_layout()
+plt.show()
+```
 
 
 
@@ -222,15 +340,48 @@ Além disso, sabe-se que $\text{IIP3}=\text{OIP3}-G$ em que $G$ é o ganho do am
 
 ![Resultados IP3 para o diodo](../figures/Results-IP3-diode.png){width=300, #fig-results-IP3-diode}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```{python}
 #| echo: false
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Parâmetros
-Is = 1e-16
-VT = 26e-3  # Tensão térmica típica a temperatura ambiente (26 mV)
-gm = Is / VT
+gm = Is/VT
 a1 = gm
 a3 = gm / VT
 
@@ -239,7 +390,7 @@ Vi = np.logspace(np.log10(700e-6), np.log10(2), 500)
 
 # Cálculo de Io
 Io1 = a1 * Vi
-Io3 = 3 / 4 * a3 * Vi**3
+Io3 = 3/4 * a3 * Vi**3
 
 # Plot log-log
 plt.figure(figsize=(8, 6))
@@ -251,7 +402,6 @@ plt.title("Gráfico log-log de $I_{o1}$ e $I_{o3}$ vs $V_i$", fontsize=14)
 plt.grid(which="both", linestyle="--", linewidth=0.5)
 plt.tight_layout()
 plt.show()
-
 ```
 
 
