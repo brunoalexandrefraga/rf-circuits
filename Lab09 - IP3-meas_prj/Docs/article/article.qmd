@@ -70,7 +70,7 @@ $$ {#eq-rd-differential}
 Em que
 
 $$
-  I_D=I_s\left(e^{V_D/V_T}-1\right)
+  I_D\approx I_se^{V_D/V_T}
 $$ {#eq-diode-current}
 
 assumindo $n=1$ (parâmetro dependente da estrutura física do componente) @sedra2014microelectronic. Além disso,
@@ -191,6 +191,8 @@ em que, $I_D$ é dado pela [Eq. @eq-diode-current]
 $$
 \begin{split}
   a_1&=\frac{dI_D}{dV_D}\bigg|_{V_D=0}\implies\\
+  &=\frac{I_D(0)}{V_T}\implies\\
+  &=\frac{1}{V_T}I_se^{0/V_T}\implies\\
   &=\frac{I_s}{V_T}
 \end{split}
 $$ {#eq-def-a1}
@@ -268,7 +270,7 @@ Assim, é possível calcular o ponto de interceptação de terceira ordem para i
 $$
 \begin{split}
   \left|a_1V_i\right|&=\left|\frac{3}{4}a_3V_i^3\right|\implies\\
-  \text{IP}_{3i}&=V_i=2\sqrt{\frac{\left|a_1\right|}{3\left|a_3\right|}}\\
+  \text{IP}_{3i}&=V_i=2\sqrt{\frac{\left|a_1\right|}{3\left|a_3\right|}}\implies\\
   &=\frac{\text{IP}_{3h}}{\sqrt{3}}\\
 \end{split}
 $$
@@ -280,12 +282,26 @@ import math
 a1_diode_0 = Is/VT 
 a2_diode_0 = Is/VT**2/2 
 a3_diode_0 = Is/VT**3/6
-IP3h_diode = 2*math.sqrt(abs(a1_diode_0)/abs(a3_diode_0))
-IP3i_diode = IP3h_diode/math.sqrt(3)
+IIP3h_diode = 2*math.sqrt(abs(a1_diode_0)/abs(a3_diode_0))
+OIP3h_diode = IIP3h_diode*yD
+IIP3i_diode = IIP3h_diode/math.sqrt(3)
+OIP3i_diode = IIP3i_diode*yD
 ```
 
-Dadas a [Eq. @eq-def-a1] e a [Eq. @eq-def-a3], pode-se quantificar os pontos de interceptação de terceira ordem (harmônico e intermodulação). Dessa forma, $\text{IP}_{3h}=$ `{python} format_simple(IP3h_diode, 4)` V e $\text{IP}_{3i}=$ `{python} format_simple(IP3i_diode, 4)` V.
+Dadas a [Eq. @eq-def-a1] e a [Eq. @eq-def-a3], pode-se quantificar os pontos de interceptação de terceira ordem (harmônico e intermodulação). Dessa forma, $\text{IIP}_{3h}=$ `{python} format_simple(IIP3h_diode, 4)` V, $\text{OIP}_{3h}=$ `{python} format_simple(OIP3h_diode, 4)` A, $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_diode, 4)` V e $\text{OIP}_{3i}=$ `{python} format_simple(OIP3i_diode, 4)` A. Assim, a [Fig. @fig-graph-intersec-diode] apresenta a extrapolação das curvas de corrente das frequências fundamental, dada por
 
+$$
+  I_{o1}=\frac{I_D}{V_T}V_i=y_DV_i
+$$
+
+e a corrente da frequência de terceira ordem é obtida pela seguinte equação
+
+$$
+  I_{o3}=\frac{y_D}{6V_T^2}V_i
+$$
+
+
+::: {#fig-graph-intersec-diode}
 ```{python}
 #| echo: false
 import numpy as np
@@ -320,48 +336,17 @@ plt.legend(fontsize=10)
 plt.tight_layout()
 plt.show()
 ```
+:::
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Pode-se perceber que os mesmos resultados são obtidos na intersecção das curvas apresentadas.
 
 ## Validação por simulação
 
-Para que seja possível calcular o IP3 de um circuito, dois testes são realizados. O primeiro teste trata-se da obtenção da curva de compressao de ganho com apenas 1 tom e o segundo teste é a obtenção da mesma curva com dois tons. Para o circuito analisado anteriormente, verifica-se a curva apresentada na [Fig. @fig-diode-IP3].
+Para que seja possível calcular o IP3 de um circuito, dois testes são realizados. O primeiro teste trata-se da obtenção da curva de compressão de ganho com apenas 1 tom e o segundo teste é a obtenção da mesma curva com dois tons. Para o circuito analisado anteriormente, verifica-se a curva apresentada na [Fig. @fig-diode-IP3].
 
 ![Gráfico de IP3 para o Diodo](../figures/IP3-diode-meas.png){width=300, #fig-diode-IP3}
 
-A curva em azul representa a compressão de ganho devido aos harmônicos produzidos pelo componente não linear (neste caso, o diodo) com a aplicação de apenas um tom. A curva em vermelho é o comportamento esperado para o produto de intermodulação resultante dos dois tons, em que $f_3=2f_1-f_2$. Percebe-se que a inclinação das curvas é diferente e a curva do IM3 é bem mais acentuada qua outra. Assim, sabe-se que as duas curvas, se forem prolongadas na parte linear (inicial), cruzam-se em um ponto, esse ponto é o IP3 (IIP3, OIP3). Para o cálculo desse ponto, sabe-se que
+A curva em azul representa a compressão de ganho devido aos harmônicos produzidos pelo componente não linear (neste caso, o diodo) com a aplicação de apenas um tom. A curva em vermelho é o comportamento esperado para o produto de intermodulação resultante dos dois tons, em que $f_3=2f_1-f_2$. Percebe-se que a inclinação das curvas é diferente e a curva do IM3 é bem mais acentuada que a outra. Assim, sabe-se que as duas curvas, se forem prolongadas na parte linear (inicial), cruzam-se em um ponto, esse ponto é o IP3 (IIP3, OIP3). Para o cálculo desse ponto, sabe-se que
 
 $$
   \begin{split}
@@ -374,7 +359,7 @@ Além disso, sabe-se que $\text{IIP3}=\text{OIP3}-G$ em que $G$ é o ganho do am
 
 ![Resultados IP3 para o diodo](../figures/Results-IP3-diode.png){width=300, #fig-results-IP3-diode}
 
-
+Por meio da simulação, também é possível visualizar os mesmos resultados dos cálculos e do gráfico anteriormente apresentados.
 
 
 
