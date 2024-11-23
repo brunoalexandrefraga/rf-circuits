@@ -246,7 +246,7 @@ $$
   \text{IIP}_{3h}&=2\sqrt{\left|\frac{I_s/V_T}{I_s/\left(6V_T^3\right)}\right|}\implies\\
   &=2V_T\sqrt{6}
 \end{split}
-$$
+$$ {#eq-iip3h-diode}
 
 
 Semelhante ao que foi obtido para os produtos harmônicos, pode-se realizar para os produtos de intermodulação, nesse caso, com o teste de dois tons $V_D=V_i\left[\cos\left(\omega_1t\right)+\cos\left(\omega_2t\right)\right]$ (tons de mesma amplitude). Aplicando à [Eq. @eq-taylor-expansion], obtém-se
@@ -294,9 +294,7 @@ $$
   \text{IIP}_{3i}&=\frac{2V_T\sqrt{6}}{\sqrt{3}}\implies\\
   &=2V_T\sqrt{2}\implies\\
 \end{split}
-$$
-
-
+$$ {#eq-iip3i-diode}
 
 ```{python}
 #| echo: false
@@ -305,10 +303,13 @@ import math
 a1_diode_0 = Is/VT 
 a2_diode_0 = Is/VT**2/2 
 a3_diode_0 = Is/VT**3/6
+
+g_diode = yD
+
 IIP3h_diode = 2*math.sqrt(abs(a1_diode_0)/abs(a3_diode_0))
-OIP3h_diode = IIP3h_diode*yD
+OIP3h_diode = IIP3h_diode*g_diode
 IIP3i_diode = IIP3h_diode/math.sqrt(3)
-OIP3i_diode = IIP3i_diode*yD
+OIP3i_diode = IIP3i_diode*g_diode
 ```
 
 Dadas a [Eq. @eq-def-a1] e a [Eq. @eq-def-a3], pode-se quantificar os pontos de interceptação de terceira ordem (harmônico e intermodulação). Dessa forma, $\text{IIP}_{3h}=$ `{python} format_simple(IIP3h_diode, 4)` V, $\text{OIP}_{3h}=$ `{python} format_simple(OIP3h_diode, 4)` A, $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_diode, 4)` V e $\text{OIP}_{3i}=$ `{python} format_simple(OIP3i_diode, 4)` A. Assim, a [Fig. @fig-graph-intersec-diode] apresenta a extrapolação das curvas de corrente das frequências fundamental, dada por
@@ -322,7 +323,6 @@ e a corrente da frequência de terceira ordem é obtida pela seguinte equação
 $$
   I_{o3}=\frac{y_D}{6V_T^2}V_i
 $$
-
 
 ::: {#fig-graph-intersec-diode}
 ```{python}
@@ -383,63 +383,6 @@ Além disso, sabe-se que $\text{IIP3}=\text{OIP3}-G$ em que $G$ é o ganho do am
 ![Resultados IP3 para o diodo](../figures/Results-IP3-diode.png){width=300, #fig-results-IP3-diode}
 
 Por meio da simulação, também é possível visualizar os mesmos resultados dos cálculos e do gráfico anteriormente apresentados.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Circuito com BJT ideal
 
@@ -503,15 +446,44 @@ $$ {#eq-def-a3-bjt-ideal}
 
 As equações do teste de um tom é a mesma que a apresentada na [Eq. @eq-one-tom-test-diode] e a equação do teste de dois tons é a mesma que a [Eq. @eq-two-tom-test-diode] apresentadas para o diodo. Dessa forma, pode-se calcular diretamente o parâmetro $IIP3_h$
 
+$$
+\begin{split}
+  \text{IIP}_{3h}&=2\sqrt{\left|\frac{I_s/V_T}{I_s/\left(6V_T^3\right)}\right|}\implies\\
+  &=2V_T\sqrt{6}
+\end{split}
+$$ {#eq-iip3h-bjt-ideal}
 
+e, para o $IIP3_i$,
 
+$$
+\begin{split}
+  \text{IIP}_{3i}&=\frac{2V_T\sqrt{6}}{\sqrt{3}}\implies\\
+  &=2V_T\sqrt{2}
+\end{split}
+$$ {#eq-iip3i-bjt-ideal}
 
+A [Eq. @eq-iip3h-bjt-ideal] é exatamente a mesma que a [Eq. @eq-iip3h-diode], enquanto que a [Eq. @eq-iip3i-bjt-ideal] é exatamente a mesma que a [Eq. @eq-iip3i-diode]. Conforme será demonstrado depois, os valores são coincidentes.
 
+```{python}
+#| echo: false
+import math
 
+IC = 1e-3
+gm = IC/VT
 
+a1_bjt_ideal_0 = Is/VT
+a2_bjt_ideal_0 = Is/VT**2/2
+a3_bjt_ideal_0 = Is/VT**3/6
 
+g_bjt_ideal = gm
 
+IIP3h_bjt_ideal = 2*math.sqrt(abs(a1_bjt_ideal_0)/abs(a3_bjt_ideal_0))
+OIP3h_bjt_ideal = IIP3h_bjt_ideal*g_bjt_ideal
+IIP3i_bjt_ideal = IIP3h_bjt_ideal/math.sqrt(3)
+OIP3i_bjt_ideal = IIP3i_bjt_ideal*g_bjt_ideal
+```
 
+Aplicando os valores, obtém-se $\text{IIP}_{3h}=$ `{python} format_simple(IIP3h_bjt_ideal, 4)` V, $\text{OIP}_{3h}=$ `{python} format_simple(OIP3h_bjt_ideal, 4)` A, $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_bjt_ideal, 4)` V e $\text{OIP}_{3i}=$ `{python} format_simple(OIP3i_bjt_ideal, 4)` A.
 
 
 
