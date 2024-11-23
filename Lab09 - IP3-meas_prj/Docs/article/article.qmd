@@ -228,16 +228,26 @@ $$
   I_D^{'}&=\frac{1}{2}a_2V_i^2+\left(a_1V_i+\frac{3}{4}a_3V_i^3\right)\cos(\omega_1t)\\
        &+\frac{1}{2}a_2V_i^2\cos(2\omega_1t)+\frac{1}{4}a_3V_i^3\cos(3\omega_1t)
 \end{aligned}
-$$
+$$ {#eq-one-tom-test-diode}
 
 O ponto de interceptação harmônico de terceira ordem, $\text{IP}_{3h}$, ocorre quando a amplitude da frequência fundamental e a amplitude do harmônico de terceira ordem são iguais, ou seja
 
 $$
+  \left|a_1V_i\right|=\left|\frac{1}{4}a_3V_i^3\right|\implies
+$$
+$$
+  \text{IIP}_{3h}=V_i=2\sqrt{\left|\frac{a_1}{a_3}\right|}
+$$ {#eq-iip3h-def}
+
+Especificamente para o diodo, a equação do $\text{IIP}_{3h}$ é dada por
+
+$$
 \begin{split}
-  \left|a_1V_i\right|&=\left|\frac{1}{4}a_3V_i^3\right|\implies\\
-  \text{IP}_{3h}&=V_i=2\sqrt{\left|\frac{a_1}{a_3}\right|}
+  \text{IIP}_{3h}&=2\sqrt{\left|\frac{I_s/V_T}{I_s/\left(6V_T^3\right)}\right|}\implies\\
+  &=2V_T\sqrt{6}
 \end{split}
 $$
+
 
 Semelhante ao que foi obtido para os produtos harmônicos, pode-se realizar para os produtos de intermodulação, nesse caso, com o teste de dois tons $V_D=V_i\left[\cos\left(\omega_1t\right)+\cos\left(\omega_2t\right)\right]$ (tons de mesma amplitude). Aplicando à [Eq. @eq-taylor-expansion], obtém-se
 
@@ -263,17 +273,30 @@ $$
     &+ a_3 V_i^3 \left[\frac{3}{2} \cos(3 \omega_2 t) + \frac{3}{4} \cos(2 \omega_1 - \omega_2)t 
     + \frac{3}{4} \cos(2 \omega_1 + \omega_2)t\right].
 \end{aligned}
-$$
+$$ {#eq-two-tom-test-diode}
 
 Assim, é possível calcular o ponto de interceptação de terceira ordem para intermodulação, $\text{IP}_{3i}$, igualando as amplitudes da fundamental e da intermodulação de terceira ordem, como é apresentado a seguir
 
 $$
 \begin{split}
   \left|a_1V_i\right|&=\left|\frac{3}{4}a_3V_i^3\right|\implies\\
-  \text{IP}_{3i}&=V_i=2\sqrt{\frac{\left|a_1\right|}{3\left|a_3\right|}}\implies\\
-  &=\frac{\text{IP}_{3h}}{\sqrt{3}}\\
+  \text{IIP}_{3i}&=V_i=2\sqrt{\frac{\left|a_1\right|}{3\left|a_3\right|}}\implies
 \end{split}
 $$
+$$
+  \text{IIP}_{3i}=\frac{\text{IIP}_{3h}}{\sqrt{3}}
+$$ {#eq-iip3i-def}
+
+Para o diodo, especificamente, obtém-se
+
+$$
+\begin{split}
+  \text{IIP}_{3i}&=\frac{2V_T\sqrt{6}}{\sqrt{3}}\implies\\
+  &=2V_T\sqrt{2}\implies\\
+\end{split}
+$$
+
+
 
 ```{python}
 #| echo: false
@@ -394,34 +417,6 @@ Por meio da simulação, também é possível visualizar os mesmos resultados do
 
 
 
-```{python}
-#| echo: false
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Parâmetros
-gm = Is/VT
-a1 = gm
-a3 = gm / VT
-
-# Intervalo de Vi
-Vi = np.logspace(np.log10(700e-6), np.log10(2), 500)
-
-# Cálculo de Io
-Io1 = a1 * Vi
-Io3 = 3/4 * a3 * Vi**3
-
-# Plot log-log
-plt.figure(figsize=(8, 6))
-plt.loglog(Vi, Io1, linestyle="--", color="blue")
-plt.loglog(Vi, Io3, linestyle="-", color="green")
-plt.xlabel(r"$V_i$ (V)", fontsize=12)
-plt.ylabel(r"$I_o$ (A)", fontsize=12)
-plt.title("Gráfico log-log de $I_{o1}$ e $I_{o3}$ vs $V_i$", fontsize=14)
-plt.grid(which="both", linestyle="--", linewidth=0.5)
-plt.tight_layout()
-plt.show()
-```
 
 
 
@@ -446,15 +441,9 @@ plt.show()
 
 
 
+# Circuito com BJT ideal
 
-
-
-
-
-
-# Cálculo do IP3 para circuito com BJT
-
-Em seguida, é realizada a medição do IP3 do transistor BJT (npn) ideal. O circuito de medição pode ser visualizado na Fig.\ref{fig:circuit-bjt-original}.
+Esta seção trata da medição do IP3 do transistor BJT (npn) ideal. O circuito de medição pode ser visualizado na Fig.\ref{fig:circuit-bjt-original}.
 
 ```{=latex}
 \begin{figure}[h]
@@ -471,10 +460,48 @@ Em seguida, é realizada a medição do IP3 do transistor BJT (npn) ideal. O cir
 \end{figure}
 ```
 
+A análise para o BJT inicia modificando a [Eq. @eq-taylor-expansion] para se obter a corrente de coletor, como se segue
 
+$$
+  I_C^{'}=a_1V_{BE}+a_2V_{BE}^2+a_3V_{BE}^3
+$$ {#eq-taylor-expansion-bjt-ideal}
 
+Em que,
 
+$$
+  I_C=I_se^{V_{BE}/V_T}
+$$
 
+Conforme as definições, obtém-se
+
+$$
+\begin{split}
+  a_1&=\frac{dI_C}{dV_{BE}}\bigg|_{V_{BE}=0}\implies\\
+  &=\frac{I_C(0)}{V_T}\implies\\
+  &=\frac{1}{V_T}I_se^{0/V_T}\implies\\
+  &=\frac{I_s}{V_T}
+\end{split}
+$$ {#eq-def-a1-bjt-ideal}
+
+continuando,
+
+$$
+\begin{split}
+  2a_2&=\frac{d^2I_C}{dV_{BE}^2}\bigg|_{V_{BE}=0}\implies\\
+  &=\frac{I_s}{V_T^2}
+\end{split}
+$$
+
+e, finalmente,
+
+$$
+\begin{split}
+  6a_3&=\frac{d^3I_C}{dV_{BE}^3}\bigg|_{V_{BE}=0}\implies\\
+  &=\frac{I_s}{V_T^3}
+\end{split}
+$$ {#eq-def-a3-bjt-ideal}
+
+As equações do teste de um tom é a mesma que a apresentada na [Eq. @eq-one-tom-test-diode] e a equação do teste de dois tons é a mesma que a [Eq. @eq-two-tom-test-diode] apresentadas para o diodo. Dessa forma, pode-se calcular diretamente o parâmetro $IIP3_h$
 
 
 
