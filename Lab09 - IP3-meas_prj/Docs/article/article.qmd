@@ -483,15 +483,84 @@ IIP3i_bjt_ideal = IIP3h_bjt_ideal/math.sqrt(3)
 OIP3i_bjt_ideal = IIP3i_bjt_ideal*g_bjt_ideal
 ```
 
-Aplicando os valores, obtém-se $\text{IIP}_{3h}=$ `{python} format_simple(IIP3h_bjt_ideal, 4)` V, $\text{OIP}_{3h}=$ `{python} format_simple(OIP3h_bjt_ideal, 4)` A, $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_bjt_ideal, 4)` V e $\text{OIP}_{3i}=$ `{python} format_simple(OIP3i_bjt_ideal, 4)` A.
+Aplicando os valores, obtém-se $\text{IIP}_{3h}=$ `{python} format_simple(IIP3h_bjt_ideal, 4)` V, $\text{OIP}_{3h}=$ `{python} format_simple(OIP3h_bjt_ideal, 4)` A, $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_bjt_ideal, 4)` V e $\text{OIP}_{3i}=$ `{python} format_simple(OIP3i_bjt_ideal, 4)` A. Assim, a [Fig. @fig-graph-intersec-bjt-ideal] apresenta a extrapolação das curvas de corrente das frequências fundamental, dada por
 
+$$
+  I_{o1}=\frac{I_C}{V_T}V_i=g_mV_i
+$$
 
+e a corrente da frequência de terceira ordem é obtida pela seguinte equação
 
+$$
+  I_{o3}=\frac{g_m}{6V_T^2}V_i
+$$
 
+::: {#fig-graph-intersec-bjt-ideal}
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
 
+# Intervalo de Vi
+Vi = np.logspace(np.log10(700e-6), np.log10(2), 10000)
 
+a1_bjt_ideal = gm
+a3_bjt_ideal = gm/(6*VT**2)
 
+# Cálculo de Io
+Io1_bjt_ideal = a1_bjt_ideal * Vi
+Io3_bjt_ideal = 3/4 * a3_bjt_ideal * Vi**3
 
+# Determinando o ponto de interceptação
+idx_intercept_bjt_ideal = np.argmin(np.abs(Io1_bjt_ideal - Io3_bjt_ideal))  # Índice do ponto mais próximo
+Vi_IP3_bjt_ideal = Vi[idx_intercept_bjt_ideal]  # Valor de Vi no ponto de interceptação
+I_IP3_bjt_ideal = Io3_bjt_ideal[idx_intercept_bjt_ideal]  # Valor de Io no ponto de interceptação
+
+# Plot log-log
+plt.figure(figsize=(8, 6))
+plt.loglog(Vi, Io1_bjt_ideal, linestyle="-", color="blue", label=r"$I_{o1}$")
+plt.loglog(Vi, Io3_bjt_ideal, linestyle="-", color="green", label=r"$I_{o3}$")
+plt.axhline(I_IP3_bjt_ideal, color="red", linestyle=":", label=f"$OIP3 = {I_IP3_bjt_ideal:.5e}$ A")
+plt.axvline(Vi_IP3_bjt_ideal, color="purple", linestyle=":", label=f"$IIP3 = {Vi_IP3_bjt_ideal:.5e}$ V")
+plt.xlabel(r"$V_i$", fontsize=12)
+plt.ylabel(r"$I_o$", fontsize=12)
+plt.title(r"Gráfico $IP_{3i}$", fontsize=14)
+plt.grid(which="both", linestyle="--", linewidth=0.5)
+plt.legend(fontsize=10)
+plt.tight_layout()
+plt.show()
+```
+:::
+
+## Validação por simulação
+
+De forma similar como foi feito para o diodo, pode-se perceber que os resultados coincidiram com os cálculos teóricos. A [Fig. @fig-results-IP3-bjt-ideal] apresenta os resultados.
+
+![Resultados IP3 para o BJT ideal](../figures/Results-IP3-bjt-ideal.png){width=300, #fig-results-IP3-bjt-ideal}
+
+As curvas e suas extrapolações, obtidas por meio da simulação são apresentadas na [Fig. @fig-IP3-diode-meas].
+
+![Resultados IP3 para o BJT ideal](../figures/IP3-diode-meas.png){width=300, #fig-IP3-diode-meas}
+
+## Elevando IIP3
+
+De acordo com o problema proposto, deseja-se quadruplicar o $\text{IIP}_{3i}$ do circuito com o BJT ideal. Dessa forma, o valor desejado é $4\text{IIP}_{3i}=$ `{python} format_simple(4*IIP3i_bjt_ideal, 4)` V. Para isso, será utilizado o conceito de degeneração de emissor. A degeneração de emissor é causada pela inclusão de resistência em série com o terminal do emissor do transistor. Essa degeneração gera *feedback* negativo no amplificador e reduz o $IIP_3$ do circuito (sob a pena de reduzir um pouco o ganho do amplificador). O circuito com o resistor de emissor, $R_E$, incluso, pode ser visualizado na [Fig. @].
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}[american]
+    \draw (1.98, -0.5) node[npn](nmos1){};
+    \draw (nmos1.C) to[short] ++(0, 0.23) to[short, i^<=$I_C$] ++(3.52, 0) to[battery1, l=$V_{cc}$] ++(0, -5) node[ground]{} ;
+    \draw (-0.5, -4.5) node[ground]{} to[sV, l=$V_{s2}$] ++(0, 1.5) to[sV, l=$V_{s1}$] ++(0, 2.5) to[battery1, l=$V_B$, invert] (nmos1.B) ;
+    \draw (2, -3) coordinate(point1) to[isource, l=$I_{ee}$] ++(0, -1.5) node[ground]{} ;
+    \draw (point1) to[short] ++(2, 0) to[C, l=$C$] ++(0, -1.5) node[ground]{} ;
+    \draw (point1) to[R, l=$R_E$] (nmos1.E) ;
+  \end{circuitikz}
+  \caption{Circuito com $R_E$}
+  \label{fig:circuit-bjt-RE}
+\end{figure}
+```
 
 
 

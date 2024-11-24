@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-324,-26,1876,1237,0.669397,280,0
+View=-324,-88,2625,1159,0.669397,586,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -50,14 +50,14 @@ Eqn Eqn2 1 160 720 0 8 0 0 "IM1_0=yvalue(yvalue(ic.Ib, f1),0)=" 1 "IM3_0=yvalue(
 450 100 450 100 "vc" 450 50 0 ""
 </Wires>
 <Diagrams>
-<Rect 857 740 933 653 31 #c0c0c0 1 11 1 0.0003 1 3 1 1e-09 1 100 1 0 0 0 315 0 225 "" "" "">
+<Rect 964 840 1314 848 31 #c0c0c0 1 11 1 0.0003 1 3 1 1e-09 1 100 1 0 0 0 315 0 225 "" "" "">
 	<Legend 10 -640 1>
 	<"yvalue(ic.Ib, f1)" "" #0000ff 3 3 0 0 0 1 "Corrente (f1)">
 	<"yvalue(ic.Ib, f3)" "" #ff0000 3 3 0 0 0 1 "Corrente (f3)">
 	<"IM1_0/V0*vsource" "" #ff00ff 2 3 0 0 0 1 "Extrapolação corrente (f1)">
-	  <Mkr 0.0731198 263 -540 3 1 0 0 0 50>
+	  <Mkr 0.0731198 266 -690 3 1 0 0 0 50>
 	<"IM3_0/V0^3*vsource^3" "" #00ff00 2 3 0 0 0 1 "Extrapolação corrente (f3)">
-	  <Mkr 0.0731198 263 -490 3 1 0 0 0 50>
+	  <Mkr 0.0731198 266 -640 3 1 0 0 0 50>
 </Rect>
 </Diagrams>
 <Paintings>

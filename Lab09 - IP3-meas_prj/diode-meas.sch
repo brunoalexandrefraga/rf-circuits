@@ -59,6 +59,12 @@ Eqn Eqn3 1 260 480 0 8 0 0 "id1=abs(yvalue(idiode.Ib, f1))=" 1 "id3=abs(yvalue(i
 	<"iip3i" "" #0000ff 0 6 1 0 0 0 "">
 	<"oip3i" "" #0000ff 0 6 1 0 0 0 "">
 </Tab>
+<Tab 828 876 356 66 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+	<"iip3h_dB" "" #0000ff 0 3 1 0 0 0 "">
+	<"oip3h_dB" "" #0000ff 0 3 1 0 0 0 "">
+	<"oip3i_dB" "" #0000ff 0 3 1 0 0 0 "">
+	<"iip3i_dB" "" #0000ff 0 3 1 0 0 0 "">
+</Tab>
 </Diagrams>
 <Paintings>
 </Paintings>
