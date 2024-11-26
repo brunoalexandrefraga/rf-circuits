@@ -701,13 +701,8 @@ $$
   \frac{\left(1+g_mR_E\right)^4}{1-2g_mR_E}=16
 $$
 
-Para facilitar a resolução dessa equação, faz-se $x=g_mR_E$, obtendo, assim,
-
-$$
-  \frac{\left(1+x\right)^4}{1-2x}=16
-$$
-
 ```{python}
+#| echo: false
 from sympy import symbols, Eq, solve
 
 # Definir a variável
@@ -726,19 +721,25 @@ real_positive_solutions = [sol.evalf() for sol in solutions if sol.is_real and s
 if real_positive_solutions:
     x_gmRE = real_positive_solutions[0]
 
-x_gmRE
+RE = x_gmRE/gm
 ```
 
-Dessa forma, é possível calcular o valor de $R_E$ por meio da seguinte equação
-
-$$
-  R_E=\frac{x}{g_m}
-$$
 
 ```{python}
-RE_gm = x_gmRE/gm
-RE_gm
+#| echo: false
+IIP3i_4_bjt_RE_calc = 2 * math.sqrt(2) * VT * (1 + gm * RE)**2 * math.sqrt(abs(1 / (1 - 2 * gm * RE)))
 ```
+
+Resolvendo essa equação, obtém-se a seguinte resistência $R_E=$ `{python} format(RE)`$\Omega$. Aplicando este valor à [Eq. @eq-iip3i-bjt-RE], obtém-se $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_4_bjt_RE_calc, 4)`, conforme o esperado.
+
+
+
+
+
+
+
+
+
 
 
 
