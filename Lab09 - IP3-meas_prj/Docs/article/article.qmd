@@ -192,9 +192,8 @@ em que, $I_D$ é dado pela [Eq. @eq-diode-current]
 $$
 \begin{split}
   a_1&=\frac{dI_D}{dV_D}\bigg|_{V_D=0}\implies\\
-  &=\frac{I_D(0)}{V_T}\implies\\
-  &=\frac{1}{V_T}I_se^{0/V_T}\implies\\
-  &=\frac{I_s}{V_T}
+  &=\frac{I_D}{V_T}\implies\\
+  &=y_D
 \end{split}
 $$ {#eq-def-a1}
 
@@ -203,7 +202,7 @@ continuando,
 $$
 \begin{split}
   2a_2&=\frac{d^2I_D}{dV_D^2}\bigg|_{V_D=0}\implies\\
-  &=\frac{I_s}{V_T^2}
+  &=\frac{y_D}{V_T}
 \end{split}
 $$
 
@@ -212,7 +211,7 @@ e, finalmente,
 $$
 \begin{split}
   6a_3&=\frac{d^3I_D}{dV_D^3}\bigg|_{V_D=0}\implies\\
-  &=\frac{I_s}{V_T^3}
+  &=\frac{y_D}{V_T^2}
 \end{split}
 $$ {#eq-def-a3}
 
@@ -244,8 +243,8 @@ Especificamente para o diodo, a equação do $\text{IIP}_{3h}$ é dada por
 
 $$
 \begin{split}
-  \text{IIP}_{3h}&=2\sqrt{\left|\frac{I_s/V_T}{I_s/\left(6V_T^3\right)}\right|}\implies\\
-  &=2V_T\sqrt{6}
+  \text{IIP}_{3h}&=2\sqrt{\left|\frac{y_D}{y_D/\left(6V_T^2\right)}\right|}\implies\\
+  &=2\sqrt{6}V_T
 \end{split}
 $$ {#eq-iip3h-diode}
 
@@ -292,8 +291,8 @@ Para o diodo, especificamente, obtém-se
 
 $$
 \begin{split}
-  \text{IIP}_{3i}&=\frac{2V_T\sqrt{6}}{\sqrt{3}}\implies\\
-  &=2V_T\sqrt{2}\implies\\
+  \text{IIP}_{3i}&=\frac{2\sqrt{6}V_T}{\sqrt{3}}\implies\\
+  &=2\sqrt{2}V_T\implies\\
 \end{split}
 $$ {#eq-iip3i-diode}
 
@@ -301,13 +300,13 @@ $$ {#eq-iip3i-diode}
 #| echo: false
 import math
 
-a1_diode_0 = Is/VT 
-a2_diode_0 = Is/VT**2/2 
-a3_diode_0 = Is/VT**3/6
+a1_diode = yD
+a2_diode = yD/VT/2
+a3_diode = yD/VT**2/6
 
 g_diode = yD
 
-IIP3h_diode = 2*math.sqrt(abs(a1_diode_0)/abs(a3_diode_0))
+IIP3h_diode = 2*math.sqrt(6)*VT
 OIP3h_diode = IIP3h_diode*g_diode
 IIP3i_diode = IIP3h_diode/math.sqrt(3)
 OIP3i_diode = IIP3i_diode*g_diode
@@ -333,9 +332,6 @@ import matplotlib.pyplot as plt
 
 # Intervalo de Vi
 Vi = np.logspace(np.log10(700e-6), np.log10(2), 10000)
-
-a1_diode = yD
-a3_diode = yD/(6*VT**2)
 
 # Cálculo de Io
 Io1 = a1_diode * Vi
@@ -421,9 +417,8 @@ Conforme as definições, obtém-se
 $$
 \begin{split}
   a_1&=\frac{dI_C}{dV_{BE}}\bigg|_{V_{BE}=0}\implies\\
-  &=\frac{I_C(0)}{V_T}\implies\\
-  &=\frac{1}{V_T}I_se^{0/V_T}\implies\\
-  &=\frac{I_s}{V_T}
+  &=\frac{I_C}{V_T}\implies\\
+  &=g_m
 \end{split}
 $$ {#eq-def-a1-bjt-ideal}
 
@@ -432,7 +427,7 @@ continuando,
 $$
 \begin{split}
   2a_2&=\frac{d^2I_C}{dV_{BE}^2}\bigg|_{V_{BE}=0}\implies\\
-  &=\frac{I_s}{V_T^2}
+  &=\frac{g_m}{V_T}
 \end{split}
 $$
 
@@ -441,7 +436,7 @@ e, finalmente,
 $$
 \begin{split}
   6a_3&=\frac{d^3I_C}{dV_{BE}^3}\bigg|_{V_{BE}=0}\implies\\
-  &=\frac{I_s}{V_T^3}
+  &=\frac{g_m}{V_T^2}
 \end{split}
 $$ {#eq-def-a3-bjt-ideal}
 
@@ -449,8 +444,8 @@ As equações do teste de um tom é a mesma que a apresentada na [Eq. @eq-one-to
 
 $$
 \begin{split}
-  \text{IIP}_{3h}&=2\sqrt{\left|\frac{I_s/V_T}{I_s/\left(6V_T^3\right)}\right|}\implies\\
-  &=2V_T\sqrt{6}
+  \text{IIP}_{3h}&=2\sqrt{\left|\frac{g_m}{g_m/\left(6V_T^2\right)}\right|}\implies\\
+  &=2\sqrt{6}V_T
 \end{split}
 $$ {#eq-iip3h-bjt-ideal}
 
@@ -458,8 +453,8 @@ e, para o $IIP3_i$,
 
 $$
 \begin{split}
-  \text{IIP}_{3i}&=\frac{2V_T\sqrt{6}}{\sqrt{3}}\implies\\
-  &=2V_T\sqrt{2}
+  \text{IIP}_{3i}&=\frac{2\sqrt{6}V_T}{\sqrt{3}}\implies\\
+  &=2\sqrt{2}V_T
 \end{split}
 $$ {#eq-iip3i-bjt-ideal}
 
@@ -472,13 +467,13 @@ import math
 IC = 1e-3
 gm = IC/VT
 
-a1_bjt_ideal_0 = Is/VT
-a2_bjt_ideal_0 = Is/VT**2/2
-a3_bjt_ideal_0 = Is/VT**3/6
+a1_bjt_ideal = gm
+a2_bjt_ideal = gm/VT/2
+a3_bjt_ideal = gm/VT**2/6
 
 g_bjt_ideal = gm
 
-IIP3h_bjt_ideal = 2*math.sqrt(abs(a1_bjt_ideal_0)/abs(a3_bjt_ideal_0))
+IIP3h_bjt_ideal = 2*math.sqrt(6)*VT
 OIP3h_bjt_ideal = IIP3h_bjt_ideal*g_bjt_ideal
 IIP3i_bjt_ideal = IIP3h_bjt_ideal/math.sqrt(3)
 OIP3i_bjt_ideal = IIP3i_bjt_ideal*g_bjt_ideal
@@ -504,9 +499,6 @@ import matplotlib.pyplot as plt
 
 # Intervalo de Vi
 Vi = np.logspace(np.log10(700e-6), np.log10(2), 10000)
-
-a1_bjt_ideal = gm
-a3_bjt_ideal = gm/(6*VT**2)
 
 # Cálculo de Io
 Io1_bjt_ideal = a1_bjt_ideal * Vi
@@ -545,7 +537,7 @@ As curvas e suas extrapolações, obtidas por meio da simulação são apresenta
 
 ## Elevando IIP3
 
-De acordo com o problema proposto, deseja-se quadruplicar o $\text{IIP}_{3i}$ do circuito com o BJT ideal. Dessa forma, o valor desejado é $4\text{IIP}_{3i}=$ `{python} format_simple(4*IIP3i_bjt_ideal, 4)` V. Para isso, será utilizado o conceito de degeneração de emissor. A degeneração de emissor é causada pela inclusão de resistência em série com o terminal do emissor do transistor. Essa degeneração gera *feedback* negativo no amplificador e reduz o $IIP_3$ do circuito (sob a pena de reduzir um pouco o ganho do amplificador). O circuito com o resistor de emissor, $R_E$, incluso, pode ser visualizado na [Fig. @].
+De acordo com o problema proposto, deseja-se quadruplicar o $\text{IIP}_{3i}$ do circuito com o BJT ideal. Dessa forma, o valor desejado é $4\cdot\text{IIP}_{3i}=$ `{python} format_simple(4*IIP3i_bjt_ideal, 4)` V. Para isso, será utilizado o conceito de degeneração de emissor. A degeneração de emissor é causada pela inclusão de resistência em série com o terminal do emissor do transistor. Essa degeneração gera *feedback* negativo no amplificador e eleva o $\text{IIP}_3$ do circuito (sob a pena de reduzir um pouco o ganho do amplificador). O circuito com o resistor de emissor, $R_E$, pode ser visualizado na Fig.\ref{fig:circuit-bjt-RE}.
 
 ```{=latex}
 \begin{figure}[h]
@@ -652,36 +644,101 @@ $$
 Como já foi visto que $a_1=g_m$,
 
 $$
-  a_1^{'}=\frac{g_m}{1+g_mR_E}
+  a_1^{'}=\frac{g_m}{1+R_Eg_m}
 $$ {#eq-def-a1-bjt-RE}
 
-para $a_2^{'}$, com $a_2=g_m/V_T$
+para $a_2^{'}$, com $a_2=g_m/(2V_T)$
 
 $$
 \begin{split}
-  a_2^{'}&=\frac{g_m/V_T}{\left(1+R_Eg_m\right)^3}
+  a_2^{'}&=\frac{g_m/(2V_T)}{\left(1+g_mR_E\right)^3}\implies\\
+  &=\frac{I_s}{2V_T\left(1+g_mR_E\right)^3}\implies\\
 \end{split}
-$$
+$$ {#eq-def-a2-bjt-RE}
 
-e, para $a_3^{'}$, com $a_3=g_m/V_T^2$
+e, para $a_3^{'}$, com $a_3=g_m/(6V_T^2)$
 
 $$
 \begin{split}
-  a_3^{'}&=\frac{g_m/V_T^2}{\left(1+R_Eg_m\right)^4}-\frac{2\left(g_m/V_T\right)^2R_E}{\left(1+R_Eg_m\right)^5}
+  a_3^{'}&=\frac{g_m/(6V_T^2)}{\left(1+g_mR_E\right)^4}-\frac{2\left[g_m/\left(2V_T\right)\right]^2R_E}{\left(1+g_mR_E\right)^5}\implies\\
+  &=\frac{g_m}{6V_T^2\left(1+g_mR_E\right)^4}-\frac{g_m^2R_E}{2V_T^2\left(1+g_mR_E\right)^5}\implies\\
+  &=\frac{g_m\left(1+g_mR_E\right)-3g_m^2R_E}{6V_T^2\left(1+g_mR_E\right)^5}\implies\\
+  &=\frac{g_m\left(1-2g_mR_E\right)}{6V_T^2\left(1+g_mR_E\right)^5}\implies\\
+\end{split}
+$$ {#eq-def-a3-bjt-RE}
+
+Aplicando isso na [Eq. @eq-iip3h-def], obtém-se
+
+$$
+\begin{split}
+  \text{IIP}_{3h}&=2\sqrt{\left|\frac{g_m}{1+g_mR_E}\cdot\frac{6V_T^2\left(1+g_mR_E\right)^5}{g_m\left(1-2g_mR_E\right)}\right|}\implies\\
+  &=2\sqrt{\left|\frac{6V_T^2\left(1+g_mR_E\right)^4}{\left(1-2g_mR_E\right)}\right|}\implies\\
+  &=2\sqrt{6}V_T\left(1+g_mR_E\right)^2\sqrt{\left|\frac{1}{\left(1-2g_mR_E\right)}\right|}\implies\\
+\end{split}
+$$ {#eq-iip3h-bjt-RE}
+
+Assim, obtém-se $\text{IIP}_{3i}$ como
+
+$$
+\begin{split}
+  \text{IIP}_{3i}&=2\sqrt{2}V_T\left(1+g_mR_E\right)^2\sqrt{\left|\frac{1}{\left(1-2g_mR_E\right)}\right|}\implies\\
+\end{split}
+$$ {#eq-iip3i-bjt-RE}
+
+Deseja-se obter o valor de $R_E$ para que quadruplique o $\text{IIP}_{3i}$. Isolando o valor de $R_E$,
+
+$$
+\begin{split}
+  4\cdot\text{IIP}_{3i}&=2\sqrt{2}V_T\left(1+g_mR_E\right)^2\sqrt{\left|\frac{1}{\left(1-2g_mR_E\right)}\right|}\implies\\
+  \frac{4\cdot\text{IIP}_{3i}}{2\sqrt{2}V_T}&=\frac{\left(1+g_mR_E\right)^2}{\sqrt{1-2g_mR_E}}\implies\\
+  \frac{4\cdot\text{IIP}_{3i}}{2\sqrt{2}V_T}&=\frac{\left(1+g_mR_E\right)^4}{1-2g_mR_E}\implies\\
 \end{split}
 $$
 
+Como foi apresentado na equação [Eq. @eq-iip3i-bjt-ideal], pode-se realizar a seguinte simplificação
 
+$$
+  \frac{\left(1+g_mR_E\right)^4}{1-2g_mR_E}=16
+$$
 
+Para facilitar a resolução dessa equação, faz-se $x=g_mR_E$, obtendo, assim,
 
+$$
+  \frac{\left(1+x\right)^4}{1-2x}=16
+$$
 
+```{python}
+from sympy import symbols, Eq, solve
 
+# Definir a variável
+x = symbols('x')
 
+# Definir a equação
+equation = Eq(((1 + x)**4) / (1 - 2*x), 16)
 
+# Resolver a equação
+solutions = solve(equation, x)
 
+# Filtrar apenas as soluções reais e positivas
+real_positive_solutions = [sol.evalf() for sol in solutions if sol.is_real and sol > 0]
 
+# Exibir apenas a primeira solução real e positiva
+if real_positive_solutions:
+    x_gmRE = real_positive_solutions[0]
 
+x_gmRE
+```
 
+Dessa forma, é possível calcular o valor de $R_E$ por meio da seguinte equação
+
+$$
+  R_E=\frac{x}{g_m}
+$$
+
+```{python}
+RE_gm = x_gmRE/gm
+RE_gm
+```
 
 
 

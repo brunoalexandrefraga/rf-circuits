@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-120,-7,1863,1112,0.715977,213,120
+View=-120,-18,1863,1005,0.715977,207,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -24,12 +24,12 @@ GND * 1 170 470 0 0 0 0
 GND * 1 470 470 0 0 0 0
 GND * 1 600 470 0 0 0 0
 GND * 1 710 470 0 0 0 0
-Eqn Eqn4 1 160 580 0 8 0 0 "ic1=abs(yvalue(ic.Ib, f1))=" 1 "ic3=abs(yvalue(ic.Ib, f3))=" 1 "ic1_dB=dB(ic1)=" 1 "ic3_dB=dB(ic3)=" 1 "delta=(ic1_dB-ic3_dB)/2=" 1 "oip3i_dB=ic1_dB+delta=" 1 "oip3i=10^(oip3i_dB/20)=" 1 "vbe=abs(yvalue(vb.Vb, f1)-yvalue(ve.Vb, f1))=" 1 "g=ic1/vbe=" 1 "g_dB=dB(g)=" 1 "iip3i_dB=oip3i_dB-g_dB=" 1 "iip3i=10^(iip3i_dB/20)=" 1 "iip3h=iip3i*sqrt(3)=" 1 "iip3h_dB=dB(iip3h)=" 1 "oip3h_dB=iip3h_dB+g_dB=" 1 "oip3h=10^(oip3h_dB/20)=" 1 "yes" 0
 Idc I2 1 470 410 -69 -26 0 2 "iee" 1 "SIL-2" 0
 R R1 1 470 260 15 -26 0 1 "RE" 1 "26.85" 0 "US" 0 "SMD0603" 0
 .HB HB1 1 690 550 0 63 0 0 "6@;6@f1;6@f2;" 0 "no" 0 "1 GHz" 0 "lin" 0 "1 kHz" 0 "10 kHz" 0 "10" 0 "0.001" 0 "1 µA" 0 "500" 0
 DCBlock C2 1 600 410 21 -26 0 1 "1 µF" 0
-Eqn Eqn1 1 510 580 0 8 0 0 "Vcc=5 V=" 1 "Vb=1.8 V=" 1 "f1=1 kHz=" 1 "deltaf=100 Hz=" 1 "f2=f1 + deltaf=" 1 "f3=2*f1-f2=" 1 "f4=2*f2-f1=" 1 "pavs=10 nW=" 1 "rs=50=" 1 "vsource=sqrt(8*pavs*rs)=" 1 "iee=1 mA=" 1 "RE=5 Ω=" 1 "yes" 0
+Eqn Eqn1 1 510 580 0 8 0 0 "Vcc=5 V=" 1 "Vb=1.8 V=" 1 "f1=1 kHz=" 1 "deltaf=100 Hz=" 1 "f2=f1 + deltaf=" 1 "f3=2*f1-f2=" 1 "f4=2*f2-f1=" 1 "pavs=10 nW=" 1 "rs=50=" 1 "vsource=sqrt(8*pavs*rs)=" 1 "iee=1 mA=" 1 "RE=9.953270298110148 Ω=" 1 "yes" 0
+Eqn Eqn4 1 160 580 0 8 0 0 "ic1=abs(yvalue(ic.Ib, f1))=" 1 "ic3=abs(yvalue(ic.Ib, f3))=" 1 "ic1_dB=dB(ic1)=" 1 "ic3_dB=dB(ic3)=" 1 "delta=(ic1_dB-ic3_dB)/2=" 1 "oip3i_dB=ic1_dB+delta=" 1 "oip3i=10^(oip3i_dB/20)=" 1 "vbe=abs(yvalue(vb.Vb, f1)-yvalue(ve.Vb, f1))=" 1 "gm=ic1/vbe=" 1 "g=gm/(1+gm*RE)=" 1 "g_dB=dB(g)=" 1 "iip3i_dB=oip3i_dB-g_dB=" 1 "iip3i=10^(iip3i_dB/20)=" 1 "iip3h=iip3i*sqrt(3)=" 1 "iip3h_dB=dB(iip3h)=" 1 "oip3h_dB=iip3h_dB+g_dB=" 1 "oip3h=10^(oip3h_dB/20)=" 1 "yes" 0
 </Components>
 <Wires>
 170 170 440 170 "" 0 0 0 ""
