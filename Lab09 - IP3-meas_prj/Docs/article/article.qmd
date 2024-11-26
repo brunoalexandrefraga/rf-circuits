@@ -652,7 +652,7 @@ para $a_2^{'}$, com $a_2=g_m/(2V_T)$
 $$
 \begin{split}
   a_2^{'}&=\frac{g_m/(2V_T)}{\left(1+g_mR_E\right)^3}\implies\\
-  &=\frac{I_s}{2V_T\left(1+g_mR_E\right)^3}\implies\\
+  &=\frac{g_m}{2V_T\left(1+g_mR_E\right)^3}\implies\\
 \end{split}
 $$ {#eq-def-a2-bjt-RE}
 
@@ -732,7 +732,45 @@ IIP3i_4_bjt_RE_calc = 2 * math.sqrt(2) * VT * (1 + gm * RE)**2 * math.sqrt(abs(1
 
 Resolvendo essa equação, obtém-se a seguinte resistência $R_E=$ `{python} format(RE)`$\Omega$. Aplicando este valor à [Eq. @eq-iip3i-bjt-RE], obtém-se $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_4_bjt_RE_calc, 4)`, conforme o esperado.
 
+::: {#fig-graph-intersec-bjt-RE}
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
 
+
+a1_bjt_RE = gm/(1+gm*RE)
+a2_bjt_RE = gm/(2*VT*(1+gm*RE)**3)
+a3_bjt_RE = gm*(1-2*gm*RE)/(6*VT**2*(1+gm*RE)**5)
+
+
+# Intervalo de Vi
+Vi = np.logspace(np.log10(700e-6), np.log10(2), 10000)
+
+# Cálculo de Io
+Io1_bjt_RE = a1_bjt_RE * Vi
+Io3_bjt_RE = 3/4 * a3_bjt_RE * Vi**3
+
+# Determinando o ponto de interceptação
+idx_intercept_bjt_RE = np.argmin(np.abs(Io1_bjt_RE - Io3_bjt_RE))  # Índice do ponto mais próximo
+Vi_IP3_bjt_RE = Vi[idx_intercept_bjt_RE]  # Valor de Vi no ponto de interceptação
+I_IP3_bjt_RE = Io3_bjt_RE[idx_intercept_bjt_RE]  # Valor de Io no ponto de interceptação
+
+# Plot log-log
+plt.figure(figsize=(8, 6))
+plt.loglog(Vi, Io1_bjt_RE, linestyle="-", color="blue", label=r"$I_{o1}$")
+plt.loglog(Vi, Io3_bjt_RE, linestyle="-", color="green", label=r"$I_{o3}$")
+plt.axhline(I_IP3_bjt_RE, color="red", linestyle=":", label=f"$OIP3 = {I_IP3_bjt_RE:.5e}$ A")
+plt.axvline(Vi_IP3_bjt_RE, color="purple", linestyle=":", label=f"$IIP3 = {Vi_IP3_bjt_RE:.5e}$ V")
+plt.xlabel(r"$V_i$", fontsize=12)
+plt.ylabel(r"$I_o$", fontsize=12)
+plt.title(r"Gráfico $IP_{3i}$", fontsize=14)
+plt.grid(which="both", linestyle="--", linewidth=0.5)
+plt.legend(fontsize=10)
+plt.tight_layout()
+plt.show()
+```
+:::
 
 
 
