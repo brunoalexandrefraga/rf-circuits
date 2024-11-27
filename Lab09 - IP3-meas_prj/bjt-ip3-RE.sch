@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-312,-94,2225,975,0.620514,0,0
+View=-127,-214,2490,975,0.52505,89,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -56,7 +56,7 @@ Eqn Eqn1 1 80 470 0 8 0 0 "Vcc=5 V=" 1 "f1=1 kHz=" 1 "deltaf=100 Hz=" 1 "f2=f1 +
 	<"yvalue(ic.Ib, f1)" "" #0000ff 3 3 0 0 0 1 "Corrente (f1)">
 	<"yvalue(ic.Ib, f3)" "" #ff0000 3 3 0 0 0 1 "Corrente (f3)">
 	<"IM1_0/V0*vsource" "" #ff00ff 2 3 0 0 0 1 "Extrapolação corrente (f1)">
-	  <Mkr 0.292877 266 -690 6 1 0 0 0 50>
+	  <Mkr 0.292877 276 -700 6 1 0 0 0 50>
 	<"IM3_0/V0^3*vsource^3" "" #00ff00 2 3 0 0 0 1 "Extrapolação corrente (f3)">
 	  <Mkr 0.292877 276 -750 6 1 0 0 0 50>
 </Rect>

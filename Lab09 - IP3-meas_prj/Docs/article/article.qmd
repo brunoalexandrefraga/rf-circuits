@@ -532,9 +532,9 @@ De forma similar como foi feito para o diodo, pode-se perceber que os resultados
 
 ![Resultados IP3 para o BJT ideal](../figures/Results-IP3-bjt-ideal.png){width=300, #fig-results-IP3-bjt-ideal}
 
-As curvas e suas extrapolações, obtidas por meio da simulação são apresentadas na [Fig. @fig-IP3-diode-meas].
+As curvas e suas extrapolações, obtidas por meio da simulação são apresentadas na [Fig. @fig-IP3-bjt-ideal-meas].
 
-![Resultados IP3 para o BJT ideal](../figures/IP3-diode-meas.png){width=300, #fig-IP3-diode-meas}
+![Resultados IP3 para o BJT ideal](../figures/IP3-bjt-ideal-meas.png){width=300, #fig-IP3-bjt-ideal-meas}
 
 ## Elevando IIP3
 
@@ -731,7 +731,7 @@ RE = x_gmRE/gm
 IIP3i_4_bjt_RE_calc = 2 * math.sqrt(2) * VT * (1 + gm * RE)**2 * math.sqrt(abs(1 / (1 - 2 * gm * RE)))
 ```
 
-Resolvendo essa equação, obtém-se a seguinte resistência $R_E=$ `{python} format(RE)`$\Omega$. Aplicando este valor à [Eq. @eq-iip3i-bjt-RE], obtém-se $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_4_bjt_RE_calc, 4)`, conforme o esperado.
+Resolvendo essa equação, obtém-se a seguinte resistência $R_E=$ `{python} format(RE)`$\Omega$. Aplicando este valor à [Eq. @eq-iip3i-bjt-RE], obtém-se $\text{IIP}_{3i}=$ `{python} format_simple(IIP3i_4_bjt_RE_calc, 4)`, conforme o esperado. A [Fig. @fig-graph-intersec-bjt-RE] apresenta o gráfico que da intersecção das retas.
 
 ::: {#fig-graph-intersec-bjt-RE}
 ```{python}
@@ -772,6 +772,16 @@ plt.tight_layout()
 plt.show()
 ```
 :::
+
+## Validação por simulação
+
+A [Fig. @fig-results-IP3-bjt-RE] apresenta os resultados, mostrando que o resistor $R_E$ calculado, fornece o aumento desejado do $\text{IIP}_{3i}$.
+
+![Resultados IP3 para o BJT com RE](../figures/Results-IP3-bjt-RE.png){width=300, #fig-results-IP3-bjt-RE}
+
+As curvas e suas extrapolações, obtidas por meio da simulação são apresentadas na [Fig. @fig-IP3-bjt-RE-meas].
+
+![Resultados IP3 para o BJT com RE](../figures/IP3-bjt-RE-meas.png){width=300, #fig-IP3-bjt-RE-meas}
 
 
 
