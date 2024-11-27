@@ -392,8 +392,9 @@ Esta seção trata da medição do IP3 do transistor BJT (npn) ideal. O circuito
     \draw (1.98, -0.5) node[npn](nmos1){};
     \draw (nmos1.C) to[short] ++(0, 0.23) to[short, i^<=$I_C$] ++(3.52, 0) to[battery1, l=$V_{cc}$] ++(0, -4) node[ground]{} ;
     \draw (nmos1.E) to[isource, l=$I_{ee}$] (2, -3.5) node[ground]{} ;
-    \draw (-0.5, -3.5) node[ground]{} to[sV, l=$V_{s2}$] ++(0, 1.5) to[sV, l=$V_{s1}$] ++(0, 1.5) to[battery1, l=$V_B$, invert] (nmos1.B) ;
-    \draw (2, -1.5) to[short] ++(2, 0) to[C, l=$C$] ++(0, -2) node[ground]{} ;
+    \draw (nmos1.B) to[short] ++(-1.65, 0) coordinate(point1) ;
+    \draw (-0.5, -3.5) node[ground]{} to[sV, l=$V_{s2}$] ++(0, 1.5) to[sV, l=$V_{s1}$] (point1) ;
+    \draw (1.99, -1.5) to[short] ++(2, 0) to[C, l=$C$] ++(0, -2) node[ground]{} ;
   \end{circuitikz}
   \caption{Circuito com o BJT}
   \label{fig:circuit-bjt-original}
@@ -545,7 +546,7 @@ De acordo com o problema proposto, deseja-se quadruplicar o $\text{IIP}_{3i}$ do
   \begin{circuitikz}[american]
     \draw (1.98, -0.5) node[npn](nmos1){};
     \draw (nmos1.C) to[short] ++(0, 0.23) to[short, i^<=$I_C$] ++(3.52, 0) to[battery1, l=$V_{cc}$] ++(0, -5) node[ground]{} ;
-    \draw (-0.5, -4.5) node[ground]{} to[sV, l=$V_{s2}$] ++(0, 1.5) to[sV, l=$V_{s1}$] ++(0, 2.5) to[battery1, l=$V_B$, invert] (nmos1.B) ;
+    \draw (-0.5, -4.5) node[ground]{} to[sV, l=$V_{s2}$] ++(0, 1.5) to[sV, l=$V_{s1}$] ++(0, 2.5) to[short] (nmos1.B) ;
     \draw (2, -3) coordinate(point1) to[isource, l=$I_{ee}$] ++(0, -1.5) node[ground]{} ;
     \draw (point1) to[short] ++(2, 0) to[C, l=$C$] ++(0, -1.5) node[ground]{} ;
     \draw (point1) to[R, l=$R_E$] (nmos1.E) ;

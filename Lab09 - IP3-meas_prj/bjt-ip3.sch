@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-324,-88,2625,1159,0.669397,586,0
+View=60,-88,2305,1159,0.669397,60,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -15,7 +15,6 @@ FrameText3=Revision:
 </Symbol>
 <Components>
 Idc I2 1 450 330 -69 -26 0 2 "iee" 1 "SIL-2" 0
-Vdc V4 1 150 220 22 -19 0 0 "1.8 V" 1 "battery" 0 "SIL-2" 0
 Vac V5 1 150 280 18 -26 0 0 "vsource" 1 "f1" 1 "0" 0 "0" 0 "SUBCLICK" 0
 Vac V6 1 150 340 18 -26 0 0 "vsource" 1 "f2" 1 "0" 0 "0" 0 "SUBCLICK" 0
 GND * 1 150 370 0 0 0 0
@@ -44,7 +43,7 @@ Eqn Eqn2 1 160 720 0 8 0 0 "IM1_0=yvalue(yvalue(ic.Ib, f1),0)=" 1 "IM3_0=yvalue(
 450 270 500 270 "" 0 0 0 ""
 450 100 580 100 "" 0 0 0 ""
 450 100 450 160 "" 0 0 0 ""
-150 250 150 250 "vs" 80 240 0 ""
+150 190 150 250 "" 0 0 0 ""
 420 190 420 190 "vb" 380 130 0 ""
 450 270 450 270 "ve" 400 250 0 ""
 450 100 450 100 "vc" 450 50 0 ""
