@@ -783,7 +783,7 @@ As curvas e suas extrapolações, obtidas por meio da simulação são apresenta
 
 ![Resultados IP3 para o BJT com RE](../figures/IP3-bjt-RE-meas.png){width=300, #fig-IP3-bjt-RE-meas}
 
-
+# Circuito com BFP720
 
 
 
