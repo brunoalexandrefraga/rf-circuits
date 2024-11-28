@@ -42,11 +42,12 @@ format:
 ---
 
 
-```{=latex}
 
-\section{Adaptação de impedância de entrada do amplificador}
+# Adaptação de impedância de entrada do amplificador
 
 O amplificador utilizado nesta atividade é o que foi projetado no laboratório 04. O amplificador em questão fornece um ganho de 21 dB, com uma corrente de emissor de aproximadamente 5 mA. Conforme é apresentado pela Fig.~\ref{fig:complete-amplifier-dc-characterization}.
+
+```{=latex}
 
 \begin{figure}
     \centering

@@ -785,7 +785,7 @@ As curvas e suas extrapolações, obtidas por meio da simulação são apresenta
 
 # Circuito com BFP720
 
-
+Nesta etapa será realizada a análise do ponto de interceptação de terceira ordem para distorções causadas pelos produtos de intermodulação para o prática do 
 
 
 
