@@ -186,7 +186,7 @@ def imprimir_numero_complexo(real, imaginario, casas_decimais):
 
 ```
 
-Já se sabe que a impedância da fonte é a principal responsável pela minimização de ruído no circuito. Assim, deseja-se adaptar a impedância da fonte para que o amplificador seja submetido a uma fonte com impedância ótima. Para obter o valor da impedância ótima, a simulação de parâmetros de espalhamento do QucsStudio fornece uma propriedade chamada $S_\text{opt}$ que se trata do coeficiente de reflexão da fonte ótimo normalizado para a impedância do porto de entrada e por meio da função `rtoz`, converte o coeficiente de reflexão com impedância de referência para uma determinada impedância, por padrão, 50 $\Omega$. Fazendo utilização das ferramentas fornecidas, chega-se à uma figura de ruído mínima de 0.516 dB a uma determinada impedância ótima da fonte. Dessa forma, deseja-se adaptar a impedância da fonte $Z_s=$ `{python} imprimir_numero_complexo(z_source_r, z_source_i, 0)` $\Omega$ para $Z_{opt}=$ `{python} imprimir_numero_complexo(zopt_NF_min_r, zopt_NF_min_i, 2)` $\Omega$, conforme pode ser visualizado na [Fig. @fig-complete-amplifier-dc-characterization]. A primeira parte dessa adaptação da parte real da impedância. Essa adaptação é realizada de modo que $R_s=$ `{python} imprimir_numero_complexo(z_source_r, 0, 0)` $\Omega$ e $R_L=$ `{python} imprimir_numero_complexo(zopt_NF_min_r, 0, 0)` $\Omega$. Como $R_L>R_s$, então a topologia escolhida será série-paralelo, com o capacitor em série para permitir a passagem de sinais de alta frequência. Assim, o fator de qualidade é calculado como
+Já se sabe que a impedância da fonte é a principal responsável pela minimização de ruído no circuito. Assim, deseja-se adaptar a impedância da fonte para que o amplificador seja submetido a uma fonte com impedância ótima. Para obter o valor da impedância ótima, a simulação de parâmetros de espalhamento do QucsStudio fornece uma propriedade chamada $S_\text{opt}$ que se trata do coeficiente de reflexão da fonte ótimo normalizado para a impedância do porto de entrada e por meio da função `rtoz`, converte o coeficiente de reflexão com impedância de referência para uma determinada impedância, por padrão, 50 $\Omega$. Fazendo utilização das ferramentas fornecidas, chega-se à uma figura de ruído mínima de 0.516 dB a uma determinada impedância ótima da fonte. Dessa forma, deseja-se adaptar a impedância da fonte $Z_s=$ `{python} imprimir_numero_complexo(z_source_r, z_source_i, 0)` $\Omega$ para $Z_{opt}=$ `{python} imprimir_numero_complexo(zopt_NF_min_r, zopt_NF_min_i, 2)` $\Omega$, conforme pode ser visualizado na [Fig. @fig-complete-amplifier-dc-characterization]. A primeira parte dessa adaptação da parte real da impedância. Essa adaptação é realizada de modo que $R_s=$ `{python} imprimir_numero_complexo(z_source_r, 0, 0)` $\Omega$ e $R_L=$ `{python} imprimir_numero_complexo(zopt_NF_min_r, 0, 2)` $\Omega$. Como $R_L>R_s$, então a topologia escolhida será série-paralelo, com o capacitor em série para permitir a passagem de sinais de alta frequência. Assim, o fator de qualidade é calculado como
 
 $$
 \begin{split}
@@ -218,7 +218,6 @@ Xs_NF_min = abs(Qs_NF_min * z_source_r)
 Xp_NF_min = abs(zopt_NF_min_r / Qs_NF_min)
 C_NF_min = 1/(omega*Xs_NF_min)
 L_NF_min = Xp_NF_min/omega
-
 ```
 
 ```{python}
