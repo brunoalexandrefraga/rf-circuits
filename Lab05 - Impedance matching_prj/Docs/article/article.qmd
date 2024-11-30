@@ -283,6 +283,29 @@ def format_simple(value, decimals=2):
 
 Resultando em $Q_s=$ `{python} format_simple(Qs_NF_min)`. Com isso, obtém-se $X_s=$ `{python} format_simple(Xs_NF_min)` $\Omega$ e $X_p=$ `{python} format_simple(Xp_NF_min)` $\Omega$. Dessa forma, o capacitor em série é dado por $C=\left(\omega X_s\right)^{-1}$ resultando em $C=$ `{python} format(C_NF_min)`F e o indutor em paralelo é dado por $L=X_p/\omega$ resultando em $L=$ `{python} format(L_NF_min)`H o resultado obtido podem ser visualizados na [Fig. @fig-result-part1].
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ![Resultado do LNA](../images/result-part1.png){width=300, #fig-result-part1}
 
 Como pode ser verificado a figura mínima de ruído foi corretamente atingida e a impedância ótima que é apresentada pelo QucsStudio é muito próxima ao valor real da impedância da fonte.
