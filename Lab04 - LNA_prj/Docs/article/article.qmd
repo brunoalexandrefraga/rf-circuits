@@ -281,15 +281,18 @@ Para realizar esse teste de ganho, o transistor BFP720 foi polarizado de forma a
 ```{python}
 #| echo: false
 T0=273.15
-ie_13dB = 5e-3
+ie_factor = 2.45
+ie_theory = 4.145671457e-5
+ie_13dB = ie_factor*ie_theory
+
 Vcc=3.3
 ```
 
-Dessa forma, acopla-se esse amplificador emissor-comum ao *testbench* apresentado. Variando-se a corrente de emissor $I_E$ de 10 $\mu\text{A}$ a 200 $\mu\text{A}$, obtém-se a curva apresentada na [Fig. @fig-testbench-gain-result], além do valor de corrente de `{python} format(ie_13dB)`A.
+Dessa forma, acopla-se esse amplificador emissor-comum ao *testbench* apresentado. Variando-se a corrente de emissor $I_E$ de 10 $\mu\text{A}$ a 200 $\mu\text{A}$, obtém-se a curva apresentada na [Fig. @fig-testbench-gain-result], além do valor de corrente de `{python} format(ie_theory)`A.
 
 ![Resultados do ganho](../images/testbench-gain-result.png){width=300, #fig-testbench-gain-result}
 
-A seguir, é apresentado o raciocínio utilizado para polarizar o amplificador com a corrente determinada anteriormente. A Fig.\ref{fig:generig-ampl} apresenta o circuito padrão para o projeto de um amplificador emissor comum.
+Entretanto, após polarizar o circuito buscando obter o valor de corrente acima citado, o amplificador não fornece o ganho designado pelo problema. Dessa forma, os cálculos apresentados consedararão tal corrente multiplicada por um fator de `{python} ie_factor`. Esse fator foi obtido empiricamente por meio de várias tentativas de polarização. Portanto, agora será é apresentado o raciocínio utilizado para polarizar o amplificador com a corrente `{python} format(ie_13dB)`A no emissor (corrente que gera `{python} wish_gain` dB de ganho no amplificador). A Fig.\ref{fig:generig-ampl} apresenta o circuito padrão para o projeto de um amplificador emissor comum.
 
 ```{=latex}
 \begin{figure}[h]
@@ -399,7 +402,7 @@ def format_e_notation(value, decimals=2):
 #| echo: false
 import math
 
-Is = 1e-15
+Is = 7.621e-016
 Vbe = math.log(IC/Is)*VT
 ```
 
@@ -435,7 +438,19 @@ $$
     \frac{R_{B2}}{R_{B1}+R_{B2}}=\frac{1}{3}
 $$
 
-Dessa forma, $R_{B1}=$ `{python} format(RB1)`$\Omega$ e $R_{B2}=$ `{python} format(RB2)`$\Omega$. E finalmente, é possível calcular a resistência do coletor,
+Dessa forma, $R_{B1}=$ `{python} format(RB1)`$\Omega$ e $R_{B2}=$ `{python} format(RB2)`$\Omega$. Antes de finalizar com o resistor de coletor, calcula-se, novamente a corrente de emissor utilizando a equação abaixo
+
+$$
+    I_E=\frac{V_B-V_{BE}}{R_E-R_B/(\beta+1)}
+$$
+
+```{python}
+#| echo: false
+IE = (VB - Vbe)/(RE-RB/(beta_min+1))
+IC_new = alpha_min * IE
+```
+
+Resultando em $I_E=$ `{python} format(IE)`A. Apesar de essa corrente não ser a corrente desejada, nem a corrente que será obtida após o processo de polarização, esse valor é necessário para calcular o resistor do coletor, como é apresentado a seguir
 
 $$
     R_C=\frac{3}{2}\frac{V_{CC}}{I_C}
@@ -443,10 +458,16 @@ $$
 
 ```{python}
 #| echo: false
-RC = (3/2)*(Vcc/IC)
+RC = (3/2)*(Vcc/IC_new)
 ```
 
-resultando em $R_C=$ `{python} format(RC)`$\Omega$.
+resultando em $R_C=$ `{python} format(RC)`$\Omega$. Os valores obtidos nesta seção são apresentados na [Fig. @fig-biased-circuit-initial], com uma atenção especial a corrente de emissor obtida. Com essa corrente, é possível obter um ganho de potência de `{python} wish_gain` dB.
+
+![Amplificador devidamente polarizado](../images/biased-circuit.png){width=300, #fig-biased-circuit}
+
+Utilizando o *testbench* já apresentado, obtém-se os resultados que podem ser visualizados na [Fig. @fig-testbench-biased-amplifier-results].
+
+![Resultados do amplificador polarizado](../images/testbench-biased-amplifier-results.png){width=300, #fig-testbench-biased-amplifier-results}
 
 
 
@@ -459,21 +480,6 @@ resultando em $R_C=$ `{python} format(RC)`$\Omega$.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-$$
-    I_E=\frac{V_B-V_{BE}}{R_E-R_B/(\beta+1)}
-$$
 
 
 
