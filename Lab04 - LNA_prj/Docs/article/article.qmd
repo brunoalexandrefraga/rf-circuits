@@ -484,23 +484,13 @@ Utilizando o *testbench* já apresentado, obtém-se os resultados que podem ser 
 
 
 
-Como o valor de $I_E$ não é adequado ao projeto, ajusta-se o valor de $R_E$ para $55\;\Omega$. O circuito corretamente polarizado é apresentado na [Fig. @fig-biased-circuit].
 
-![Circuito devidamente polarizado](../images/biased-circuit.png){width=300, #fig-biased-circuit}
 
-Ao simular esse circuito utilizando a simulação de parâmetros S, pode-se obter o ganho do circuito, bem como as figuras de ruído mínima e atual. Os resultados obtidos nessa primeira simulação são apresentados na [Fig. @fig-results-ampl].
+Ao simular esse circuito utilizando a simulação de parâmetros S, pode-se obter as figuras de ruído mínima e atual. Os resultados obtidos nessa primeira simulação são apresentados na [Fig. @fig-results-ampl].
 
 ![Resultados preliminares do amplificador](../images/results-ampl.png){width=300, #fig-results-ampl}
 
- Nessa primeira análise, pode-se perceber que a figura de ruído mínima ainda não foi atendida. Entretanto, o ganho obtido é de 21,4 dB, atendendo ao critério estabelecido pelo problema.
-
-Como já foi estudado anteriormente, a figura do ruído de um amplificador está intimamente ligada à impedância de entrada da fonte. Dessa forma, para minimizar essa figura de ruído, pode-se buscar um valor ótimo para a resistência da fonte. A curva que apresenta a figura de ruído pela resistência da fonte pode ser visualizada na [Fig. @fig-opt-load-source].
-
-![Curva da figura de ruído pela impedância da fonte](../images/opt-load-source.png){width=300, #fig-opt-load-source}
-
-Assim, temos um valor quase-ótimo para a resistência da fonte. Aplicando esse valor ao circuito do amplificador, obtém-se os resultados apresentados na [Fig. @fig-result-final].
-
-![Resultados finais](../images/result-final.png){width=300, #fig-result-final}
+ Nessa primeira análise, pode-se perceber que a figura de ruído mínima ainda não foi atendida. Para que essa figura de ruído mínima seja obtida, é necessário que a impedância ótima seja utilizada como impedância de fonte.
 
 # Perdas por inserção e reflexão
 
@@ -527,8 +517,3 @@ Sendo bem sucinto na minha resposta, com essa atividade eu aprendi a calcular ma
 Acredito que foi bem proveitoso e eu tive um bom resultado com este desenvolvimento. Entretanto, é importante pontuar algumas coisas que ficaram pendentes. A primeira, é analisar como reduzir a figura de ruído adequadamente. Não tenho certeza se o que eu fiz é adequado e se é o único método de se obter a figura de ruído mínima. Como a figura de ruído mínima é calculada analisando a variação da figura de ruído pela resistência de fonte, parece que essa reposta é positiva, mas sem certeza. Além disso, acho que, apesar do grande trabalho, seria bem legal obter essas equações analiticamente, não só deixar a cargo da simulação resolver tudo. Em relação à última parte da atividade, acredito que seja extremamente importante o aprofundamento nos conceitos de perda por inserção, reflexão e o que foi citado como o efeito mais geral da perda por inserção, ou seja, a perda por substituição. E o mais importante de tudo, acredito que é muito necessário entender porque a figura de ruído ficou tão elevada, em referência ao que foi apresentado pelo *datasheet*. Faz sentido deixar bem claro que a figura de ruído mínima obtida é mais do que o dobro do que foi apresentado pelo *datasheet* e, entender se é possível aproximar ainda mais o valor da figura de ruído mínimo ao que foi obtido. Essa consideração faz sentido, uma vez que a figura de ruído mínima não foi plenamente atendida, a que foi apresentada pelo Qucs é de 0,815 e o obtido foi 0,819.
 
 Ademais, a atividade foi extremamente enriquecedora e os pontos citados não foram resolvidos devido ao tempo que disponho para estudar os diversos fenômenos dos circuitos RF.
-
-
-
-
-```
