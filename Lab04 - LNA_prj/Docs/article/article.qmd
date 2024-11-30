@@ -41,103 +41,96 @@ format:
       cite-style: number
 ---
 
-```{=latex}
+# Introdução
 
-\section{Introdução}
-
-Segundo \cite{steer2019microwavev3}, a forma mais viável de se determinar os parâmetros de espalhamento é por meio das (raízes de) ondas de potência \cite{steer2019microwavev3}.
+Segundo @steer2019microwavev3, a forma mais viável de se determinar os parâmetros de espalhamento é por meio das (raízes de) ondas de potência.
 
 O cálculo da razão entre as ondas refletida e incidente (tensão) na porta de entrada quando a reflexão da carga é zero, $S_{11}$, é dado por
 
-\[
+
+$$
     S_{11}=\frac{b_1}{a_1}\bigg|_{a_2=0}
-\]
+$$
 
 A razão da onda refletida na porta de entrada para a onda incidente na porta de saída quando a porta de entrada está casada (isolamento reverso), $S_{12}$ é 
 
-\[
+$$
     S_{12}=\frac{b_1}{a_2}\bigg|_{a_1=0}
-\]
+$$
 
 A razão É a razão entre as ondas refletida e incidente na saída quando a reflexão da resistência de fonte é zero, $S_{22}$.
 
-\[
+$$
     S_{22}=\frac{b_2}{a_2}\bigg|_{a_1=0}
-\]
+$$
 
-E, finalmente, a razão da onda incidente na carga para a onda que vai para a entrada quando a reflexão da carga é zero, $S_{21}$ \cite{razavi2011rf}.
+E, finalmente, a razão da onda incidente na carga para a onda que vai para a entrada quando a reflexão da carga é zero, $S_{21}$ @razavi2011rf.
 
-\[
+$$
     S_{21}=\frac{b_2}{a_1}\bigg|_{a_2=0}
-\]
+$$
 
 Em que as ondas de potência são calculadas por
 
-\[
-    \begin{split}
-        a=\frac{V+Z_0I}{2\sqrt{\mathbb{R}\{Z_0\}}}
-    \end{split}
-\]
+$$
+\begin{split}
+    a=\frac{V+Z_0I}{2\sqrt{\mathbb{R}\{Z_0\}}}
+\end{split}
+$$
 
 e
 
-\[
-    \begin{split}
-        b=\frac{V-Z_0^*I}{2\sqrt{\mathbb{R}\{Z_0\}}}
-    \end{split}
-\]
+$$
+\begin{split}
+    b=\frac{V-Z_0^*I}{2\sqrt{\mathbb{R}\{Z_0\}}}
+\end{split}
+$$
 
 
-\section{Circuito resistivo}
+# Circuito resistivo
 
-Para o circuito em questão, é necessário modelar seus parâmetros para atender aos requisitos de \(R_0=50\;\Omega\), \(S_{11}=S_{22}<-50\;\text{dB}\) e \(S_{12}=S_{21}=-10\;\text{dB}\).
+Para o circuito em questão, é necessário modelar seus parâmetros para atender aos requisitos de $R_0=50\;\Omega$, $S_{11}=S_{22}<-50\;\text{dB}$ e $S_{12}=S_{21}=-10\;\text{dB}$.
 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{../images/resistive-original-two-port.png}
-    \caption{Circuito resistivo no formato de duas portas}
-    \label{fig:resistive-original-two-port}
-\end{figure}
-
-Calcula-se, inicialmente, o parâmetro $S_{11}$. Como \(a_2=0\) e \(Z_0=R_0\), \(V_2=-I_2R_0\).
+![Circuito resistivo no formato de duas portas](../images/resistive-original-two-port.png){width=300, #fig-resistive-original-two-port}
 
 
-\[
+Calcula-se, inicialmente, o parâmetro $S_{11}$. Como $a_2=0$ e $Z_0=R_0$, $V_2=-I_2R_0$.
+
+$$
     I_1=I_2+I_B
-\]
+$$
 
 Também tem-se que
 
-\[
+$$
     V_1=V_{s1}-I_1R_0
-\]
+$$
 
 E
 
-\[
+$$
     I_1=\frac{V_1-V_B}{R_A}=\frac{V_{s1}-V_B}{R_A+R_0}
-\]
+$$
 
 É possível obter $V_B$, como
 
-\[
+$$
     V_B=\frac{V_{s1}R_B}{R_0+2R_B+R_A}
-\]
+$$
 
 Consequentemente, a corrente $I_1$ torna-se
 
-\[
+$$
 \begin{split}
     I_1&=\frac{V_{s1}}{R_A+R_0}-\frac{V_{s1}R_B}{(R_A+R_0)(R_0+2R_B+R_A)}\implies\\
     &=\frac{V_{s1}(R_0+2R_B+R_A)-V_{s1}R_B}{(R_A+R_0)(R_0+2R_B+R_A)}\implies\\
     &=V_{s1}\frac{R_0+R_B+R_A}{(R_A+R_0)(R_0+2R_B+R_A)}\implies\\
 \end{split}
-\]
+$$
 
 Dessa forma, o parâmetro de reflexão na entrada é dado por
 
-\[
+$$
 \begin{split}
     S_{11}&=\frac{b_1}{a_1}\bigg|_{a_2=0}\implies\\
     &=\frac{V_{s1}-I_1R_0-R_0I_1}{V_{s1}-I_1R_0+R_0I_1}\implies\\
@@ -145,229 +138,387 @@ Dessa forma, o parâmetro de reflexão na entrada é dado por
     &=1-\frac{2I_1R_0}{V_{s1}}\implies\\
     &=1-\frac{2R_0(R_0+R_B+R_A)}{(R_A+R_0)(R_0+2R_B+R_A)}
 \end{split}  
-\]
+$$
 
-Sob a circunstância de $a_2=0$, sabe-se que \(V_2=-R_0I_2\). Além disso, é possível calcular o ganho do circuito, $S_{21}$ como
+Sob a circunstância de $a_2=0$, sabe-se que $V_2=-R_0I_2$. Além disso, é possível calcular o ganho do circuito, $S_{21}$ como
 
-\[
+$$
 \begin{split}
     S_{21}&=\frac{b_2}{a_1}\bigg|_{a_2=0}\implies\\
     &=\frac{V_2-R_0I_2}{V_1+R_0I_1}\implies\\
     &=\frac{-R_0I_2-R_0I_2}{V_{s1}-R_0I_1+R_0I_1}\implies\\
     &=\frac{-2R_0I_2}{V_{s1}}
 \end{split}
-\]
+$$
 
 O parâmetro $I_2$, pode ser obtido como
 
-\[
+$$
 \begin{split}
     I_2&=\frac{V_B}{R_A+R_0}\implies\\
     I_2&=\frac{V_{s1}R_B}{(R_A+R_0)(R_0+2R_B+R_A)}\implies\\
 \end{split}
-\]
+$$
 
 Levando em consideração que os parâmetros S consideram que a corrente entra na porta pelo terminal superior (contrário ao que foi utilizado para modelar o circuito), utiliza-se o valor de $-I_2$ para o cálculo do ganho do circuito. Dessa forma, é possível obter que
 
-\[
+$$
     \begin{split}
         S_{21}&=\frac{-2R_0(-I_2)}{V_{s1}}\implies\\
         &=\frac{2R_0R_B}{(R_A+R_0)(R_0+2R_B+R_A)}\implies\\
     \end{split}
-\]
+$$
 
-Ao analisar o circuito, percebe-se que \(S_{11}=S_{22}\) e que \(S_{12}=S_{21}\). Isso faz sentido, uma vez que o circuito é simétrico.
+Ao analisar o circuito, percebe-se que $S_{11}=S_{22}$ e que $S_{12}=S_{21}$. Isso faz sentido, uma vez que o circuito é simétrico.
 
 Continuando com a resolução do problema, aplica-se as restrições do projeto, iniciando pelos coeficientes de reflexão. Para esse cálculo, utiliza-se a expressão de $S_{11}$ sem perda de generalidade, uma vez que $S_{11}=S_{22}$.
 
-\[
+$$
     S_{11}<-50\;\text{dB}\implies
-\]
-\[
+$$
+$$
     \begin{split}
         1-\frac{2R_0(R_0+R_B+R_A)}{(R_A+R_0)(R_0+2R_B+R_A)}&<-50\;\text{dB}\implies\\
         1-\frac{2R_0(R_0+R_B+R_A)}{(R_A+R_0)(R_0+2R_B+R_A)}&<10^{-2,5}\implies\\
         \frac{R_0(R_0+R_B+R_A)}{(R_A+R_0)(R_0+2R_B+R_A)}&>\frac{1-10^{-2,5}}{2}\implies\\
     \end{split}
-\]
+$$
 
-A outra restrição diz que \(S_{12}=S_{21}=-10\;\text{dB}\). Da mesma forma como apresentado anteriormente para os parâmetros de reflexão, aqui será utilizado o parâmetro de ganho do circuito sem perda de generalidade. Dessa forma,
+A outra restrição diz que $S_{12}=S_{21}=-10\;\text{dB}$. Da mesma forma como apresentado anteriormente para os parâmetros de reflexão, aqui será utilizado o parâmetro de ganho do circuito sem perda de generalidade. Dessa forma,
 
-\[
+$$
     S_{21}=-10\;\text{dB}\implies
-\]
-\[
+$$
+$$
     \begin{split}
         \frac{2R_0R_B}{(R_A+R_0)(R_0+2R_B+R_A)}&=10^{-1/2}\implies\\
         \frac{R_0R_B}{(R_A+R_0)(R_0+2R_B+R_A)}&=\frac{10^{-1/2}}{2}\implies\\
     \end{split}
-\]
+$$
 
 Calculando o caso extremo em que $S_{11}=S_{22}=-50\;\text{dB}$, a inequação da restrição dos coeficientes de reflexão torna-se um equação e, dividindo as duas equações obtidas, chega-se ao seguinte resultado
 
-\[
+$$
     \begin{split}
         \frac{R_0R_B}{R_0(R_0+R_A+R_B)}&=\frac{10^{-1/2}}{1-10^{-2,5}}\implies\\
         \frac{R_B}{(R_0+R_A+R_B)}&=\frac{10^{-1/2}}{1-10^{-2,5}}\implies\\
         R_A&=R_B\left(\sqrt{10}-10^{-3}-1\right)-R_0
     \end{split}
-\]
+$$
 
 Manipulando a equação obtida, é possível obter que 
 
-\[
+$$
     R_A+R_0=R_B\left(\sqrt{10}-10^{-3}-1\right)
-\]
+$$
 
 Substituindo essa relação na equação do ganho do circuito, obtém-se
 
-\[
+$$
 \begin{split}
     \frac{R_0R_B}{R_B\left(\sqrt{10}-10^{-3}-1\right)(R_B\left(\sqrt{10}-10^{-3}-1\right)+2R_B)}&=\frac{10^{-1/2}}{2}\implies\\
     \frac{R_0}{R_B\left(\sqrt{10}-10^{-3}-1\right)(\sqrt{10}-10^{-3}-1+2)}&=\frac{10^{-1/2}}{2}\implies\\
     R_B=R_0\frac{2\sqrt{10}}{9-2\cdot10^{-3/2}+10^{-6}}
 \end{split}
-\]
+$$
 
-Já se sabe que $R_0=50\;\Omega$. Portanto, \(R_B\approx35,3851\Omega\) e, consequentemente, \(R_A=26,477\;\Omega\). Com esses valores de resistência, Os resultados obtidos são \(S_{11}=S_{22}=-43,6\;\text{dB}\) e \(S_{12}=S_{21}=-10,1\;\text{dB}\).
+Já se sabe que $R_0=50\;\Omega$. Portanto, $R_B\approx35,3851\Omega$ e, consequentemente, $R_A=26,477\;\Omega$. Com esses valores de resistência, Os resultados obtidos são $S_{11}=S_{22}=-43,6\;\text{dB}$ e $S_{12}=S_{21}=-10,1\;\text{dB}$.
 
-Percebe-se que o ganho não atende ao padrão estabelecido pelo problema. Esse problema pode ser facilmente contornado variando um pouco o valor do resistor $R_B$ de modo que o coeficiente de reflexão obtido atenda ao requisito. Ao verificar os valores chega-se à conclusão de que uma resistência de \(34,6\;\Omega\) é suficiente para que os critérios sejam atendidos, conforme é apresentada na Fig.~\ref{fig:circuiti-pronto}.
+Percebe-se que o ganho não atende ao padrão estabelecido pelo problema. Esse problema pode ser facilmente contornado variando um pouco o valor do resistor $R_B$ de modo que o coeficiente de reflexão obtido atenda ao requisito. Ao verificar os valores chega-se à conclusão de que uma resistência de $34,6\;\Omega$ é suficiente para que os critérios sejam atendidos, conforme é apresentada na [Fig. @fig-circuiti-pronto].
 
-\begin{figure}
+![Circuito com os valores corretos](../images/circuiti-pronto.png){width=300, #fig-circuiti-pronto}
+
+Os resultados podem ser visualizados na [Fig. @fig-resultspart11111111]. Nota-se que ambos os parâmetros (coeficientes de reflexão e ganhos) não variam com a frequência. Isso faz sentido, uma vez que o circuito é puramente resistivo.
+
+![Resultados do circuito resistivo](../images/resultspart11111111.png){width=300, #fig-resultspart11111111}
+
+# Amplificador
+
+Nesta seção, será apresentada o projeto de um amplificador emissor comum baseado no transistor BFP720 (BJT NPN) para operar na frequência de 400 MHz, alimentado por uma fonte de tensão de 3,3 V, com um ganho de potência de 13 e uma carga de 50 $\Omega$. O diagrama do mocelo real do transistor é apresentado na [Fig. @fig-BFP720-model].
+
+![Modelo do transistor BFP720](../images/BFP720-model.png){width=300, #fig-BFP720-model}
+
+```{python}
+#| echo: false
+wish_gain = 13 #dB
+```
+
+```{python}
+#| echo: false
+def format(value):
+    if value >= 1e9:
+        return f"{value / 1e9:.2f} G"
+    elif value >= 1e6:
+        return f"{value / 1e6:.2f} M"
+    elif value >= 1e3:
+        return f"{value / 1e3:.2f} k"
+    elif value >= 1:
+        return f"{value:.2f} "
+    elif value >= 1e-3:
+        return f"{value * 1e3:.2f} m"
+    elif value >= 1e-6:
+        return f"{value * 1e6:.2f} u"
+    elif value >= 1e-9:
+        return f"{value * 1e9:.2f} n"
+    elif value >= 1e-12:
+        return f"{value * 1e12:.2f} p"
+    elif value >= 1e-15:
+        return f"{value * 1e15:.2f} f"
+    else:
+        return f"{value:.0e} "
+```
+
+O *datasheet* do transistor BFP720 apresenta que quando o circuito opera próximo à frequência de 450 MHz e com uma figura de ruído mínima de 0,4 dB, o ganho de potência obtido é de 28,5 dB. Esses resultados devem ser suficientes também quando o circuito opera na frequência desejada de 400 MHz. Além disso, o *datasheet* informa que esses valores foram obtido com uma corrente de coletor, $I_C=5\;\text{mA}$. Assim, o primeiro passo do projeto apresentado nesta seção será a obtenção da corrente de coletor necessária para que seja possível obter um ganho de `{python} wish_gain` dB, como foi proposto pelo problema.
+
+Para isso, foi montado o *testbench* apresentado na [Fig. @fig-testbench-gain] a fim de se realizar a medição do ganho do amplificador.
+
+![Medição de ganho](../images/testbench-gain.png){width=300, #fig-testbench-gain}
+
+Para realizar esse teste de ganho, o transistor BFP720 foi polarizado de forma a se avaliar o ganho para diversos valores da corrente de emissor, conforme é apresentado na [Fig. @fig-simplified-bias].
+
+![Polarização simplificada](../images/simplified-bias.png){width=300, #fig-simplified-bias}
+
+```{python}
+#| echo: false
+T0=273.15
+ie_13dB = 5e-3
+Vcc=3.3
+```
+
+Dessa forma, acopla-se esse amplificador emissor-comum ao *testbench* apresentado. Variando-se a corrente de emissor $I_E$ de 10 $\mu\text{A}$ a 200 $\mu\text{A}$, obtém-se a curva apresentada na [Fig. @fig-testbench-gain-result], além do valor de corrente de `{python} format(ie_13dB)`A.
+
+![Resultados do ganho](../images/testbench-gain-result.png){width=300, #fig-testbench-gain-result}
+
+A seguir, é apresentado o raciocínio utilizado para polarizar o amplificador com a corrente determinada anteriormente. A Fig.\ref{fig:generig-ampl} apresenta o circuito padrão para o projeto de um amplificador emissor comum.
+
+```{=latex}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\linewidth]{../images/circuiti-pronto.png}
-    \caption{Circuito com os valores corretos}
-    \label{fig:circuiti-pronto}
-\end{figure}
+    \begin{circuitikz}[american]
+        \draw (1.98, -1) node[npn](nmos1){{BFP720}};
+        \draw (nmos1.C) to[L, l=$L_3$, a=$1\;\mu$H] ++(0, 1.73) 
+            to[R, l=$R_C$] ++(0, 2) 
+            node[vcc]{} node[anchor=west] {$V_{cc}$}; % Label no nó Vcc
+        \draw (nmos1.E) to[short] ++(0, -0.73) 
+            to[short] ++(1.02, 0) 
+            to[C, l=$C_3$, a=$1\;\mu$F] ++(0, -3) node[ground]{} ;
+        \draw (nmos1.C) 
+            to[C, l=$1\;\mu$F, a=$C_2$, -o] ++(4, 0) 
+            node[anchor=west] {$V_o$}; % Label no final do -o do C2
+        \draw (-1, -5.5) node[ground]{} 
+            to[R, l=$R_{B2}$] ++(0, 2) 
+            to[L, l=$L_2$, a=$1\;\mu$H] ++(0, 2.5) 
+            to[L, l=$L_1$, a=$1\;\mu$H] ++(0, 2.5) 
+            to[R, l=$R_{B1}$] ++(0, 2) 
+            node[vcc]{} node[anchor=west] {$V_{cc}$}; % Outro label no nó Vcc
+        \draw (2, -2.5) to[short] ++(-1, 0) 
+            to[L, l=$1\;\mu$H, a=$L_4$, mirror] ++(0, -1.5) 
+            to[R, a=$R_E$, mirror] ++(0, -1.5) node[ground]{} ;
+        \draw (-0.5, -1) coordinate(point1) 
+            to[C, l=$C_1$, a=$1\;\mu$F, -o] ++(-3.5, 0) 
+            node[anchor=east] {$V_i$}; % Label no início o- do C1
+        \draw (point1) to[short] (nmos1.B) ;
+\end{circuitikz}
 
-Os resultados podem ser visualizados na Fig.~\ref{fig:resultspart11111111}. Nota-se que ambos os parâmetros (coeficientes de reflexão e ganhos) não variam com a frequência. Isso faz sentido, uma vez que o circuito é puramente resistivo.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{../images/resultspart11111111.png}
-    \caption{Resultados do circuito resistivo}
-    \label{fig:resultspart11111111}
-\end{figure}
-
-
-\section{Amplificador}
-
-Nesta seção, será apresentada o projeto de um amplificador emissor comum baseado no transistor BFP720 (BJT NPN) para operar na frequência de 400 MHz, alimentado por uma fonte de tensão de 3,3 V, com um ganho de potência de 13 e uma carga de 50 $\Omega$.
-
-O \textit{datasheet} do transistor BFP720 apresenta que quando o circuito opera próximo à frequência de 450 MHz e com uma figura de ruído mínima de 0,4 dB, o ganho de potência obtido é de 28,5 dB. Esses resultados devem ser suficientes também quando o circuito opera na frequência desejada de 400 MHz. Além disso, o \textit{datasheet} informa que esses valores foram obtido com uma corrente de coletor, $I_C=5\;\text{mA}$.
-
-A Fig.~\ref{fig:generig-ampl} apresenta o circuito padrão para o projeto de um amplificador emissor comum. Os valores serão detalhados a seguir.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{../images/generig-ampl.png}
-    \caption{Amplificador genérico original}
+    \caption{Circuito com o diodo}
     \label{fig:generig-ampl}
 \end{figure}
+```
 
-Como é apresentado em \cite{sedra2014microelectronic}, para que seja possível obter uma corrente de 5 mA no emissor do transistor, é considerado que
+```{python}
+#| echo: false
+def format_simple(value, decimals=2):
+    format_string = f"{{:.{decimals}f}}"
+    return f"{format_string.format(value)}"
+```
 
-\[
-    V_B=\frac{1}{3}V_{CC}=1,1\;V
-\]
+Como é apresentado em @sedra2014microelectronic (Exemplo 7.12), para que seja possível obter uma corrente de `{python} format(ie_13dB)`A no emissor do transistor, com $V_{cc}=$ `{python} Vcc` V, é considerado que
 
-E, como por padrão, $V_{BE}=0,7\;V$. Além disso, tem-se que
+$$
+    V_B=\frac{1}{3}V_{CC}
+$$
 
-\[
+```{python}
+#| echo: false
+VB = Vcc/3
+beta_min = 160
+alpha_min = beta_min/(beta_min+1)
+IC = alpha_min*ie_13dB
+```
+
+Dessa forma, $V_B=$ `{python} format_simple(VB, 1)` V. Além disso, considerando o menor valor para o ganho de corrente em emissor-comum, $\beta=$ `{python} beta_min`. Dessa forma, o ganho de corrente em base-comum é dado por
+
+$$
+    \alpha=\frac{\beta}{\beta+1}
+$$
+
+Para esse valor de $\beta$, $\alpha=$ `{python} format_simple(alpha_min)`. Assim, a corrente no coletor será $I_C=$ `{python} format(IC)`A. E, portanto, a tensão $V_{BE}$ é dada por
+
+$$
+    V_{BE} = \ln\left(\frac{I_C}{I_s}\right)V_T
+$$
+
+```{python}
+#| echo: false
+from scipy.constants import Boltzmann as k, elementary_charge as q
+
+T_celsius = 26.85
+T_kelvin = T_celsius + T0
+VT = k * T_kelvin / q
+```
+
+```{python}
+#| echo: false
+def format_e_notation(value, decimals=2):
+    format_string = f"{{:.{decimals}f}}"
+    if value >= 1e9:
+        return f"{format_string.format(value / 1e9)}e9"
+    elif value >= 1e6:
+        return f"{format_string.format(value / 1e6)}e6"
+    elif value >= 1e3:
+        return f"{format_string.format(value / 1e3)}e3"
+    elif value >= 1:
+        return f"{format_string.format(value)}"
+    elif value >= 1e-3:
+        return f"{format_string.format(value * 1e3)}e-3"
+    elif value >= 1e-6:
+        return f"{format_string.format(value * 1e6)}e-6"
+    elif value >= 1e-9:
+        return f"{format_string.format(value * 1e9)}e-9"
+    elif value >= 1e-12:
+        return f"{format_string.format(value * 1e12)}e-12"
+    elif value >= 1e-15:
+        return f"{format_string.format(value * 1e15)}e-15"
+    elif value >= 1e-18:
+        return f"{format_string.format(value * 1e18)}e-18"
+    else:
+        return f"{value:.{decimals}}"
+```
+
+```{python}
+#| echo: false
+import math
+
+Is = 1e-15
+Vbe = math.log(IC/Is)*VT
+```
+
+E, como $I_s=$ `{python} format_e_notation(Is)` A, a tensão resulta em $V_{BE}=$ `{python} format_simple(Vbe)` V. Com esses valores, é possível obter o primeiro resistor, o resistor de emissor com a seguinte equação
+
+$$
 \begin{split}
-    R_E&=\frac{V_E}{I_E}=\frac{V_B-V_{BE}}{I_E}\implies\\
-    &=\frac{1,1-0,7}{5\cdot10^{-3}}\implies\\
-    &=80\;\Omega
+    R_E&=\frac{V_E}{I_E}=\frac{V_B-V_{BE}}{I_E}
 \end{split}
-\]
+$$
 
-Tem-se, também, que
+```{python}
+#| echo: false
+RE = (VB-Vbe)/ie_13dB
+```
 
-\[
-    R_{B1}+R_{B2}=\frac{V_{CC}}{0,1\cdot I_E}=\frac{3,3}{0,1\cdot 5\cdot10^{-3}}=6,6\;k\Omega
-\]
+Resultando em $R_E=$ `{python} format(RE)`$\Omega$. Em seguida, analisa-se a soma dos resistores de base. Para esse cálculo é utilizada a seguinte equação
 
-e
+$$
+    R_B=R_{B1}+R_{B2}=\frac{V_{CC}}{0,1\cdot I_E}
+$$
 
-\[
+```{python}
+#| echo: false
+    RB = Vcc/(0.1*ie_13dB)
+    RB2 = RB/3
+    RB1 = 2*RB2
+```
+
+de modo que seleciona-se esses valores de modo que a corrente seja entre $I_E$ e $0,1\cdot I_E$. Dessa forma, $R_B=$ `{python} format(RB)`$\Omega$. Além disso, a relação entre $R_{B1}$ e $R_{B2}$ é dada por
+
+$$
     \frac{R_{B2}}{R_{B1}+R_{B2}}=\frac{1}{3}
-\]
+$$
 
-Dessa forma, \(R_{B1}=4,4\;k\Omega\) e \(R_{B1}=2,2\;k\Omega\).
+Dessa forma, $R_{B1}=$ `{python} format(RB1)`$\Omega$ e $R_{B2}=$ `{python} format(RB2)`$\Omega$. E finalmente, é possível calcular a resistência do coletor,
 
-Assumindo o menor valor de $\beta$ informado pelo \textit{datasheet}, ou seja, $\beta=160$,
+$$
+    R_C=\frac{3}{2}\frac{V_{CC}}{I_C}
+$$
 
-\[
-    I_E=\frac{V_B-V_{BE}}{R_E-R_B/(\beta+1)}\approx4,5\;mA
-\]
+```{python}
+#| echo: false
+RC = (3/2)*(Vcc/IC)
+```
 
-E assim, é possível calcular a resistência do coletor. Assumindo \(I_E\approx I_C\),
+resultando em $R_C=$ `{python} format(RC)`$\Omega$.
 
-\[
-    R_C=\frac{3}{2}\frac{V_{CC}}{I_C}\approx220\;\Omega
-\]
 
-Como o valor de $I_E$ não é adequado ao projeto, ajusta-se o valor de $R_E$ para $55\;\Omega$. O circuito corretamente polarizado é apresentado na Fig.~\ref{fig:biased-circuit}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{../images/biased-circuit.png}
-    \caption{Circuito devidamente polarizado}
-    \label{fig:biased-circuit}
-\end{figure}
 
-Ao simular esse circuito utilizando a simulação de parâmetros S, pode-se obter o ganho do circuito, bem como as figuras de ruído mínima e atual. Os resultados obtidos nessa primeira simulação são apresentados na Fig.~\ref{fig:results-ampl}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{../images/results-ampl.png}
-    \caption{Resultados preliminares do amplificador}
-    \label{fig:results-ampl}
-\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$$
+    I_E=\frac{V_B-V_{BE}}{R_E-R_B/(\beta+1)}
+$$
+
+
+
+
+Como o valor de $I_E$ não é adequado ao projeto, ajusta-se o valor de $R_E$ para $55\;\Omega$. O circuito corretamente polarizado é apresentado na [Fig. @fig-biased-circuit].
+
+![Circuito devidamente polarizado](../images/biased-circuit.png){width=300, #fig-biased-circuit}
+
+Ao simular esse circuito utilizando a simulação de parâmetros S, pode-se obter o ganho do circuito, bem como as figuras de ruído mínima e atual. Os resultados obtidos nessa primeira simulação são apresentados na [Fig. @fig-results-ampl].
+
+![Resultados preliminares do amplificador](../images/results-ampl.png){width=300, #fig-results-ampl}
 
  Nessa primeira análise, pode-se perceber que a figura de ruído mínima ainda não foi atendida. Entretanto, o ganho obtido é de 21,4 dB, atendendo ao critério estabelecido pelo problema.
 
-Como já foi estudado anteriormente, a figura do ruído de um amplificador está intimamente ligada à impedância de entrada da fonte. Dessa forma, para minimizar essa figura de ruído, pode-se buscar um valor ótimo para a resistência da fonte. A curva que apresenta a figura de ruído pela resistência da fonte pode ser visualizada na Fig.~\ref{fig:opt-load-source}.
+Como já foi estudado anteriormente, a figura do ruído de um amplificador está intimamente ligada à impedância de entrada da fonte. Dessa forma, para minimizar essa figura de ruído, pode-se buscar um valor ótimo para a resistência da fonte. A curva que apresenta a figura de ruído pela resistência da fonte pode ser visualizada na [Fig. @fig-opt-load-source].
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{../images/opt-load-source.png}
-    \caption{Curva da figura de ruído pela impedância da fonte}
-    \label{fig:opt-load-source}
-\end{figure}
+![Curva da figura de ruído pela impedância da fonte](../images/opt-load-source.png){width=300, #fig-opt-load-source}
 
-Assim, temos um valor quase-ótimo para a resistência da fonte. Aplicando esse valor ao circuito do amplificador, obtém-se os resultados apresentados na Fig.~\ref{fig:result-final}.
+Assim, temos um valor quase-ótimo para a resistência da fonte. Aplicando esse valor ao circuito do amplificador, obtém-se os resultados apresentados na [Fig. @fig-result-final].
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\linewidth]{../images/result-final.png}
-    \caption{Resultados finais}
-    \label{fig:result-final}
-\end{figure}
+![Resultados finais](../images/result-final.png){width=300, #fig-result-final}
 
-\section{Perdas por inserção e reflexão}
+# Perdas por inserção e reflexão
 
-Segundo \cite{steer2019microwave}, a perda por reflexão é uma medida da fração da potência disponível que não é entregue por uma fonte a uma carga. Esse parâmetro pode ser calculado é igual ao parâmetro $S_{11}$ em decibéis. Dessa forma, o circuito do amplificador tem uma perda por reflexão igual a
+Segundo @steer2019microwave, a perda por reflexão é uma medida da fração da potência disponível que não é entregue por uma fonte a uma carga. Esse parâmetro pode ser calculado é igual ao parâmetro $S_{11}$ em decibéis. Dessa forma, o circuito do amplificador tem uma perda por reflexão igual a
 
-\[
+$$
     \text{RL}_{\text{dB}} = -20 \log |S_{11}|=-2,04\;dB
-\]
+$$
 
-Ainda segundo \cite{steer2019microwave}, a perda por inserção é um tipo específico de perda por substituição em quadripolos. A perda por substituição é a relação entre a potência entregue a uma carga por uma rede inicial e a potência entregue por uma rede substituída.
+Ainda segundo @steer2019microwave, a perda por inserção é um tipo específico de perda por substituição em quadripolos. A perda por substituição é a relação entre a potência entregue a uma carga por uma rede inicial e a potência entregue por uma rede substituída.
 
 Considera-se que a perda por inserção será calculada utilizando um adaptador ideal. A perda por inserção é determinada comparando a potência entregue à carga com a potência fornecida pelo adaptador ideal. Um adaptador ideal assume que não há reflexões nas portas e que a transmissão de potência ocorre sem perdas ou desvio de fase. Dito isso, a equação para a perda por inserção pode ser simplificada (a equação original é bem densa) em
 
-\[
+$$
     \text{IL}_{\text{dB}} = -20 \log |S_{21}|
-\]
+$$
 
-E, esse cálculo, realizado para o circuito amplificador resulta em uma perda por inserção, \(\text{IL}_{\text{dB}}=-23,11\;\text{dB}\).
+E, esse cálculo, realizado para o circuito amplificador resulta em uma perda por inserção, $\text{IL}_{\text{dB}}=-23,11\;\text{dB}$.
 
-\section{Discussão}
+# Discussão
 
 Sendo bem sucinto na minha resposta, com essa atividade eu aprendi a calcular manualmente os parâmetros S, relembrei como polarizar um transistor e, com o conhecimento adquirido nas atividades anteriores, pude minimizar a figura de ruído para chegar próximo ao que foi calculado pelo Qucs como a figura de ruído mínima.
 
-Acredito que foi bem proveitoso e eu tive um bom resultado com este desenvolvimento. Entretanto, é importante pontuar algumas coisas que ficaram pendentes. A primeira, é analisar como reduzir a figura de ruído adequadamente. Não tenho certeza se o que eu fiz é adequado e se é o único método de se obter a figura de ruído mínima. Como a figura de ruído mínima é calculada analisando a variação da figura de ruído pela resistência de fonte, parece que essa reposta é positiva, mas sem certeza. Além disso, acho que, apesar do grande trabalho, seria bem legal obter essas equações analiticamente, não só deixar a cargo da simulação resolver tudo. Em relação à última parte da atividade, acredito que seja extremamente importante o aprofundamento nos conceitos de perda por inserção, reflexão e o que foi citado como o efeito mais geral da perda por inserção, ou seja, a perda por substituição. E o mais importante de tudo, acredito que é muito necessário entender porque a figura de ruído ficou tão elevada, em referência ao que foi apresentado pelo \textit{datasheet}. Faz sentido deixar bem claro que a figura de ruído mínima obtida é mais do que o dobro do que foi apresentado pelo \textit{datasheet} e, entender se é possível aproximar ainda mais o valor da figura de ruído mínimo ao que foi obtido. Essa consideração faz sentido, uma vez que a figura de ruído mínima não foi plenamente atendida, a que foi apresentada pelo Qucs é de 0,815 e o obtido foi 0,819.
+Acredito que foi bem proveitoso e eu tive um bom resultado com este desenvolvimento. Entretanto, é importante pontuar algumas coisas que ficaram pendentes. A primeira, é analisar como reduzir a figura de ruído adequadamente. Não tenho certeza se o que eu fiz é adequado e se é o único método de se obter a figura de ruído mínima. Como a figura de ruído mínima é calculada analisando a variação da figura de ruído pela resistência de fonte, parece que essa reposta é positiva, mas sem certeza. Além disso, acho que, apesar do grande trabalho, seria bem legal obter essas equações analiticamente, não só deixar a cargo da simulação resolver tudo. Em relação à última parte da atividade, acredito que seja extremamente importante o aprofundamento nos conceitos de perda por inserção, reflexão e o que foi citado como o efeito mais geral da perda por inserção, ou seja, a perda por substituição. E o mais importante de tudo, acredito que é muito necessário entender porque a figura de ruído ficou tão elevada, em referência ao que foi apresentado pelo *datasheet*. Faz sentido deixar bem claro que a figura de ruído mínima obtida é mais do que o dobro do que foi apresentado pelo *datasheet* e, entender se é possível aproximar ainda mais o valor da figura de ruído mínimo ao que foi obtido. Essa consideração faz sentido, uma vez que a figura de ruído mínima não foi plenamente atendida, a que foi apresentada pelo Qucs é de 0,815 e o obtido foi 0,819.
 
 Ademais, a atividade foi extremamente enriquecedora e os pontos citados não foram resolvidos devido ao tempo que disponho para estudar os diversos fenômenos dos circuitos RF.
 

@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-264,10,1311,1660,0.715978,0,73
+View=-264,-110,1311,1263,0.715978,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -19,8 +19,8 @@ GND * 1 260 350 0 0 0 0
 Pac P2 1 410 290 -70 -16 0 0 "2" 0 "50 Ω" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0 "SUBCLICK" 0
 .SP SP1 1 520 110 0 63 0 0 "list" 1 "100 MHz" 0 "500 MHz" 0 "400 MHz" 1 "yes" 1 "1" 0 "2" 0 "none" 0
 Sub AMP_sim 1 270 220 -20 24 0 0 "amplifier-simplified.sch" 0 "ie" 1
-Eqn Input 1 520 290 0 8 0 0 "Rs=98 Ω=" 1 "ie=148 uA=" 1 "yes" 0
 .SW SW1 0 -180 720 0 63 0 0 "SP1" 1 "ie" 1 "lin" 1 "0" 1 "1 mA" 1 "1000" 1
+Eqn Input 1 520 290 0 8 0 0 "Rs=50 Ω=" 1 "ie=148 uA=" 1 "yes" 0
 </Components>
 <Wires>
 120 320 120 350 "" 0 0 0 ""
