@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=0,0,1540,800,1,274,0
+View=-10,30,1226,740,1,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
