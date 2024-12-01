@@ -25,7 +25,7 @@ Eqn Calc 1 850 270 0 8 0 0 "Pi=real(vin.dv*conj(is.i))/2=" 1 "Po=real(vo.dv*conj
 Eqn Log 1 850 390 0 8 0 0 "Pi_dBm=10*log10(Pi/1e-3)=" 1 "Po_dBm=10*log10(Po/1e-3)=" 1 "G_dB=10*log10(G)=" 1 "no" 0
 R R1 1 750 320 15 -26 0 1 "50 Ω" 1 "26.85" 0 "european" 0 "SMD0603" 0
 Pac P1 1 260 320 18 -26 0 0 "1" 1 "50 Ω" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0 "SUBCLICK" 0
-Sub SUB1 1 510 230 -20 24 0 0 "amplifier.sch" 0
+Sub SUB1 1 510 230 -20 24 0 0 "amplifier-RE-initial.sch" 0
 </Components>
 <Wires>
 260 230 290 230 "" 0 0 0 ""
