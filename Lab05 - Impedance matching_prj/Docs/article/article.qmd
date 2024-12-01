@@ -164,8 +164,8 @@ Entretanto, busca-se uma banda que todas as restrições sejam atendidas. Dessa 
 
 ```{python}
 #| echo: false
-zopt_NF_min_r = 298.779610488444
-zopt_NF_min_i = 874.576209019344
+zopt_NF_min_r = 113.4070024
+zopt_NF_min_i = 959.9578037
 z_source_r = 50
 z_source_i = 0
 ```
@@ -218,6 +218,8 @@ Xs_NF_min = abs(Qs_NF_min * z_source_r)
 Xp_NF_min = abs(zopt_NF_min_r / Qs_NF_min)
 C_NF_min = 1/(omega*Xs_NF_min)
 L_NF_min = Xp_NF_min/omega
+
+L_add_NF_min = zopt_NF_min_i/omega
 ```
 
 ```{python}
@@ -280,32 +282,32 @@ def format_simple(value, decimals=2):
     return f"{format_string.format(value)}"
 ```
 
-Resultando em $Q_s=$ `{python} format_simple(Qs_NF_min)`. Com isso, obtém-se $X_s=$ `{python} format_simple(Xs_NF_min)` $\Omega$ e $X_p=$ `{python} format_simple(Xp_NF_min)` $\Omega$. Dessa forma, o capacitor em série é dado por $C=\left(\omega X_s\right)^{-1}$ resultando em $C=$ `{python} format(C_NF_min)`F e o indutor em paralelo é dado por $L=X_p/\omega$ resultando em $L=$ `{python} format(L_NF_min)`H o resultado obtido podem ser visualizados na [Fig. @fig-result-part1].
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Resultando em $Q_s=$ `{python} format_simple(Qs_NF_min)`. Com isso, obtém-se $X_s=$ `{python} format_simple(Xs_NF_min)` $\Omega$ e $X_p=$ `{python} format_simple(Xp_NF_min)` $\Omega$. Dessa forma, o capacitor em série é dado por $C=\left(\omega X_s\right)^{-1}$ resultando em $C=$ `{python} format(C_NF_min)`F e o indutor em paralelo é dado por $L=X_p/\omega$ resultando em $L=$ `{python} format(L_NF_min)`H. Além disso, deve ser acoplado um componente para que a parte imaginária da impedância ideal, $S_\text{opt}$, seja devidamente atendida. Como a parte imaginária trata-se de uma reatância positiva, é evidente que o componente necessário é um indutor. A forma mais direta de se obter esse indutor é calculando um indutor em série que corresponda a essa reatância, resultando em $L=$ `{python} format(L_add_NF_min)`H. Entretanto, uma forma mais adequada de se obter o indutor necessário é projetá-lo para que ele esteja em paralelo com o indutor da rede L, assim, é possível unir os dois componentes. Entretanto, essa abordagem será realizada posteriormente. O resultado preliminar pode ser visualizado na [Fig. @fig-result-part1].
 
 
 ![Resultado do LNA](../images/result-part1.png){width=300, #fig-result-part1}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Como pode ser verificado a figura mínima de ruído foi corretamente atingida e a impedância ótima que é apresentada pelo QucsStudio é muito próxima ao valor real da impedância da fonte.
 

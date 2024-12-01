@@ -516,6 +516,7 @@ $$
 ```{python}
 #| echo: false
 Q_line = (omega*C1)/GL
+GL
 ```
 
  e esse fator de qualidade é referente ao capacitor em paralelo e a condutância de carga, $G_i$. Aplicando os valores, obtém-se um fator de qualidade, $Q =$ `{python} format_decimal(Q_line, 4)`. Em seguida, é possível calcular o capacitor em série, $C_1^{'}$, do circuito transformado como

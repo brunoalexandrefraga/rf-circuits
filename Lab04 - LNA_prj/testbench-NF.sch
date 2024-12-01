@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=0,0,1140,800,1,0,0
+View=-120,0,1080,680,1.65064,309,166
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -15,11 +15,10 @@ FrameText3=Revision:
 </Symbol>
 <Components>
 GND * 1 400 380 0 0 0 0
-.SP SP1 1 630 120 0 63 0 0 "list" 1 "100 MHz" 0 "500 MHz" 0 "400 MHz" 1 "yes" 1 "1" 0 "2" 0 "none" 0
-Eqn Eqn2 1 630 290 0 8 0 0 "f=400 MHz=" 1 "XL=41.2585 Ω=" 1 "XC=-41.2585 Ω=" 1 "omega=2*pi*f=" 1 "L=XL/(omega)=" 1 "C=1/(XC*omega)=" 1 "yes" 0
 Sub AMP1 1 410 210 -20 24 0 0 "amplifier.sch" 0
 Pac P1 1 240 290 13 -7 0 0 "1" 0 "50 Ω" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0 "SUBCLICK" 0
 Pac P2 1 570 290 -70 -16 0 0 "2" 0 "50 Ω" 1 "0" 0 "1 GHz" 0 "26.85" 0 "SUBCLICK" 0
+.SP SP1 1 610 120 0 63 0 0 "list" 1 "100 MHz" 0 "500 MHz" 0 "400 MHz" 1 "yes" 1 "1" 0 "2" 0 "none" 0
 </Components>
 <Wires>
 240 380 400 380 "" 0 0 0 ""
@@ -39,7 +38,7 @@ Pac P2 1 570 290 -70 -16 0 0 "2" 0 "50 Ω" 1 "0" 0 "1 GHz" 0 "26.85" 0 "SUBCLICK
 </Tab>
 </Diagrams>
 <Paintings>
-Rectangle 180 100 610 370 #0055ff 5 2 #c0c0c0 1 0
+Rectangle 180 100 570 370 #0055ff 5 2 #c0c0c0 1 0
 Text 195 111 24 #0055ff 0 Simulação do ruído mínimo
 Rectangle 350 180 130 80 #8a8a8a 2 2 #c0c0c0 1 0
 Text 335 151 20 #dd6e00 0 Dispositivo a medir

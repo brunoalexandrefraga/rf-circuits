@@ -281,7 +281,7 @@ Para realizar esse teste de ganho, o transistor BFP720 foi polarizado de forma a
 ```{python}
 #| echo: false
 T0=273.15
-ie_factor = 2.45
+ie_factor = 1.46
 ie_theory = 4.145671457e-5
 ie_13dB = ie_factor*ie_theory
 
@@ -299,26 +299,26 @@ Entretanto, após polarizar o circuito buscando obter o valor de corrente acima 
     \centering
     \begin{circuitikz}[american]
         \draw (1.98, -1) node[npn](nmos1){{BFP720}};
-        \draw (nmos1.C) to[L, l=$L_3$, a=$1\;\mu$H] ++(0, 1.73) 
+        \draw (nmos1.C) to[L, l=$L_3$, a=1 mH] ++(0, 1.73) 
             to[R, l=$R_C$] ++(0, 2) 
             node[vcc]{} node[anchor=west] {$V_{cc}$}; % Label no nó Vcc
         \draw (nmos1.E) to[short] ++(0, -0.73) 
             to[short] ++(1.02, 0) 
-            to[C, l=$C_3$, a=$1\;\mu$F] ++(0, -3) node[ground]{} ;
+            to[C, l=$C_3$, a=1 mF] ++(0, -3) node[ground]{} ;
         \draw (nmos1.C) 
-            to[C, l=$1\;\mu$F, a=$C_2$, -o] ++(4, 0) 
+            to[C, l=1 mF, a=$C_2$, -o] ++(4, 0) 
             node[anchor=west] {$V_o$}; % Label no final do -o do C2
         \draw (-1, -5.5) node[ground]{} 
             to[R, l=$R_{B2}$] ++(0, 2) 
-            to[L, l=$L_2$, a=$1\;\mu$H] ++(0, 2.5) 
-            to[L, l=$L_1$, a=$1\;\mu$H] ++(0, 2.5) 
+            to[L, l=$L_2$, a=1 mH] ++(0, 2.5) 
+            to[L, l=$L_1$, a=1 mH] ++(0, 2.5) 
             to[R, l=$R_{B1}$] ++(0, 2) 
             node[vcc]{} node[anchor=west] {$V_{cc}$}; % Outro label no nó Vcc
         \draw (2, -2.5) to[short] ++(-1, 0) 
-            to[L, l=$1\;\mu$H, a=$L_4$, mirror] ++(0, -1.5) 
+            to[L, l=1 mH, a=$L_4$, mirror] ++(0, -1.5) 
             to[R, a=$R_E$, mirror] ++(0, -1.5) node[ground]{} ;
         \draw (-0.5, -1) coordinate(point1) 
-            to[C, l=$C_1$, a=$1\;\mu$F, -o] ++(-3.5, 0) 
+            to[C, l=$C_1$, a=1 mF, -o] ++(-3.5, 0) 
             node[anchor=east] {$V_i$}; % Label no início o- do C1
         \draw (point1) to[short] (nmos1.B) ;
 \end{circuitikz}
@@ -461,7 +461,7 @@ $$
 RC = (3/2)*(Vcc/IC_new)
 ```
 
-resultando em $R_C=$ `{python} format(RC)`$\Omega$. Os valores obtidos nesta seção são apresentados na [Fig. @fig-biased-circuit-initial], com uma atenção especial a corrente de emissor obtida. Com essa corrente, é possível obter um ganho de potência de `{python} wish_gain` dB.
+resultando em $R_C=$ `{python} format(RC)`$\Omega$. Os valores obtidos nesta seção são apresentados na [Fig. @fig-biased-circuit], com uma atenção especial a corrente de emissor obtida. Com essa corrente, é possível obter um ganho de potência de `{python} wish_gain` dB.
 
 ![Amplificador devidamente polarizado](../images/biased-circuit.png){width=300, #fig-biased-circuit}
 
@@ -473,7 +473,7 @@ Ao simular esse circuito utilizando a simulação de parâmetros S, pode-se obte
 
 ![Resultados preliminares do amplificador](../images/results-ampl.png){width=300, #fig-results-ampl}
 
- Nessa primeira análise, pode-se perceber que a figura de ruído mínima ainda não foi atendida. Para que essa figura de ruído mínima seja obtida, é necessário que a impedância ótima seja utilizada como impedância de fonte.
+Para que essa figura de ruído mínima seja obtida, é necessário que a impedância ótima seja utilizada como impedância de fonte.
 
 # Perdas por inserção e reflexão
 

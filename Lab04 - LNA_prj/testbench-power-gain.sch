@@ -30,8 +30,8 @@ VProbe vo 1 500 630 -31 28 1 3 "SIL-2" 0
 Eqn Calc 1 730 580 0 8 0 0 "Pi=real(vin.dv*conj(is.i))/2=" 1 "Po=real(vo.dv*conj(io.i))/2=" 1 "G=Po/Pi=" 1 "yes" 0
 Eqn Log 1 730 700 0 8 0 0 "Pi_dBm=10*log10(Pi/1e-3)=" 1 "Po_dBm=10*log10(Po/1e-3)=" 1 "G_dB=10*log10(G)=" 1 "no" 0
 Pac P1 1 140 630 18 -26 0 0 "1" 1 "50 Ω" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0 "SUBCLICK" 0
-Sub AMP1 1 390 540 -20 24 0 0 "amplifier.sch" 0
 R R1 1 630 630 15 -26 0 1 "50 Ω" 1 "26.85" 0 "european" 0 "SMD0603" 0
+Sub AMP1 1 390 540 -20 24 0 0 "amplifier.sch" 0
 </Components>
 <Wires>
 140 540 170 540 "" 0 0 0 ""
