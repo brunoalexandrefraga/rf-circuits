@@ -1,0 +1,131 @@
+---
+title: Componentes Passivos em RF 
+subtitle: Laboratório 07
+author:
+  - name: Bruno Alexandre Fraga
+    email: bruno.fraga@posgrad.ufsc.br
+    affiliations: 
+        - id: some-tech
+          name: Universidade Federal de Santa Catarina
+          department: Departamento de Engenharia Elétrica e Eletrônica
+          address: R. Delfino Conti
+          city: Florianópolis
+          state: Santa Catarina
+          postal-code: 88040-370
+abstract: |
+  Este trabalho tem por objetivo consolidar a técnica de projeto de redes de casamento de impedância, em especial a técnica pela rede L. Para isso, é proposto realizar o casamento de impedância da saída de um amplificador para uma carga de 50 $\Omega$ de modo que a eficiência da potência dissipada na carga seja de 80%. Após algumas análises o projeto foi concluído com sucesso e realizada uma simulação Monte Carlo com 100 iterações para verificar a robustez do projeto por técnicas estatísticas. Os resultados obtidos foram brevemente discutidos.
+keywords: 
+  - Robustez
+  - Adaptação de impedância
+  - Análise estatística
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    include-in-header:
+      - text: |
+          \usepackage{steinmetz}
+          \usepackage[a4paper, margin=1in]{geometry}
+          \usepackage{graphicx} % Required for inserting images
+          \usepackage{circuitikz}
+          \usepackage{amsmath}
+          \usepackage{amssymb}
+          \usepackage{amsthm}
+          \usepackage{comment}
+
+          \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
+    keep-tex: true
+    journal:
+      name: RF Circuits
+      formatting: preprint
+      # model: 3p # Don't set a model with preprint
+      cite-style: number
+---
+
+# Introdução
+
+```{python}
+#| echo: false
+def format_simple(value, decimals=2):
+    format_string = f"{{:.{decimals}f}}"
+    return f"{format_string.format(value)}"
+```
+
+```{python}
+#| echo: false
+def format(value):
+    if value >= 1e9:
+        return f"{value / 1e9:.2f} G"
+    elif value >= 1e6:
+        return f"{value / 1e6:.2f} M"
+    elif value >= 1e3:
+        return f"{value / 1e3:.2f} k"
+    elif value >= 1:
+        return f"{value:.2f} "
+    elif value >= 1e-3:
+        return f"{value * 1e3:.2f} m"
+    elif value >= 1e-6:
+        return f"{value * 1e6:.2f} μ"
+    elif value >= 1e-9:
+        return f"{value * 1e9:.2f} n"
+    elif value >= 1e-12:
+        return f"{value * 1e12:.2f} p"
+    elif value >= 1e-15:
+        return f"{value * 1e12:.2f} p"
+    else:
+        return f"{value:.0e} "
+```
+
+```{python}
+#| echo: false
+
+import math
+
+emitter_efficiency = 60 #%
+Pi_dBm = 5
+Po_dBm = 25
+Pi = 10**(Pi_dBm/10)*1e-3
+Po = 10**(Po_dBm/10)*1e-3
+freq = 400e6 #Hz
+z_source_real = 50 #Ohms
+z_source_imag = 0 
+z_load_real = 50 #Ohms
+z_load_imag = 0
+VL = math.sqrt(2*Po*z_source_real)
+IL = 2*Po/VL
+``` 
+
+
+A intenção deste trabalho é apresentar o projeto de um amplificador de potência que opere na frequência $f=$ `{python} format(freq)`Hz, com uma eficiência de emissor (dreno) de $\eta=$ `{python} format_simple(emitter_efficiency, 0)`%, sendo a potência de entrada $P_i=$ `{python} format_simple(Pi_dBm, 0)` dBm e a potência de saída $P_o=$ `{python} format_simple(Po_dBm, 0)` dBm, com a impedância de fonte igual a `{python} format_simple(z_source_real, 0)` $\Omega$ e a impedância de saída, `{python} format_simple(z_load_real, 0)` $\Omega$.
+
+Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_L=$ `{python} format(VL)`V e $I_L=$ `{python} format(IL)`A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# References {-}
