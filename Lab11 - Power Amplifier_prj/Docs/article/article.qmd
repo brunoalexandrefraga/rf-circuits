@@ -125,7 +125,4 @@ Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=
 
 
 
-
-
-
 # References {-}
