@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-233,-142,1797,1128,0.715976,0,0
+View=-342,-172,1790,1148,0.715976,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -31,7 +31,6 @@ IProbe IL 1 550 360 -26 16 0 0 "SIL-2" 0
 VProbe VL 1 660 470 -16 28 0 3 "SIL-2" 0
 .TR TR1 1 1080 170 0 63 0 0 "lin" 0 "0" 0 "1 ms" 1 "501" 1 "Trapezoidal" 0 "1e-16" 0 "500" 0 "0.001" 0 "1 µV" 0 "yes" 0 "none" 0
 Eqn Eqn2 1 220 20 0 8 0 0 "f0=sqrt(1/(LL*CL))/(2*pi)=" 1 "yes" 0
-Eqn Eqn1 1 80 20 0 8 0 0 "RL=1 kΩ=" 1 "LL=637 nH=" 1 "CL=398 pF=" 1 "yes" 0
 GND * 1 20 540 0 0 0 0
 Vac V1 1 20 420 -102 -23 1 2 "0.026 V" 1 "f0" 1 "0" 0 "0" 0 "SUBCLICK" 0
 GND * 1 60 280 0 0 0 0
@@ -40,6 +39,7 @@ GND * 1 490 590 0 0 0 0
 GND * 1 600 590 0 0 0 0
 Eqn Eqn4 1 440 10 0 8 0 0 "Temp=16.85=" 1 "yes" 0
 Eqn Eqn3 1 580 20 0 8 0 0 "T=Temp-T0K=" 1 "VT=(kB*T)/qelectron=" 1 "yes" 0
+Eqn Eqn1 1 420 -120 0 8 0 0 "RL=1 kΩ=" 1 "LL=637 nH=" 1 "CL=398 pF=" 1 "yes" 0
 </Components>
 <Wires>
 260 390 280 390 "" 0 0 0 ""
