@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-342,-172,1790,1148,0.715976,0,0
+View=-342,-281,1790,1070,0.715976,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -37,9 +37,9 @@ GND * 1 60 280 0 0 0 0
 GND * 1 380 590 0 0 0 0
 GND * 1 490 590 0 0 0 0
 GND * 1 600 590 0 0 0 0
-Eqn Eqn4 1 440 10 0 8 0 0 "Temp=16.85=" 1 "yes" 0
 Eqn Eqn3 1 580 20 0 8 0 0 "T=Temp-T0K=" 1 "VT=(kB*T)/qelectron=" 1 "yes" 0
 Eqn Eqn1 1 420 -120 0 8 0 0 "RL=1 kΩ=" 1 "LL=637 nH=" 1 "CL=398 pF=" 1 "yes" 0
+Eqn Eqn4 1 440 10 0 8 0 0 "Temp=26.85=" 1 "yes" 0
 </Components>
 <Wires>
 260 390 280 390 "" 0 0 0 ""
