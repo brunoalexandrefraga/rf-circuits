@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-20,-40,2253,1383,0.385036,0,0
+View=-20,24,2297,1322,0.751111,275,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -39,6 +39,8 @@ Eqn Eqn1 1 290 650 0 8 0 0 "RL=1 kΩ=" 1 "LL=637 nH=" 1 "CL=398 pF=" 1 "Vcc=3.3 
 Vdc V2 1 310 160 18 -26 0 0 "Vcc" 1 "battery" 0 "SIL-2" 0
 Eqn Eqn7 1 940 1040 0 8 0 0 "Ic_dc=yvalue(Ic.Ib, 0)=" 1 "Pdc=Vcc*Ic_dc=" 1 "yes" 0
 Eqn Eqn8 1 940 1150 0 8 0 0 "n=PL/Pdc=" 1 "yes" 0
+Eqn Eqn9 1 940 1270 0 8 0 0 "RLopt=abs(Vcc/IL_f0)=" 1 "yes" 0
+Eqn Eqn10 0 290 820 0 8 0 0 "RL=1105.914 Ω=" 1 "LL=637 nH=" 1 "CL=398 pF=" 1 "Vcc=3.3 V=" 1 "yes" 0
 </Components>
 <Wires>
 480 240 480 330 "" 0 0 0 ""
@@ -125,7 +127,10 @@ Eqn Eqn8 1 940 1150 0 8 0 0 "n=PL/Pdc=" 1 "yes" 0
 	<"Pdc" "" #0000ff 0 3 1 0 0 0 "">
 </Tab>
 <Tab 1176 1178 302 50 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 10000 315 0 225 "" "" "">
-	<"n*100" "" #0000ff 0 3 1 0 0 0 "">
+	<"n*100" "" #0000ff 0 7 1 0 0 0 "">
+</Tab>
+<Tab 1169 1302 170 53 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+	<"RLopt" "" #0000ff 0 7 1 0 0 0 "">
 </Tab>
 </Diagrams>
 <Paintings>
