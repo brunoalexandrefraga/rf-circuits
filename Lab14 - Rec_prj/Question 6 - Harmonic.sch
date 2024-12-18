@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=183,-151,3569,1371,0.367026,0,0
+View=224,-31,3569,1542,0.715978,0,569
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -160,4 +160,6 @@ Eqn Eqn1 1 520 850 0 8 0 0 "Pcc=vcc*yvalue(ic.Ib, 0)=" 1 "Pee=yvalue(Ve.dVb, 0)*
 </Rect>
 </Diagrams>
 <Paintings>
+Text 435 1161 16 #000000 0 6. Verifique a potência na carga, a classe de operação, a \n eficiência.
+Text 415 1261 16 #000000 0 A potência de carga e a eficiência estão apresentadas nas \n tabelas deste esquemático. Com o projeto realizado, foi obtido \n com sucesso uma potência de carga de 20 dBm, com uma potência \n de entrada de aproximadamente 5 dBm. A eficiência também \n se comportou adequadamente, ficando acima do que foi estabelecido \n pelo problema, ou seja, 45%.
 </Paintings>

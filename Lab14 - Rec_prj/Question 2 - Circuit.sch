@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=0,0,1162,800,1,0,0
+View=0,40,1162,924,1,0,240
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.dpl
@@ -75,4 +75,6 @@ GND * 1 820 460 0 0 0 0
 <Diagrams>
 </Diagrams>
 <Paintings>
+Text 195 581 16 #000000 0 2. Desenhe o circuito no Qucstudio, usando diferentes \n arquivos esquemáticos para registrar as alterações. \n Escolha a fonte de sinal e a simulação adequadas para \n cada figura de mérito avaliada.
+Text 195 691 16 #000000 0 O circuito aqui apresentado trata-se de um amplificador \n de potência classe B, alimentado por somente uma fonte  \n de 5 V e fornece uma potência de 20 dBm à uma carga \n de 50 \\Omega.
 </Paintings>

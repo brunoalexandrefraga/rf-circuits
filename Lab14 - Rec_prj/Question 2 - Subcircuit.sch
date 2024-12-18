@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=0,0,1132,800,1,0,0
+View=0,80,1132,1040,1,0,296
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.dpl
@@ -77,4 +77,6 @@ _BJT T1 1 500 320 7 -54 0 0 "npn" 0 "1e-16" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 1 "0" 
 <Diagrams>
 </Diagrams>
 <Paintings>
+Text 195 591 16 #000000 0 2. Desenhe o circuito no Qucstudio, usando diferentes \n arquivos esquemáticos para registrar as alterações. \n Escolha a fonte de sinal e a simulação adequadas para \n cada figura de mérito avaliada.
+Text 185 701 16 #000000 0 Subcircuito utilizado para medições de forma facilitada.
 </Paintings>

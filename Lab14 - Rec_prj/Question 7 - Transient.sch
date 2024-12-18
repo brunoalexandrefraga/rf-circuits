@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=633,-106,2752,1182,0.552433,0,0
+View=633,-166,2752,1137,0.552433,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -117,4 +117,6 @@ Eqn Eqn1 1 2250 700 0 8 0 0 "angle=360*fs*5.04e-09=" 1 "yes" 0
 </Tab>
 </Diagrams>
 <Paintings>
+Text 2285 121 16 #000000 0 7. Plote a corrente de coletor e demais formas de onda \n relevantes.
+Text 2235 871 16 #000000 0 Como o ângulo de condução é de aproximadamente 180º, \n este amplificador trata-se de um amplificador classe B. Ainda \n tenho um pouco de dúvidas quanto à avaliação da classe de \n operação, bem como projetar um amplificador em uma classe \n específica.
 </Paintings>

@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=294,-202,2455,1031,0.605827,0,89
+View=294,-202,2455,1151,0.605827,0,180
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -128,4 +128,6 @@ Eqn Eqn2 1 1710 650 0 8 0 0 "vcc=5 V=" 1 "fs=100 MHz=" 1 "Temp=26.85=" 1 "yes" 0
 </Tab>
 </Diagrams>
 <Paintings>
+Text 805 711 16 #000000 0 3. Verifique o ponto de operação.
+Text 805 811 16 #000000 0 Neste arquivo são apresentados os parâmetros de operação \n do amplificador de potência. Atenção especial pelo valor da \n corrente de emissor, que dita a potência fornecida à carga.
 </Paintings>

@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=180,-71,1868,1199,0.715978,0,0
+View=58,-10,1868,1219,0.715978,0,179
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.dpl
@@ -96,6 +96,14 @@ Eqn Eqn2 1 1250 410 0 8 0 0 "vcc=5 V=" 1 "fs=100 MHz=" 1 "Temp=26.85=" 1 "yes" 0
 	<"stabS()" "" #ff0000 2 3 0 1 0 0 "">
 	  <Mkr 0 250 -160 3 1 0 0 1 50>
 </Smith>
+<Tab 116 822 413 55 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+	<"S[1,1]" "" #0000ff 0 3 1 0 0 0 "">
+	<"S[1,2]" "" #0000ff 0 3 1 0 0 0 "">
+	<"S[2,1]" "" #0000ff 0 3 1 0 0 0 "">
+	<"S[2,2]" "" #0000ff 0 3 1 0 0 0 "">
+</Tab>
 </Diagrams>
 <Paintings>
+Text 405 581 16 #000000 0 4. Avalie a estabilidade do circuito.
+Text 395 611 16 #000000 0 Como o parâmetro S[1,2] é muito próximo de 0, a estabilidade \n é determinada somente pelo parâmetros de reflexão na entrada \n e na saída e os raios dos círculos de estabilidade tornam-se nulos. \n Dessa forma, o circuito encontra-se em estabilidade incondicional, \n fato que pode ser verificado pelo parâmetro \\mu = 1
 </Paintings>
