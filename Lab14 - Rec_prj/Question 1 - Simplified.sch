@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-982,-570,2319,1416,0.683341,0,0
+View=-862,-595,2312,1416,0.489256,86,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -22,11 +22,11 @@ GND * 1 -250 -120 0 0 0 0
 IProbe ic 1 110 -340 -42 -26 0 3 "SIL-2" 0
 Vac V5 1 -250 -210 18 -26 0 0 "Vi" 1 "fs" 1 "0" 0 "0" 0 "SUBCLICK" 0
 .AC AC1 0 660 -310 0 38 0 0 "list" 1 "1 GHz" 0 "10 GHz" 0 "fs" 1 "no" 0 "none" 0
-.HB HB1 1 1460 -40 0 63 0 0 "8@;" 0 "no" 0 "1 GHz" 0 "lin" 0 "1 kHz" 0 "10 kHz" 0 "10" 0 "0.001" 0 "1 µA" 0 "500" 0
+.HB HB1 0 1460 -40 0 63 0 0 "8@;" 0 "no" 0 "1 GHz" 0 "lin" 0 "1 kHz" 0 "10 kHz" 0 "10" 0 "0.001" 0 "1 µA" 0 "500" 0
 GND * 1 400 -110 0 0 0 0
 BiasT X2 1 220 -390 -26 -53 0 2 "L_bias" 0 "C_bias" 0
 BiasT X1 1 -120 -260 -26 34 0 0 "L_bias" 0 "C_bias" 0
-.TR TR1 0 1170 -230 0 63 0 0 "steady" 0 "0" 0 "10 ns" 0 "128" 1 "Trapezoidal" 1 "1e-16" 0 "500" 0 "0.001" 0 "1 µV" 0 "yes" 0 "none" 0
+.TR TR1 1 1170 -230 0 63 0 0 "steady" 0 "0" 0 "10 ns" 0 "128" 1 "Trapezoidal" 1 "1e-16" 0 "500" 0 "0.001" 0 "1 µV" 0 "yes" 0 "none" 0
 IProbe ie1 1 110 -180 -42 -26 0 3 "SIL-2" 0
 GND * 1 140 20 0 0 0 0
 GND * 1 240 20 0 0 0 0
