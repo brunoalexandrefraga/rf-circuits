@@ -42,6 +42,22 @@ format:
       cite-style: number
 ---
 
+# Notações
+
+
+Para ilustrar a convenção, assume-se uma corrente \(i_C(t)\) que flui por um ramo em um circuito particular. A corrente \(i_C(t)\) consiste em um componente de corrente contínua (DC) \(I_C\), sobre o qual está sobreposta um componente senoidal \(i_c(t)\), cuja amplitude de pico é \(I_c\). Observe que, em um instante \(t\), a corrente instantânea total \(i_C(t)\) é a soma da corrente contínua \(I_C\) e da corrente do sinal \(i_c(t)\),
+$$
+i_C(t) = I_C + i_c(t)
+$$
+
+onde a corrente do sinal é dada por
+
+$$
+i_c(t) = I_c \sin \omega t
+$$
+Assim, declaramos algumas convenções: As quantidades instantâneas totais são denotadas por um símbolo em minúsculas com subscrito(s) em maiúsculas, por exemplo, \(i_C(t)\), \(v_{DS}(t)\). As quantidades de corrente contínua (DC) são denotadas por um símbolo em maiúsculas com subscrito(s) em maiúsculas, por exemplo, \(I_C\), \(V_{DS}\). As quantidades incrementais de sinal são denotadas por um símbolo em minúsculas com subscrito(s) em minúsculas, por exemplo, \(i_c(t)\), \(v_{gs}(t)\). Se o sinal for uma onda senoidal, sua amplitude é denotada por um símbolo em maiúsculas com subscrito(s) em minúsculas, por exemplo, \(I_c\), \(V_{gs}\). Finalmente, embora não mostrado na Fig. 1.15, as fontes de alimentação DC são denotadas por uma letra maiúscula com um subscrito de duas letras maiúsculas, por exemplo, \(V_{CC}\), \(V_{DD}\). Uma notação semelhante é usada para a corrente contínua retirada da fonte de alimentação, por exemplo, \(I_{CC}\), \(I_{DD}\).
+
+
 # Introdução
 
 ```{python}
@@ -95,10 +111,13 @@ VL = math.sqrt(2*Po*z_source_real)
 IL = 2*Po/VL
 ``` 
 
-
 A intenção deste trabalho é apresentar o projeto de um amplificador de potência que opere na frequência $f=$ `{python} format(freq)`Hz, com uma eficiência de emissor (dreno) de $\eta=$ `{python} format_simple(emitter_efficiency, 0)`%, sendo a potência de entrada $P_i=$ `{python} format_simple(Pi_dBm, 0)` dBm e a potência de saída $P_o=$ `{python} format_simple(Po_dBm, 0)` dBm, com a impedância de fonte igual a `{python} format_simple(z_source_real, 0)` $\Omega$ e a impedância de saída, `{python} format_simple(z_load_real, 0)` $\Omega$.
 
-Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_L=$ `{python} format(VL)`V e $I_L=$ `{python} format(IL)`A.
+Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_L=$ `{python} format(VL)`V e $I_L=$ `{python} format(IL)`A. A forma mais fácil de garantir que os valores apresentados sejam atingidos é adequando a corrente dc de emissor. Essa abordagem é possível, uma vez que a corrente da carga é aproximadamente a mesma que a corrente de coletor e a corrente de coletor é aproximadamente a mesma que a corrente de emissor, dessa forma,
+
+$$
+    i_L
+$$
 
 
 
