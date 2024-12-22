@@ -45,7 +45,7 @@ format:
 # Notações
 
 
-Para ilustrar a convenção, assume-se uma corrente \(i_C(t)\) que flui por um ramo em um circuito particular. A corrente \(i_C(t)\) consiste em um componente de corrente contínua (DC) \(I_C\), sobre o qual está sobreposta um componente senoidal \(i_c(t)\), cuja amplitude de pico é \(I_c\). Observe que, em um instante \(t\), a corrente instantânea total \(i_C(t)\) é a soma da corrente contínua \(I_C\) e da corrente do sinal \(i_c(t)\),
+Para ilustrar a convenção, assume-se uma corrente $i_C(t)$ que flui por um ramo em um circuito particular. Essa corrente consiste em um componente de corrente contínua (dc) $I_C$, sobre o qual está sobreposta um componente senoidal $i_c(t)$, cuja **amplitude de pico** é $I_c$. Observe que, em um instante $t$, a corrente instantânea total $i_C(t)$ é a soma da corrente contínua $I_C$ e da corrente do sinal $i_c(t)$,
 $$
 i_C(t) = I_C + i_c(t)
 $$
@@ -53,10 +53,8 @@ $$
 onde a corrente do sinal é dada por
 
 $$
-i_c(t) = I_c \sin \omega t
+i_c(t) = I_c \sin\left(\omega t\right)
 $$
-Assim, declaramos algumas convenções: As quantidades instantâneas totais são denotadas por um símbolo em minúsculas com subscrito(s) em maiúsculas, por exemplo, \(i_C(t)\), \(v_{DS}(t)\). As quantidades de corrente contínua (DC) são denotadas por um símbolo em maiúsculas com subscrito(s) em maiúsculas, por exemplo, \(I_C\), \(V_{DS}\). As quantidades incrementais de sinal são denotadas por um símbolo em minúsculas com subscrito(s) em minúsculas, por exemplo, \(i_c(t)\), \(v_{gs}(t)\). Se o sinal for uma onda senoidal, sua amplitude é denotada por um símbolo em maiúsculas com subscrito(s) em minúsculas, por exemplo, \(I_c\), \(V_{gs}\). Finalmente, embora não mostrado na Fig. 1.15, as fontes de alimentação DC são denotadas por uma letra maiúscula com um subscrito de duas letras maiúsculas, por exemplo, \(V_{CC}\), \(V_{DD}\). Uma notação semelhante é usada para a corrente contínua retirada da fonte de alimentação, por exemplo, \(I_{CC}\), \(I_{DD}\).
-
 
 # Introdução
 
@@ -113,17 +111,86 @@ IL = 2*Po/VL
 
 A intenção deste trabalho é apresentar o projeto de um amplificador de potência que opere na frequência $f=$ `{python} format(freq)`Hz, com uma eficiência de emissor (dreno) de $\eta=$ `{python} format_simple(emitter_efficiency, 0)`%, sendo a potência de entrada $P_i=$ `{python} format_simple(Pi_dBm, 0)` dBm e a potência de saída $P_o=$ `{python} format_simple(Po_dBm, 0)` dBm, com a impedância de fonte igual a `{python} format_simple(z_source_real, 0)` $\Omega$ e a impedância de saída, `{python} format_simple(z_load_real, 0)` $\Omega$.
 
-Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_L=$ `{python} format(VL)`V e $I_L=$ `{python} format(IL)`A. A forma mais fácil de garantir que os valores apresentados sejam atingidos é adequando a corrente dc de emissor. Essa abordagem é possível, uma vez que a corrente da carga é aproximadamente a mesma que a corrente de coletor e a corrente de coletor é aproximadamente a mesma que a corrente de emissor, dessa forma,
+Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_\ell=$ `{python} format(VL)`V e $I_\ell=$ `{python} format(IL)`A. A forma mais fácil de garantir que os valores apresentados sejam atingidos é adequando a corrente dc de emissor. Para isso, utiliza-se a seguinte relação
 
 $$
-    i_L
+    i_C(t)=I_E\left[1+\frac{2I_1(x)}{I_0(x)}\cos\left(\omega_1t\right)\right]
 $$
 
+Sendo $I_C=I_E$ e,
 
+$$
+    I_c = I_E\frac{2I_1(x)}{I_0(x)}
+$$
 
+Como já se sabe que $I_c=I_\ell$, então
 
+$$
+    I_\ell=I_E\frac{2I_1(x)}{I_0(x)}
+$$
 
+Antes de mais nada, calcula-se o valor de $x$ pela seguinte expressão
 
+$$
+    x = \frac{v_I}{V_T}
+$$
+
+em que $v_I$ é dado por 
+
+$$
+    v_I=\sqrt{2R_sP_i}
+$$
+
+```{python}
+#| echo: false
+from scipy.constants import Boltzmann as k, elementary_charge as q
+
+T0=273.15
+T_celsius = 26.85
+T_kelvin = T_celsius + T0
+VT = k * T_kelvin / q
+```
+
+```{python}
+#| echo: false
+import math 
+
+Vi=math.sqrt(2*Pi*z_source_real)
+x=Vi/VT
+```
+
+resultando em $v_I=$ `{python} format(Vi)`V e, consequentemente, $x=$ `{python} format_simple(x)`.
+
+```{python}
+#| echo: false
+
+from scipy import special
+
+I12_I0 = 2*special.iv(1, x)/special.iv(0, x)
+IE = IL/I12_I0
+beta = 100
+alpha = (beta+1)/beta
+IC=alpha*IE
+```
+
+Com esse valor de $x$, é possível obter o valor da corrente dc de emissor, resultando em $I_E=$ `{python} format(IE)`A. Além disso, é necessário determinar a tensão necessária para alimentar o coletor do transistor e permitir que ele opere com a tensão necessária na carga. Essa tensão é dada pela seguinte equação
+
+$$
+    V_{CC} = V_\ell+V_{BE}-V_{{CE}_\text{sat}}
+$$
+
+```{python}
+#| echo: false
+import math 
+
+Is = 1e-15
+VBE = VT * math.log(IC / Is)
+VCEsat = 0.3
+VCC = VL+VBE-VCEsat
+VB = 1 #Selecionada ar
+```
+
+Com a corrente $I_E$ obtida anteriormente, obtém-se uma tensão $V_{BE}=$ `{python} format(VBE)`V. Assumindo-se uma tensão $V_{{CE}_\text{sat}}=$ `{python} format_simple(VCEsat, 1)`V, obtém-se uma tensão $V_{CC}=$ `{python} format(VCC)`V. Para garantir a correta operação do amplificador, é necessário uma corrente de base maior que $V_{BE}$, dessa forma, seleciona-se uma tensão de base, $V_B=$ `{python} format(VB)`V.
 
 
 
