@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-957,-842,2022,1352,0.560789,0,720
+View=-914,-1050,2022,1116,0.783251,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -39,11 +39,11 @@ L L1 1 110 -570 4 -57 0 3 "L" 1 "0" 0 "" 0 "SELF-WE-PD3S" 0
 C C1 1 30 -570 7 -58 0 1 "C" 1 "0" 0 "" 0 "neutral" 0 "SMD0603" 0
 VProbe vL 1 240 -570 5 -47 1 1 "SIL-2" 0
 VProbe Ve 1 -260 -340 -31 28 1 3 "SIL-2" 0
-Eqn Eqn2 1 -750 -690 0 8 0 0 "vcc=8.99 V=" 1 "Vbe_dc=1 V=" 1 "ie=57.5 mA=" 1 "fs=400 MHz=" 1 "yes" 0
 Eqn Eqn4 1 600 -470 0 8 0 0 "L=C*(R^2/Q^2)=" 1 "R=50=" 1 "Q=50=" 1 "C=Q/(omega*R)=" 1 "omega=pi*2*400e6=" 1 "C_bias=1 uF=" 1 "L_bias=1 uH=" 1 "Rs=50=" 1 "yes" 0
 Eqn Eqn1 1 -300 220 0 8 0 0 "Pcc=vcc*yvalue(ic.Ib, 0)=" 1 "Pee=yvalue(Ve.dVb, 0)*yvalue(ie1.Ib,0)=" 1 "PL=0.5*real(yvalue(vL.dVb, fs)*conj(yvalue(iL.Ib, fs)))=" 1 "Pi=yvalue(Vb.Vb, fs)^2/(2*Rs)=" 1 "eff=(PL/(Pcc+Pee))*100=" 1 "yes" 0
 Eqn Eqn5 1 -640 220 0 8 0 0 "PL_dBm=10*log10(PL/1e-3)=" 1 "Pi_dBm=10*log10(Pi/1e-3)=" 1 "yes" 0
 Eqn Eqn3 1 -600 -690 0 8 0 0 "gm=ie/Ut=" 1 "Ut=(kB*T0)/qelectron=" 1 "Vi=562.5 mV=" 1 "yes" 0
+Eqn Eqn2 1 -750 -690 0 8 0 0 "vcc=9.02 V=" 1 "Vbe_dc=1 V=" 1 "ie=57.57 mA=" 1 "fs=400 MHz=" 1 "yes" 0
 </Components>
 <Wires>
 -180 -690 -100 -690 "" 0 0 0 ""
@@ -167,10 +167,10 @@ Eqn Eqn3 1 -600 -690 0 8 0 0 "gm=ie/Ut=" 1 "Ut=(kB*T0)/qelectron=" 1 "Vi=562.5 m
 	<"Pee" "" #0000ff 0 3 1 0 0 0 "">
 	<"eff" "" #0000ff 0 3 1 0 0 0 "">
 </Tab>
-<Tab -581 689 198 51 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+<Tab -582 688 285 51 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
 	<"Pi_dBm" "" #0000ff 0 3 1 0 0 0 "">
 	<"PL_dBm" "" #0000ff 0 3 1 0 0 0 "">
-	<"eff" "" #0000ff 0 3 1 0 0 0 "">
+	<"eff" "" #0000ff 0 7 1 0 0 0 "">
 </Tab>
 <Tab -593 798 386 49 71 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
 	<"Pee" "" #0000ff 0 3 1 0 0 0 "">

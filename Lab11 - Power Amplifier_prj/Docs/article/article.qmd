@@ -168,7 +168,7 @@ from scipy import special
 
 I12_I0 = 2*special.iv(1, x)/special.iv(0, x)
 IE = IL/I12_I0
-beta = 100
+beta = 1000
 alpha = (beta+1)/beta
 IC=alpha*IE
 ```
@@ -183,16 +183,46 @@ $$
 #| echo: false
 import math 
 
-Is = 1e-15
+Is = 1e-16
 VBE = VT * math.log(IC / Is)
 VCEsat = 0.3
-VCC = VL+VBE-VCEsat
+VCC_ideal = VL+VBE-VCEsat
 VB = 1 #Selecionada ar
 ```
 
-Com a corrente $I_E$ obtida anteriormente, obtém-se uma tensão $V_{BE}=$ `{python} format(VBE)`V. Assumindo-se uma tensão $V_{{CE}_\text{sat}}=$ `{python} format_simple(VCEsat, 1)`V, obtém-se uma tensão $V_{CC}=$ `{python} format(VCC)`V. Para garantir a correta operação do amplificador, é necessário uma corrente de base maior que $V_{BE}$, dessa forma, seleciona-se uma tensão de base, $V_B=$ `{python} format(VB)`V.
+Com a corrente $I_E$ obtida anteriormente, obtém-se uma tensão $V_{BE}=$ `{python} format(VBE)`V. Assumindo-se uma tensão $V_{{CE}_\text{sat}}=$ `{python} format_simple(VCEsat, 1)`V, obtém-se uma tensão $V_{CC}=$ `{python} format(VCC_ideal)`V. Para garantir a correta operação do amplificador, é necessário uma corrente de base maior que $V_{BE}$, dessa forma, seleciona-se uma tensão de base, $V_B=$ `{python} format(VB)`V. Com essas tensões, teoricamente obtém-se uma eficiência máxima do amplificador. Entretanto, como o problema estipula uma eficiência de $\eta=$ `{python} format_simple(emitter_efficiency, 0)`%, os parâmetros de alimentação devem ser ajustados para que essa restrição seja devidamente atendida. Primeiramente, analisa-se a equação para o cálculo da eficiência, apresentada abaixo
 
+$$
+    \eta=\frac{P_L}{P_{CC}+P_{EE}}
+$$ {#eq-eff-calc}
 
+em que $P_{CC}=V_{CC}I_C$ e $P_{EE}=V_EI_E$, sendo
+
+$$
+    V_E=V_B-V_{BE}
+$$
+
+```{python}
+#| echo: false
+import math 
+
+VE = VB-VBE
+PEE = VE*IE
+PCC = VCC_ideal*IC
+PL_calc = VL*IL/2
+eff_calc = Po/(PCC+PEE)*100
+```
+
+```{python}
+#| echo: false
+def calcular_vcc(eta, pl=Po, pee=PEE, ic=IC):
+    vcc = (pl / eta - pee) / ic
+    return vcc
+
+VCC=calcular_vcc(emitter_efficiency/100)
+```
+
+Com os dados obtidos até então, essa tensão é de $V_E=$ `{python} format(VE)`V resultando em uma potência de emissor de $P_{EE}=$ `{python} format(PEE)`W. Por outro lado, a potência de coletor é de $P_{CC}=$ `{python} format(PCC)`W. Assim, obtém-se uma eficiência $\eta=$ `{python} format_simple(eff_calc)`%. Pela [Eq. @eq-eff-calc], pode-se obter um valor de $V_{CC}$ que forneça o valor desejado para a eficiência (`{python} format_simple(emitter_efficiency, 0)`%). Resolvendo a equação, obtém-se um valor de $V_{CC}=$ `{python} format(VCC)`V.
 
 
 
