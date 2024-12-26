@@ -239,7 +239,18 @@ RB2=10e3
 RB1 = (VCC_used*RB2)/VB-RB2
 ```
 
-Para se obter a tensão de base desejada e selecionando um resistor $R_{B2}=$ `{python} format(RB2)`$\Omega$, chega-se a $R_{B1}=$ `{python} format(RB1)`$\Omega$.
+Para se obter a tensão de base desejada e selecionando um resistor $R_{B2}=$ `{python} format(RB2)`$\Omega$, chega-se a $R_{B1}=$ `{python} format(RB1)`$\Omega$. Para calcular o resistor de emissor, utiliza-se a seguinte equação
+
+$$
+    R_E = \frac{V_E}{I_E}
+$$
+
+```{python}
+#| echo: false
+RE = VE/IE
+```
+
+Dessa forma, obtém-se um resistor $R_E=$ `{python} format(RE)`$\Omega$.
 
 
 
