@@ -220,14 +220,26 @@ def calcular_vcc(eta, pl=Po, pee=PEE, ic=IC):
     return vcc
 
 VCC=calcular_vcc(emitter_efficiency/100)
+VCC_used=9
 ```
 
-Com os dados obtidos até então, essa tensão é de $V_E=$ `{python} format(VE)`V resultando em uma potência de emissor de $P_{EE}=$ `{python} format(PEE)`W. Por outro lado, a potência de coletor é de $P_{CC}=$ `{python} format(PCC)`W. Assim, obtém-se uma eficiência $\eta=$ `{python} format_simple(eff_calc)`%. Pela [Eq. @eq-eff-calc], pode-se obter um valor de $V_{CC}$ que forneça o valor desejado para a eficiência (`{python} format_simple(emitter_efficiency, 0)`%). Resolvendo a equação, obtém-se um valor de $V_{CC}=$ `{python} format(VCC)`V.
+Com os dados obtidos até então, essa tensão é de $V_E=$ `{python} format(VE)`V resultando em uma potência de emissor de $P_{EE}=$ `{python} format(PEE)`W. Por outro lado, a potência de coletor é de $P_{CC}=$ `{python} format(PCC)`W. Assim, obtém-se uma eficiência $\eta=$ `{python} format_simple(eff_calc)`%. Pela [Eq. @eq-eff-calc], pode-se obter um valor de $V_{CC}$ que forneça o valor desejado para a eficiência (`{python} format_simple(emitter_efficiency, 0)`%). Resolvendo a equação, obtém-se um valor de $V_{CC}=$ `{python} format(VCC)`V. Os resultados obtidos pelos cálculos podem ser visualizados na [Fig. @fig-results-simplified], com uma pequena diferença que foi uma alteração na tensão $V_{CC}=$ `{python} format(VCC_used)`V.
 
+![Validação do circuito com Diodo](../images/results-amplifier-simplified.png){width=300, #fig-results-simplified}
 
+O próximo passo, então, é remover as fontes e implementar a rede de polarização do amplificador. Inicia-se por calcular o divisor resistivo da base pela seguinte equação
 
+$$
+    V_B=\frac{V_{CC}R_{B2}}{R_{B1}+R_{B2}}
+$$
 
+```{python}
+#| echo: false
+RB2=10e3
+RB1 = (VCC_used*RB2)/VB-RB2
+```
 
+Para se obter a tensão de base desejada e selecionando um resistor $R_{B2}=$ `{python} format(RB2)`$\Omega$, chega-se a $R_{B1}=$ `{python} format(RB1)`$\Omega$.
 
 
 
