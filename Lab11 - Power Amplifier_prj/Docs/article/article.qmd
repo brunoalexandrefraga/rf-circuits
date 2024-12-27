@@ -298,4 +298,28 @@ Por conta desse comportamento, uma boa ideia é aumentar o resistor de emissor p
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # References {-}
