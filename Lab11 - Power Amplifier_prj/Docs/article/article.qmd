@@ -237,9 +237,10 @@ $$
 #| echo: false
 RB2=10e3
 RB1 = (VCC_used*RB2)/VB-RB2
+RB1_real = RB1*0.625
 ```
 
-Para se obter a tensão de base desejada e selecionando um resistor $R_{B2}=$ `{python} format(RB2)`$\Omega$, chega-se a $R_{B1}=$ `{python} format(RB1)`$\Omega$. Para calcular o resistor de emissor, utiliza-se a seguinte equação
+Para se obter a tensão de base desejada e selecionando um resistor $R_{B2}=$ `{python} format(RB2)`$\Omega$, chega-se a $R_{B1}=$ `{python} format(RB1)`$\Omega$. Apesar de esse valor ser calculado para um divisor resistivo ideal, para a malha de polarização fornecer a tensão necessária, utiliza-se $R_{B1}=$ `{python} format(RB1_real)`$\Omega$. A seguir, para se calcular o resistor de emissor, utiliza-se a seguinte equação
 
 $$
     R_E = \frac{V_E}{I_E}
@@ -250,11 +251,20 @@ $$
 RE = VE/IE
 ```
 
-Dessa forma, obtém-se um resistor $R_E=$ `{python} format(RE)`$\Omega$.
+Dessa forma, obtém-se um resistor $R_E=$ `{python} format(RE)`$\Omega$. E, finalmente, calcula-se o resistor de coletor pela equação
 
+$$
+    R_C=\frac{V_C}{I_C}=\frac{V_{CC}-V_\ell}{I_C}
+$$
 
+```{python}
+RC=(VCC-VL)/IC
+RC_real=54
+```
 
+Essa equação resulta em $R_C=$ `{python} format(RC)`$\Omega$. Adequando os valores ao projeto, um valor de resistor adequado é de $R_C=$ `{python} format(RC_real)`$\Omega$. A [Fig. @fig-results] apresenta o circuito com os valores descritos, além de arredondar o valor do resistor de $R_E$.
 
+![Validação do circuito com Diodo](../images/results-amplifier.png){width=300, #fig-results}
 
 
 
