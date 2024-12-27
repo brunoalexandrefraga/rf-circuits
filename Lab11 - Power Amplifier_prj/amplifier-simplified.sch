@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=13,-16,3155,1350,0.54358,7,5
+View=-97,-16,2975,1350,0.759215,0,73
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.dpl
@@ -36,9 +36,8 @@ L L1 1 1250 410 4 -57 0 3 "L" 1 "0" 0 "" 0 "SELF-WE-PD3S" 0
 C C1 1 1170 410 7 -58 0 1 "C" 1 "0" 0 "" 0 "neutral" 0 "SMD0603" 0
 VProbe vL 1 1380 410 5 -47 1 1 "SIL-2" 0
 VProbe Ve 1 880 640 -31 28 1 3 "SIL-2" 0
-Eqn Eqn4 1 170 460 0 8 0 0 "L=C*(R^2/Q^2)=" 1 "R=50=" 1 "Q=50=" 1 "C=Q/(omega*R)=" 1 "omega=pi*2*400e6=" 1 "C_bias=1 uF=" 1 "L_bias=1 uH=" 1 "Rs=50=" 1 "yes" 0
-Eqn Eqn3 1 170 170 0 8 0 0 "gm=ie/Ut=" 1 "Ut=(kB*T0)/qelectron=" 1 "Vi=562.5 mV=" 1 "yes" 0
-Eqn Eqn2 1 170 300 0 8 0 0 "vcc=9 V=" 1 "Vbe_dc=1 V=" 1 "ie=57.57 mA=" 1 "fs=400 MHz=" 1 "yes" 0
+Eqn Eqn4 1 310 430 0 8 0 0 "L=C*(R^2/Q^2)=" 1 "R=50=" 1 "Q=50=" 1 "C=Q/(omega*R)=" 1 "omega=pi*2*400e6=" 1 "C_bias=1 uF=" 1 "L_bias=1 uH=" 1 "Rs=50=" 1 "yes" 0
+Eqn Eqn2 1 310 270 0 8 0 0 "Vi=562.5 mV=" 1 "fs=400 MHz=" 1 "vcc=9 V=" 1 "Vbe_dc=1 V=" 1 "ie=57.57 mA=" 1 "yes" 0
 </Components>
 <Wires>
 960 290 1040 290 "" 0 0 0 ""

@@ -258,6 +258,7 @@ $$
 $$
 
 ```{python}
+#| echo: false
 RC=(VCC-VL)/IC
 RC_real=54
 ```
@@ -266,11 +267,34 @@ Essa equação resulta em $R_C=$ `{python} format(RC)`$\Omega$. Adequando os val
 
 ![Validação do circuito com Diodo](../images/results-amplifier.png){width=300, #fig-results}
 
+Com essa configuração apresentada, a eficiência é devidamente atingida, mas a corrente na carga fica bem distorcida, como pode-se verificar na [Fig. @fig-load-current-amplifier-ideal].
 
+![Validação do circuito com Diodo](../images/load-current-amplifier-ideal.png){width=300, #fig-load-current-amplifier-ideal}
 
+```{python}
+#| echo: false
+RE_real=10
+RC_real_used=36
+```
 
+```{python}
+#| echo: false
+conduction_angle = 106.87493
 
+def classe_amplificador(angulo):
+    if angulo == 360:
+        return 'A'
+    elif angulo == 180:
+        return 'B'
+    elif 180 < angulo < 360:
+        return 'AB'
+    elif angulo < 180:
+        return 'C'
+```
 
+Por conta desse comportamento, uma boa ideia é aumentar o resistor de emissor para $R_E=$ `{python} format(RE_real)`$\Omega$ e para o coletor obtém-se $R_C=$ `{python} format(RC_real_used)`$\Omega$. Esses valores obtidos empiricamente fornecem uma corrente estável para a carga, como pode ser visualizado na [Fig. @fig-load-current-amplifier-modified], muito diferente do que foi visto em na [Fig. @fig-load-current-amplifier-ideal]. Além disso, a [Fig. @fig-load-current-amplifier-modified] também apresenta o ângulo de condução, que é obtido pela simulação como aproximadamente `{python} format_simple(conduction_angle, 1)` ${}^\circ$, evidenciando que o amplificador aqui projetado opera em classe `{python} classe_amplificador(conduction_angle)`.
+
+![Validação do circuito com Diodo](../images/load-current-amplifier-modified.png){width=300, #fig-load-current-amplifier-modified}
 
 
 
