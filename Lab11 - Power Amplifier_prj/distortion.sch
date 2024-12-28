@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=87,20,3110,1620,0.552434,545,244
+View=133,20,2828,1970,0.552435,60,246
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -47,6 +47,7 @@ Eqn Eqn2 1 450 1050 0 8 0 0 "IM1_0=yvalue(yvalue(ic.Ib, f1),0)=" 1 "IM3_0=yvalue
 .SW SW2 1 720 880 0 63 0 0 "HB1" 1 "vsource" 1 "log" 1 "V0" 1 "2 V" 1 "10000" 1
 Eqn Eqn1 1 450 770 0 8 0 0 "vcc=9 V=" 1 "f1=400 MHz=" 1 "deltaf=4 kHz=" 1 "f2=f1 + deltaf=" 1 "f3=2*f1-f2=" 1 "f4=2*f2-f1=" 1 "pavs=1e-8 W=" 1 "rs=50=" 1 "vsource=sqrt(8*pavs*rs)=" 1 "no" 0
 Eqn Eqn4 1 1200 320 0 8 0 0 "Temp=26.85=" 1 "yes" 0
+R R4 1 770 530 15 -26 0 1 "5 Ω" 1 "26.85" 0 "US" 0 "SMD0603" 0
 </Components>
 <Wires>
 640 190 720 190 "" 0 0 0 ""
@@ -94,7 +95,8 @@ Eqn Eqn4 1 1200 320 0 8 0 0 "Temp=26.85=" 1 "yes" 0
 210 540 210 580 "" 0 0 0 ""
 210 440 210 480 "" 0 0 0 ""
 700 460 770 460 "" 0 0 0 ""
-770 460 770 600 "" 0 0 0 ""
+770 460 770 500 "" 0 0 0 ""
+770 560 770 600 "" 0 0 0 ""
 640 290 640 290 "Vc" 700 260 0 ""
 </Wires>
 <Diagrams>
@@ -102,10 +104,11 @@ Eqn Eqn4 1 1200 320 0 8 0 0 "Temp=26.85=" 1 "yes" 0
 	<Legend 10 -640 1>
 	<"yvalue(ic.Ib, f1)" "" #0000ff 3 3 0 0 0 1 "Corrente (f1)">
 	<"yvalue(ic.Ib, f3)" "" #ff0000 3 3 0 0 0 1 "Corrente (f3)">
+	  <Mkr 0.56247 1228 -545 3 1 0 0 0 50>
 	<"IM1_0/V0*vsource" "" #ff00ff 2 3 0 0 0 1 "Extrapolação corrente (f1)">
-	  <Mkr 0.0708084 278 -865 6 1 0 0 0 50>
+	  <Mkr 1.18658 278 -865 6 1 0 0 0 50>
 	<"IM3_0/V0^3*vsource^3" "" #00ff00 2 3 0 0 0 1 "Extrapolação corrente (f3)">
-	  <Mkr 0.0708648 308 -925 6 1 0 0 0 50>
+	  <Mkr 1.18658 278 -925 6 1 0 0 0 50>
 </Rect>
 </Diagrams>
 <Paintings>

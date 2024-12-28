@@ -297,7 +297,7 @@ Por conta desse comportamento, uma boa ideia é aumentar o resistor de emissor p
 
 ![Validação do circuito com Diodo](../images/load-current-amplifier-modified.png){width=300, #fig-load-current-amplifier-modified}
 
-Utilizando o circuito apresentado na [Fig. @fig-results], pode-se analisar a estabilidade do circuito por meio do parâmetro $\mu$, conforme é apresentado na [Fig. @fig-results-amplifier-stability].
+Utilizando o circuito modificado, pode-se analisar a estabilidade do circuito por meio do parâmetro $\mu$, conforme é apresentado na [Fig. @fig-results-amplifier-stability].
 
 ![Validação do circuito com Diodo](../images/results-amplifier-stability.png){width=300, #fig-results-amplifier-stability}
 
@@ -309,19 +309,6 @@ Outro característica importante de ser apresentada é em relação a distorçã
 
 ![Validação do circuito com Diodo](../images/results-amplifier-ip3.png){width=300, #fig-results-amplifier-ip3}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Para que o ponto de interceptação de terceira ordem atinja o valor mínimo da tensão desejada, pode-se incluir um resistor no emissor, implementando, assim, um *feedback* negativo no circuito. Entretanto, esse a inclusão do *feedback* influencia no ganho do amplificador e por conta disso opta-se por manter o ganho com a eficiência desejada, mesmo que a distorção causada seja um pouco maior que o esperado.
 
 # References {-}
