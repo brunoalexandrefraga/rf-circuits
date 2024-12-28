@@ -105,7 +105,8 @@ z_source_real = 50 #Ohms
 z_source_imag = 0 
 z_load_real = 50 #Ohms
 z_load_imag = 0
-VL = math.sqrt(2*Po*z_source_real)
+Vi = math.sqrt(2*Pi*z_source_real)
+VL = math.sqrt(2*Po*z_load_real)
 IL = 2*Po/VL
 ``` 
 
@@ -296,16 +297,17 @@ Por conta desse comportamento, uma boa ideia é aumentar o resistor de emissor p
 
 ![Validação do circuito com Diodo](../images/load-current-amplifier-modified.png){width=300, #fig-load-current-amplifier-modified}
 
+Utilizando o circuito apresentado na [Fig. @fig-results], pode-se analisar a estabilidade do circuito por meio do parâmetro $\mu$, conforme é apresentado na [Fig. @fig-results-amplifier-stability].
 
+![Validação do circuito com Diodo](../images/results-amplifier-stability.png){width=300, #fig-results-amplifier-stability}
 
+O circuito encontra-se em estabilidade incondicional, fato que pode ser verificado pelo parâmetro $\mu = 1$. Além disso, os parâmetros s são apresentados na [Fig. @fig-results-amplifier-s-params]. 
 
+![Validação do circuito com Diodo](../images/results-amplifier-s-params.png){width=300, #fig-results-amplifier-s-params}
 
+Outro característica importante de ser apresentada é em relação a distorção, apresentando o ponto de interceptação de terceira ordem na [Fig. @fig-results-amplifier-ip3]. Como pode-se perceber, a o ponto de interceptação ocorre antes que da tensão de `{python} format(Vi)`V, necessária para fornecer `{python} format_simple(Pi_dBm, 0)` dBm.
 
-
-
-
-
-
+![Validação do circuito com Diodo](../images/results-amplifier-ip3.png){width=300, #fig-results-amplifier-ip3}
 
 
 

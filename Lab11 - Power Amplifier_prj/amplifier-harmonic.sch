@@ -1,6 +1,6 @@
 <QucsStudio Schematic 4.3.1>
 <Properties>
-View=-20,-240,3273,1309,0.433757,0,23
+View=-39,-240,3266,1309,0.500489,0,0
 Grid=10,10,1
 DataSet=*.dat
 DataDisplay=*.sch
@@ -160,4 +160,5 @@ R R3 1 1120 -30 15 -26 0 1 "36 Ω" 1 "26.85" 0 "US" 0 "SMD0603" 0
 </Tab>
 </Diagrams>
 <Paintings>
+Text 1715 -9 16 #000000 0 Como o parâmetro S[1,2] é muito próximo de 0, a estabilidade \n é determinada somente pelo parâmetros de reflexão na entrada \n e na saída e os raios dos círculos de estabilidade tornam-se nulos. \n Dessa forma, o circuito encontra-se em estabilidade incondicional, \n fato que pode ser verificado pelo parâmetro \\mu = 1
 </Paintings>
