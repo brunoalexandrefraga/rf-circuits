@@ -1,6 +1,6 @@
 ---
-title: Componentes Passivos em RF 
-subtitle: Laboratório 07
+title: Amplificador de Potência
+subtitle: Laboratório 11
 author:
   - name: Bruno Alexandre Fraga
     email: bruno.fraga@posgrad.ufsc.br
@@ -13,11 +13,11 @@ author:
           state: Santa Catarina
           postal-code: 88040-370
 abstract: |
-  Este trabalho tem por objetivo consolidar a técnica de projeto de redes de casamento de impedância, em especial a técnica pela rede L. Para isso, é proposto realizar o casamento de impedância da saída de um amplificador para uma carga de 50 $\Omega$ de modo que a eficiência da potência dissipada na carga seja de 80%. Após algumas análises o projeto foi concluído com sucesso e realizada uma simulação Monte Carlo com 100 iterações para verificar a robustez do projeto por técnicas estatísticas. Os resultados obtidos foram brevemente discutidos.
+  Este relatório aborda o projeto e a análise de um amplificador de potência em radiofrequência (RF) operando em 400 MHz, projetado para fornecer uma potência de saída de 25 dBm a partir de um sinal de entrada de 5 dBm, com uma eficiência fixa de 60%. São explorados os aspectos teóricos que fundamentam o funcionamento de amplificadores de potência, como eficiência, distorções e estabilidade, além de uma implementação prática utilizando um modelo ideal de transistor.
 keywords: 
-  - Robustez
-  - Adaptação de impedância
-  - Análise estatística
+  - Amplificador de potência
+  - Distorção não-linear
+  - Estabilidade
 date: last-modified
 bibliography: bibliography.bib
 format:
@@ -42,6 +42,12 @@ format:
       cite-style: number
 ---
 
+# Introdução
+
+Amplificadores de potência RF são componentes extrememente importantes em sistemas de comunicação, sendo responsáveis por aumentar a potência de sinais transmitidos para atender aos requisitos de alcance e qualidade. Além disso, esses circuitos são responsáveis pela maior quantidade de consumo de energia na cadeia transmissora, além de ser o responsável por garantir que o sistema não transmita em frequências adjacentes.
+
+Este relatório apresenta o estudo e desenvolvimento de um amplificador de potência operando em 400 MHz, projetado para fornecer 25 dBm de saída a partir de uma entrada de 5 dBm, com uma eficiência exata de 60%. A análise teórica explora os fundamentos para a implementação do circuito, inclusive distorções não-lineares e estabilidade.
+
 # Notações
 
 Para ilustrar a convenção, assume-se uma corrente $i_C(t)$ que flui por um ramo em um circuito particular. Essa corrente consiste em um componente de corrente contínua (dc) $I_C$, sobre o qual está sobreposta um componente senoidal $i_c(t)$, cuja **amplitude de pico** é $I_c$. Observe que, em um instante $t$, a corrente instantânea total $i_C(t)$ é a soma da corrente contínua $I_C$ e da corrente do sinal $i_c(t)$,
@@ -49,15 +55,11 @@ $$
 i_C(t) = I_C + i_c(t)
 $$
 
-onde a corrente do sinal é dada por
+onde a corrente do sinal é dada por @sedra2014microelectronic
 
 $$
 i_c(t) = I_c \sin\left(\omega t\right)
 $$
-
-# Introdução
-
-
 
 # Amplificador de potência
 
@@ -115,7 +117,7 @@ IL = 2*Po/VL
 
 A intenção deste trabalho é apresentar o projeto de um amplificador de potência que opere na frequência $f=$ `{python} format(freq)`Hz, com uma eficiência de emissor (dreno) de $\eta=$ `{python} format_simple(emitter_efficiency, 0)`%, sendo a potência de entrada $P_i=$ `{python} format_simple(Pi_dBm, 0)` dBm e a potência de saída $P_o=$ `{python} format_simple(Po_dBm, 0)` dBm, com a impedância de fonte igual a `{python} format_simple(z_source_real, 0)` $\Omega$ e a impedância de saída, `{python} format_simple(z_load_real, 0)` $\Omega$.
 
-Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_\ell=$ `{python} format(VL)`V e $I_\ell=$ `{python} format(IL)`A. A forma mais fácil de garantir que os valores apresentados sejam atingidos é adequando a corrente dc de emissor. Para isso, utiliza-se a seguinte relação
+Para iniciar, converte-se as potências para a escala linear, dessa forma, $P_i=$ `{python} format(Pi)`W e $P_o=$ `{python} format(Po)`W. Como já é conhecida a carga do amplificador, pode-se calcular a tensão sobre a mesma, sendo $V_\ell=$ `{python} format(VL)`V e $I_\ell=$ `{python} format(IL)`A. A forma mais fácil de garantir que os valores apresentados sejam atingidos é adequando a corrente dc de emissor. Para isso, utiliza-se a seguinte relação @clarke1971communication
 
 $$
     i_C(t)=I_E\left[1+\frac{2I_1(x)}{I_0(x)}\cos\left(\omega_1t\right)\right]
@@ -316,6 +318,6 @@ Para que o ponto de interceptação de terceira ordem atinja o valor mínimo da 
 
 # Conclusão
 
-
+A conclusão do trabalho reflete os desafios encontrados durante o processo de implementação do amplificador de potência RF. Apesar das dificuldades, como a compressão de ganho e a limitação no controle do IIP3 devido à falta de um resistor de feedback no emissor, foi possível alcançar resultados satisfatórios com valores próximos aos desejados. Para equilibrar o desempenho, optou-se por manter o IIP3 no nível inicial em favor de um ganho otimizado. Além disso, a tentativa de utilizar o transistor real BFP720 não foi bem-sucedida, principalmente devido a problemas de análise no QucsStudio, o que impediu a implementação do circuito com esse componente. Essas dificuldades, embora significativas, proporcionaram aprendizado sobre a importância de ajustes finos e da escolha adequada de componentes em projetos práticos, além de destacar a complexidade envolvida na otimização de amplificadores de potência RF.
 
 # References {-}
