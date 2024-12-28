@@ -44,7 +44,6 @@ format:
 
 # Notações
 
-
 Para ilustrar a convenção, assume-se uma corrente $i_C(t)$ que flui por um ramo em um circuito particular. Essa corrente consiste em um componente de corrente contínua (dc) $I_C$, sobre o qual está sobreposta um componente senoidal $i_c(t)$, cuja **amplitude de pico** é $I_c$. Observe que, em um instante $t$, a corrente instantânea total $i_C(t)$ é a soma da corrente contínua $I_C$ e da corrente do sinal $i_c(t)$,
 $$
 i_C(t) = I_C + i_c(t)
@@ -57,6 +56,10 @@ i_c(t) = I_c \sin\left(\omega t\right)
 $$
 
 # Introdução
+
+
+
+# Amplificador de potência
 
 ```{python}
 #| echo: false
@@ -310,5 +313,9 @@ Outro característica importante de ser apresentada é em relação a distorçã
 ![Validação do circuito com Diodo](../images/results-amplifier-ip3.png){width=300, #fig-results-amplifier-ip3}
 
 Para que o ponto de interceptação de terceira ordem atinja o valor mínimo da tensão desejada, pode-se incluir um resistor no emissor, implementando, assim, um *feedback* negativo no circuito. Entretanto, esse a inclusão do *feedback* influencia no ganho do amplificador e por conta disso opta-se por manter o ganho com a eficiência desejada, mesmo que a distorção causada seja um pouco maior que o esperado.
+
+# Conclusão
+
+
 
 # References {-}
