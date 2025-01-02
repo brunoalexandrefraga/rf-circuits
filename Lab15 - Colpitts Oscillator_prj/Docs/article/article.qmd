@@ -200,7 +200,7 @@ Dessa forma, obtém-se a seguinte restrição
 
 $$
 X_1+X_2+X_3=0
-$$ {#eq-X1-X2-X3-0}
+$$ {#eq-restriction-1}
 
 e
 
@@ -208,16 +208,45 @@ $$
   \frac{A_1X_1X_2}{X_2\left(X_1+X_3\right)}=1
 $$
 
-Pela [Eq. @eq-X1-X2-X3-0], $X_1+X_3=-X_2$, assim,
+Pela [Eq. @eq-restriction-1], $X_1+X_3=-X_2$, assim,
 
 $$
-\begin{split}
-  \frac{A_1X_1X_2}{X_2\left(-X_2\right)}&=1\implies\\
-  A_1&=\frac{-X_2}{X_1}
-\end{split}
+  \frac{A_1X_1X_2}{X_2\left(-X_2\right)}=1\implies
 $$
 
+$$
+  A_1=\frac{-X_2}{X_1}
+$$ {#eq-restriction-2}
 
+Com essas equações de restrição, o circuito da Fig. \ref{fig:original-circuit-oscillator-basic} é redesenhado obtendo, assim, um oscilador de Colpitts como é apresentado na Fig. \ref{fig:collpits}
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+  
+  \begin{circuitikz}[american]
+    \draw (3.48, -1) node[npn](nmos1){};
+    \draw (nmos1.B) to[short] ++(-1, 0) coordinate(point1) to[R, l=$R_{B2}$] ++(0, -2.5) node[ground]{} ;
+    \draw (nmos1.C) to[R, l=$R_C$] ++(0, 1.73) node[vcc]{$V_{CC}$} ;
+    \draw (nmos1.E) to[R, l=$R_E$] ++(0, -1.73) node[ground]{} ;
+    \draw (1.5, 1) node[vcc]{$V_{CC}$} to[R, a=$R_{B1}$] (point1) to[C] ++(-2, 0) coordinate(point2) ;
+    \draw (nmos1.C) to[C, -*] ++(2.02, 0) coordinate(point8) |- ++(1.5, 0) coordinate(point3) ;
+    \draw (nmos1.E) to[R, l=$R_G$] ++(2.52, 0) to[C, l=$C_E$] ++(0, -1.73) node[ground]{} ;
+    \draw (7, 1) coordinate(point4) |- ++(2, 0) coordinate(point5) to[L, l=$L_3$] ++(0, -2.5) coordinate(point6) to[C, l=$C_1$] ++(0, -2) node[ground]{} ;
+    \draw (point4) |- (point3) ;
+    \draw (11, -3.5) coordinate(point7) node[ground]{} ;
+    \draw (point5) -| ++(2, 0) to[C, l=$C_2$] (point7) ;
+    \draw (point6) -| ++(-1.5, 0) -| ++(0, -3) -| (point2) ;
+
+    \node at (point8) [above right] [above] {$V_o$};
+  \end{circuitikz}
+
+
+
+  \caption{Projeto base de oscilador LC}
+  \label{fig:collpits}
+\end{figure}
+```
 
 
 
