@@ -1,0 +1,107 @@
+---
+title: Oscilador de Colpitts
+subtitle: Laboratório 15
+author:
+  - name: Bruno Alexandre Fraga
+    email: bruno.fraga@posgrad.ufsc.br
+    affiliations: 
+        - id: some-tech
+          name: Universidade Federal de Santa Catarina
+          department: Departamento de Engenharia Elétrica e Eletrônica
+          address: R. Delfino Conti
+          city: Florianópolis
+          state: Santa Catarina
+          postal-code: 88040-370
+abstract: |
+  Este relatório aborda o projeto e a análise de um amplificador de potência em radiofrequência (RF) operando em 400 MHz, projetado para fornecer uma potência de saída de 25 dBm a partir de um sinal de entrada de 5 dBm, com uma eficiência fixa de 60%. São explorados os aspectos teóricos que fundamentam o funcionamento de amplificadores de potência, como eficiência, distorções e estabilidade, além de uma implementação prática utilizando um modelo ideal de transistor.
+keywords: 
+  - Amplificador de potência
+  - Distorção não-linear
+  - Estabilidade
+date: last-modified
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    include-in-header:
+      - text: |
+          \usepackage{steinmetz}
+          \usepackage[a4paper, margin=1in]{geometry}
+          \usepackage{graphicx} % Required for inserting images
+          \usepackage{circuitikz}
+          \usepackage{amsmath}
+          \usepackage{amssymb}
+          \usepackage{amsthm}
+          \usepackage{comment}
+          \usepackage{tikz}
+          \usetikzlibrary{shapes,arrows}
+          \usetikzlibrary{shapes,arrows,positioning,calc}
+
+
+          \newcommand{\parallelsum}{\mathbin{\!/\mkern-5mu/\!}}
+    keep-tex: true
+    journal:
+      name: RF Circuits
+      formatting: preprint
+      # model: 3p # Don't set a model with preprint
+      cite-style: number
+---
+
+# Introdução
+
+```{=latex}
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}
+
+
+
+
+
+
+
+
+% Amplifier as a triangle rotated 90 degrees clockwise
+\node[draw,
+    isosceles triangle,
+    isosceles triangle apex angle=60,
+    minimum height=1.2cm,
+    minimum width=1.6cm,
+    shape border rotate=0,
+] (controller) {$A$};
+
+% System H(s)
+\node [draw,
+	minimum width=2cm, 
+	minimum height=1.2cm,
+	right=1.5cm of controller
+] (system) {$\beta$};
+
+% Arrows with text label
+\draw[-stealth] (controller.east) -- (system.west)node[]{};
+
+\draw (system.east) -- ++ (1,0)node[](output){};
+
+\draw[] (output.center) |- ++ (-7,-2.2)node[](out1){};
+
+\draw[-stealth] (out1.center) |- (controller.west);
+
+
+
+
+
+
+
+
+
+
+
+\end{tikzpicture}
+\caption{Diagrama de bloco de um amplificador de transcondutância com feedback} 
+\label{fig:feedback-amp}
+\end{figure}
+```
+
+
+
+
+# References {-}
