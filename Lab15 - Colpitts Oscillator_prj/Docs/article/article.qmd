@@ -248,13 +248,140 @@ Com essas equações de restrição, o circuito da Fig. \ref{fig:original-circui
 \end{figure}
 ```
 
+De acordo com o circuito apresentado na Fig. \ref{fig:collpits}, tem-se as seguintes relações. Para o capacitor $C_1$
 
+$$
+  X_1=\frac{-1}{\omega C_1}
+$$
 
+Para o capacitor $C_2$,
 
+$$
+  X_2=\frac{-1}{\omega C_2}
+$$
 
+Dessa forma, o ganho $A_1$ é dado por
 
+$$
+\begin{split}
+  A_1&=\left(-1\right)\left(\frac{-1}{\omega C_2}\right)\left(\frac{\omega C_1}{-1}\right)\implies\\
+  &=\frac{-C_1}{C_2}
+\end{split}
+$$ {#eq-colpitts-restriction1}
 
+Ao projetarmos efetivamente o circuito, é necessário garantir que a magnitude do ganho seja superior a $C_1/C_2$, de modo que a oscilação possa ser iniciada a partir do ruído e para que possamos superar quaisquer perdas no circuito. Seguindo com a obtenção das equações do circuito, utiliza-se a [Eq. @eq-restriction-1] para obter a frequência do oscilador
 
+$$
+  \begin{split}
+    \frac{-1}{\omega C_1}-\frac{1}{\omega C_2}+\omega L_3&=0\implies\\
+    -C_2-C_1+\omega^2C_1C_2L_3&=0\implies
+  \end{split}
+$$
+
+$$
+  \omega=\sqrt{\frac{C_1+C_2}{C_1C_2L_3}}
+$$ {#eq-omega-L3}
+
+# Projeto
+
+```{python}
+#| echo: false
+import numpy as np
+
+f = 1e6
+C1 = 1e-9
+C2 = 1e-9
+omega = 2 * np.pi * f
+L3=(C1+C2)/(C1*C2*omega**2)
+``` 
+
+```{python}
+#| echo: false
+def format_simple(value, decimals=2):
+    format_string = f"{{:.{decimals}f}}"
+    return f"{format_string.format(value)}"
+```
+
+```{python}
+#| echo: false
+def format(value):
+    if value >= 1e9:
+        return f"{value / 1e9:.2f} G"
+    elif value >= 1e6:
+        return f"{value / 1e6:.2f} M"
+    elif value >= 1e3:
+        return f"{value / 1e3:.2f} k"
+    elif value >= 1:
+        return f"{value:.2f} "
+    elif value >= 1e-3:
+        return f"{value * 1e3:.2f} m"
+    elif value >= 1e-6:
+        return f"{value * 1e6:.2f} u"
+    elif value >= 1e-9:
+        return f"{value * 1e9:.2f} n"
+    elif value >= 1e-12:
+        return f"{value * 1e12:.2f} p"
+    elif value >= 1e-15:
+        return f"{value * 1e12:.2f} p"
+    else:
+        return f"{value:.0e} "
+```
+
+```{python}
+#| echo: false
+import numpy as np
+
+# Séries de valores comerciais (E12 e E24) para capacitores
+e24_series = [1.00, 1.10, 1.20, 1.30, 1.50, 1.60, 1.80, 2.00, 2.20, 2.40, 2.70, 3.00, 3.30, 3.60, 3.90, 4.30, 4.70, 5.10, 5.60, 6.10, 6.80, 7.50, 8.20, 9.10]
+
+# Função para aproximar o valor de um capacitor para o valor comercial mais próximo
+# O parâmetro 'direction' define se o valor desejado é "acima" ou "abaixo"
+def find_commercial_value(calculated_value, direction='below'):
+    mult1 = 1
+    if calculated_value >= 1:
+        mult1 *= 1
+    elif calculated_value >= 1e-3:
+        mult1 *= 1e3  # mili (mF)
+    elif calculated_value >= 1e-6:
+        mult1 *= 1e6  # micro (µF)
+    elif calculated_value >= 1e-9:
+        mult1 *= 1e9  # nano (nF)
+    elif calculated_value >= 1e-12:
+        mult1 *= 1e12  # pico (pF)
+
+    calculated_value *= mult1
+
+    mult2 = 1
+    # Determinar o multiplicador (1, 10 ou 100)
+    if calculated_value >= 100:
+        mult2 *= 100
+    elif calculated_value >= 10:
+        mult2 *= 10
+
+    # Ajustar o valor calculado
+    adjusted_value = calculated_value / mult2
+
+    # Definir a função para encontrar o valor comercial dependendo da direção
+    if direction == 'below':
+        commercial_value = max([value for value in e24_series if value <= adjusted_value], default=None)
+    elif direction == 'above':
+        commercial_value = min([value for value in e24_series if value >= adjusted_value], default=None)
+    
+    # Ajustar o valor comercial de volta com o multiplicador
+    commercial_value = commercial_value / mult1 * mult2
+    
+    return commercial_value
+
+commercial_L3 = find_commercial_value(L3, 'below')
+```
+
+```{python}
+#| echo: false
+import math
+f_real = 1/(2*math.pi)*math.sqrt((C1+C2)/(C1*C2*commercial_L3))
+```
+
+Neste projeto, deseja-se projetar um oscilador que opere na frequência $f=$ `{python} format(f)`Hz. Para facilitar a montagem do circuito, seleciona-se capacitores $C_1=$ `{python} format(C1)`F e $C_2=$ `{python} format(C2)`F. Com esses valores, aplicando à [Eq. @eq-omega-L3], obtém-se $L_3=$ `{python} format(L3)`H. Dessa forma, seleciona-se o valor de $L_3=$ `{python} format(commercial_L3)`H. Com esse valor de indutor, o circuito deve operar com uma frequência $f=$ `{python} format(f_real)`Hz.
 
 
 
