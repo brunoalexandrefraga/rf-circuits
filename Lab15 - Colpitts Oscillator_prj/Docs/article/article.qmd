@@ -229,7 +229,7 @@ Com essas equações de restrição, o circuito da Fig. \ref{fig:original-circui
     \draw (nmos1.B) to[short] ++(-1, 0) coordinate(point1) to[R, l=$R_{B2}$] ++(0, -2.5) node[ground]{} ;
     \draw (nmos1.C) to[R, l=$R_C$] ++(0, 1.73) node[vcc]{$V_{CC}$} ;
     \draw (nmos1.E) to[R, l=$R_E$] ++(0, -1.73) node[ground]{} ;
-    \draw (1.5, 1) node[vcc]{$V_{CC}$} to[R, a=$R_{B1}$] (point1) to[C] ++(-2, 0) coordinate(point2) ;
+    \draw (1.6, 1) node[vcc]{$V_{CC}$} to[R, a=$R_{B1}$] (point1) to[C] ++(-2, 0) coordinate(point2) ;
     \draw (nmos1.C) to[C, -*] ++(2.02, 0) coordinate(point8) |- ++(1.5, 0) coordinate(point3) ;
     \draw (nmos1.E) to[R, l=$R_G$] ++(2.52, 0) to[C, l=$C_E$] ++(0, -1.73) node[ground]{} ;
     \draw (7, 1) coordinate(point4) |- ++(2, 0) coordinate(point5) to[L, l=$L_3$] ++(0, -2.5) coordinate(point6) to[C, l=$C_1$] ++(0, -2) node[ground]{} ;
