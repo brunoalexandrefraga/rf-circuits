@@ -48,17 +48,12 @@ format:
 
 # Introdução
 
+Um oscilador é um dispositivo projetado para gerar uma onda periódica sem a necessidade de um sinal de entrada. O diagrama de blocos de um oscilador básico pode ser visualizado na Fig.\ref{fig:basic-oscillator}.
+
 ```{=latex}
 \begin{figure}[!htb]
 \centering
 \begin{tikzpicture}
-
-
-
-
-
-
-
 
 % Amplifier as a triangle rotated 90 degrees clockwise
 \node[draw,
@@ -85,21 +80,158 @@ format:
 
 \draw[-stealth] (out1.center) |- (controller.west);
 
-
-
-
-
-
-
-
-
-
-
 \end{tikzpicture}
-\caption{Diagrama de bloco de um amplificador de transcondutância com feedback} 
-\label{fig:feedback-amp}
+\caption{Diagrama de um oscilador básico} 
+\label{fig:basic-oscillator}
 \end{figure}
 ```
+
+Agora é possível alterar o diagrama da Fig.\ref{fig:basic-oscillator} para incorporar as não idealidades dos circuitos (amplificador e malha de *feedback*). Fazendo as devidas adequações e utilizando uma abordagem de um filtro LC para a carga, chega-se a topologia apresentada na Fig.\ref{fig:original-circuit-oscillator-basic}.
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+
+  \begin{circuitikz}[american]
+    \draw (0, 0.5) coordinate(point1) to[american controlled voltage source, l=$A_1V_1$] (0, -1.5) node[ground]{} ;
+    \draw (point1) to[R, l=$R_o$, -*] (3, 0.5) coordinate(point2) to[generic, l=$Z_3$, *-] ++(0, -1.5) coordinate(point3) to[generic, l=$Z_1$] ++(0, -1.5) node[ground]{} ;
+    \draw (-1, -1.5) coordinate(point4) node[ground]{} ;
+    \draw (4.5, -2.5) coordinate(point5) node[ground]{} ;
+    \draw (-1, 0.5) coordinate(point6) to[R, a=$R_i$, *-] (point4) ;
+    \draw (point2) to[short, *-] ++(1.5, 0) to[generic, l=$Z_2$] (point5) ;
+    \draw (point3) to[short] ++(-2, 0) to[short] ++(0, -2) to[short] ++(-3, 0) to[short] ++(0, 3.5) to[short, -*] (point6) ;
+
+    \node at (point6) [above right] [above] {$V_1$};
+    \node at (point2) [above right] [above] {$V_2$};
+  \end{circuitikz}
+
+  \caption{Projeto base de oscilador LC}
+  \label{fig:original-circuit-oscillator-basic}
+\end{figure}
+```
+
+para facilitar a análise do circuito, redesenha-se como o que é apresentado na Fig./ref{fig:original-circuit-oscillator-basic-redrawn}
+
+```{=latex}
+\begin{figure}[h]
+  \centering
+
+  
+  \begin{circuitikz}
+    \draw (0.5, 0.5) coordinate(point1) to[R, l=$R_o$, -*] ++(2, 0) coordinate(point2) to[generic, l=$Z_2$, *-] ++(0, -2) node[ground]{} ;
+    \draw (point1) to[american controlled voltage source, l=$A_1V_1$] ++(0, -2) node[ground]{} ;
+    \draw (4.5, -1.5) coordinate(point3) node[ground]{} ;
+    \draw (6.5, -1.5) coordinate(point4) node[ground]{} ;
+    \draw (point2) to[generic, l=$Z_3$, *-] ++(2, 0) coordinate(point5) to[generic, l=$Z_1$] (point3) ;
+    \draw (point5) to[short, -*] ++(2, 0) coordinate(point6) to[R, l=$R_i$, *-] (point4) ;
+
+    \node at (point6) [above right] [above] {$V_1$};
+    \node at (point2) [above right] [above] {$V_2$};
+  \end{circuitikz}
+
+
+
+  \caption{Projeto base de oscilador LC}
+  \label{fig:original-circuit-oscillator-basic-redrawn}
+\end{figure}
+```
+
+Com o circuito apresentado na Fig.\ref{fig:original-circuit-oscillator-basic-redrawn}, pode-se calcular
+
+$$
+\begin{split}
+  V_1=V_2\frac{Z_1\parallelsum R_i}{Z_1\parallelsum R_i+Z_3}\implies\\
+  \frac{V_1}{V_2}=\frac{Z_1\parallelsum R_i}{Z_1\parallelsum R_i+Z_3}\implies\\
+\end{split}
+$$ {#eq-v1_V2}
+
+Em seguida, calcula-se
+
+$$
+\begin{split}
+  V_2=A_1V_1\frac{\left(Z_1\parallelsum R_i+Z_3\right)\parallelsum Z_2}{\left(Z_1\parallelsum R_i+Z_3\right)\parallelsum Z_2+R_o}\implies\\
+  \frac{V_2}{A_1V_1}=\frac{\left(Z_1\parallelsum R_i+Z_3\right)\parallelsum Z_2}{\left(Z_1\parallelsum R_i+Z_3\right)\parallelsum Z_2+R_o}\implies\\
+\end{split}
+$$ {#eq-v2_A1V1}
+
+Expandindo $\left(Z_1\parallelsum R_i+Z_3\right)\parallelsum Z_2$ como
+
+$$
+  \left(Z_1\parallelsum R_i+Z_3\right)\parallelsum Z_2 = \frac{\left(Z_1\parallelsum R_i+Z_3\right)Z_2}{\left(Z_1\parallelsum R_i+Z_3\right)+Z_2}
+$$
+
+E multiplicando tudo por $$, a [Eq. @eq-v2_A1V1] resulta em
+
+$$
+  \frac{V_2}{V_1}=A_1\frac{\left(Z_1\parallelsum R_i+Z_3\right)Z_2}{\left(Z_1\parallelsum R_i+Z_3\right)Z_2+R_o\left(Z_1\parallelsum R_i+Z_3+Z_2\right)}
+$$ {#eq-v2_V1}
+
+Como já se tem a [Eq. @eq-v1_V2] é possível multiplicado com a [Eq. @eq-v2_V1] e o resultado deve ser igual a 1. Antes disso, pode-se perceber que é possível simplificar $R_i$ para osciladores com BJT, uma vez que isso é uma suposição bastante razoável, pois a impedância de entrada observada na base de um transistor tende a ser bem alta. Essa abordagem pode não ser uma boa ideia caso seja utilizado um MOSFET, por exemplo. Dessa forma, a [Eq. @eq-v2_V1] resulta em
+
+$$
+\begin{split}
+  \frac{V_2}{V_1}&=\frac{A_1\left(Z_1+Z_3\right)Z_2}{\left(Z_1+Z_3\right)Z_2+R_o\left(Z_1+Z_3+Z_2\right)}\implies\\
+  &=\frac{A_1\left(Z_1+Z_3\right)Z_2}{\left(Z_1+Z_3\right)Z_2+R_o\left(Z_1+Z_3+Z_2\right)}\implies\\
+\end{split}
+$$
+
+E a [Eq. @eq-v1_V2] fica
+
+$$
+  \frac{V_1}{V_2}=\frac{Z_1}{Z_1+Z_3}
+$$
+
+Multiplicando as duas equações obtém-se
+
+$$
+\begin{split}
+  \frac{V_1}{V_2}\cdot\frac{V_2}{V_1}&=\frac{Z_1}{\left(Z_1+Z_3\right)}\cdot\frac{A_1\left(Z_1+Z_3\right)Z_2}{\left(Z_1+Z_3\right)Z_2+R_o\left(Z_1+Z_3+Z_2\right)}\implies\\
+  &=\frac{A_1Z_1Z_2}{Z_2\left(Z_1+Z_3\right)+R_o\left(Z_1+Z_2+Z_3\right)}=1
+\end{split}
+$$
+
+Como $Z_i=jX_i$,
+
+$$
+  \frac{-A_1X_1X_2}{jR_o\left(X_1+X_2+X_3\right)-X_2\left(X_1+X_3\right)}=1
+$$
+
+Dessa forma, obtém-se a seguinte restrição
+
+$$
+X_1+X_2+X_3=0
+$$ {#eq-X1-X2-X3-0}
+
+e
+
+$$
+  \frac{A_1X_1X_2}{X_2\left(X_1+X_3\right)}=1
+$$
+
+Pela [Eq. @eq-X1-X2-X3-0], $X_1+X_3=-X_2$, assim,
+
+$$
+\begin{split}
+  \frac{A_1X_1X_2}{X_2\left(-X_2\right)}&=1\implies\\
+  A_1&=\frac{-X_2}{X_1}
+\end{split}
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
