@@ -385,9 +385,15 @@ Neste projeto, deseja-se projetar um oscilador que opere na frequência $f=$ `{p
 
 ```{python}
 C_bias = 82e-9
+VCC=9
+RB1 = 12e3
+RB2 = 8.8e3
+VB = 4
+RC = RE = 1e3
+CE = 10e-6
 ```
 
-Para os capacitores de acoplamento, utilizam-se dois capacitores (um na entrada e um na saída) de `{python} format(C_bias)`F.
+Para os capacitores de acoplamento, utilizam-se dois capacitores (um na entrada e um na saída) de `{python} format(C_bias)`F. Para manter uma o transistor devidamente polarizado, seleciona-se uma determinada tensão de base. Como a tensão de alimentação é $V_{CC}=$ `{python} format(VCC)`V, a determinada tensão de base é obtida com um divisor resistivo com $R_{B1}=$ `{python} format(RB1)`$\Omega$ e $R_{B2}=$ `{python} format(RB2)`$\Omega$. Este divisor resistivo deveria gerar uma tensão de aproximadamente $V_B\approx$ `{python} format(VB)`V na base. Além disso, sabe-se que o ganho aproximado de um transistor na configuração de emissor comum é dado pela razão entre o resistor de coletor ($R_C$) e o resistor de emissor ($R_e$). Se ambos os resistores forem escolhidos com `{python} format(RC)`$\Omega$, o circuito deve fornecer um ganho aproximado de 1. Um ganho de pelo menos 1 é necessário para que o oscilador funcione, mas, na prática, é necessário um ganho maior que 1 para superar as perdas adicionais no circuito e garantir que ele comece a oscilar a partir do ruído. Para alcançar isso, um capacitor é conectado ao emissor através de outro resistor, permitindo o controle do ganho AC e garantindo que ele exceda 1. Para este projeto, foi selecionado um capacitor de valor elevado de `{python} format(CE)`F para maximizar o ganho do transistor.
 
 
 
