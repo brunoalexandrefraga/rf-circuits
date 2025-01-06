@@ -384,6 +384,7 @@ f_real = 1/(2*math.pi)*math.sqrt((C1+C2)/(C1*C2*commercial_L3))
 Neste projeto, deseja-se projetar um oscilador que opere na frequência $f=$ `{python} format(f)`Hz. Para facilitar a montagem do circuito, seleciona-se capacitores $C_1=$ `{python} format(C1)`F e $C_2=$ `{python} format(C2)`F. Com esses valores, aplicando à [Eq. @eq-omega-L3], obtém-se $L_3=$ `{python} format(L3)`H. Dessa forma, seleciona-se o valor de $L_3=$ `{python} format(commercial_L3)`H. Com esse valor de indutor, o circuito deve operar com uma frequência $f=$ `{python} format(f_real)`Hz.
 
 ```{python}
+#| echo: false
 C_bias = 82e-9
 VCC=9
 RB1 = 12e3
