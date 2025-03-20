@@ -6,3 +6,5 @@ netlist.txt
 **/article/*
 !**/article/article.qmd
 !**/article/bibliography.bib
+
+outputarticles/
